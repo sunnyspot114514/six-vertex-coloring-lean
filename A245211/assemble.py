@@ -7,6 +7,19 @@ import re
 MODULES = ("Core", "Cycle", "TokenAllocation", "Checker", "Projection", "Finite", "Main")
 
 
+def kernel_proof_definitions(text: str) -> set[str]:
+    """Find proof-valued definitions that retain the module's proof options."""
+    declarations = list(re.finditer(
+        r"(?m)^(?:private\s+)?(theorem|lemma|abbrev|def)\s+([^\s(:]+)", text))
+    result: set[str] = set()
+    for index, declaration in enumerate(declarations):
+        end = declarations[index + 1].start() if index + 1 < len(declarations) else len(text)
+        body = text[declaration.start():end].partition(":=")[2]
+        if declaration[1] == "def" and re.match(r"\s*by\s+decide\s+\+kernel(?:\s|$)", body):
+            result.add(declaration[2])
+    return result
+
+
 def assemble(source: Path, destination: Path) -> None:
     imports: list[str] = []
     bodies: list[str] = []
@@ -24,11 +37,19 @@ def assemble(source: Path, destination: Path) -> None:
         text = re.sub(r"(?m)^set_option \S+ \d+\s*\n", "", text)
         if options:
             # The upstream gate permits scoped options only. Keep each module's
-            # settings on its proof declarations, leaving definitions unchanged.
+            # settings on its proofs, including synchronous kernel certificates.
             prefix = "".join(f"set_option {key} {value} in\n" for key, value in options)
             text = text.replace("/--", "/-")
-            text = re.sub(r"(?m)^((?:@\[[^\n]*\]\s*)?(?:private\s+)?(?:theorem|lemma)\b)",
-                          lambda match: prefix + match.group(1), text)
+            proof_definitions = kernel_proof_definitions(text)
+
+            def scope_options(match: re.Match[str]) -> str:
+                if match[2] == "def" and match[3] not in proof_definitions:
+                    return match[0]
+                return prefix + match[0]
+
+            text = re.sub(
+                r"(?m)^((?:@\[[^\n]*\]\s*)?(?:private\s+)?)(theorem|lemma|def)\b"
+                r"(?:[ \t]+([A-Za-z_][A-Za-z0-9_'.]*))?", scope_options, text)
         bodies.append(text)
     required_import = "import OMAReductions.R_OeisA245211_conjecture_R2"
     imports.remove(required_import)

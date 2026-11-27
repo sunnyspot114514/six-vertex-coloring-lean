@@ -37,7 +37,7 @@ def abbrev(name, r, q, params, tokens):
     emit(f'abbrev {name}{bind} : Bool :=\n  positionTest {r} {q} {spec(tokens)}\n')
 
 def closed(name, statement, private=True):
-    emit(f'{"private " if private else ""}theorem {name} :\n    {statement} := by\n  decide +kernel\n')
+    emit(f'{"private " if private else ""}def {name} :\n    {statement} := by\n  decide +kernel\n')
 
 def glue(name, param, size, statement, blocks, private=True):
     emit(f'{"private " if private else ""}theorem {name} ({param} : Fin {size}) :\n    {statement} := by\n  fin_cases {param}')
