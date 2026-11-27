@@ -75,8 +75,29 @@ for r,fs in FACTORS.items():
       positionTest {r} q (tokenSpec factors{r} pos) = true :=
     positionTest_of_token_cycle (by decide) q hq ho factors{r} pos p
       hfactor hrec (fun i => (hp i).1) (fun i => lt_of_le_of_lt hb (hlarge i))''')
-    def projected(test,q):
-        emit(f'  · simpa [{test}, projectedTokenSpec, hspec] using\n      hprojected {q} (by decide) (by decide) (by decide)')
+    def projected(_test,q,bullet=True,neutral_spec=None):
+        filtered_pairs=', '.join(
+            f'({f}, '+('0' if i==j else f'(pos {i}).val')+')'
+            for i,f in enumerate(fs) if f % q != 1)
+        filtered_spec='['+filtered_pairs+']'
+        lead='  · ' if bullet else '  '
+        indent='    ' if bullet else '  '
+        # Normalize only the token list, keeping the symbolic checker opaque.
+        emit(f'''{lead}have hfiltered : projectedTokenSpec {q} factors{r} pos = {filtered_spec} := by
+{indent}  change (tokenSpec factors{r} pos).filter (fun tp => decide (tp.1 % {q} ≠ 1)) = {filtered_spec}
+{indent}  rw [hspec]
+{indent}  norm_num [List.filter_cons, List.filter_nil]
+{indent}have hh := hprojected {q} (by decide) (by decide) (by decide)
+{indent}rw [hfiltered] at hh''')
+        if neutral_spec is None:
+            emit(f'{indent}exact hh')
+        else:
+            emit(f'''{indent}have hneutral : ({neutral_spec} : List (Nat × Nat)).filter
+{indent}    (fun tp => decide (tp.1 % {q} ≠ 1)) = {filtered_spec} := by
+{indent}  norm_num [List.filter_cons, List.filter_nil]
+{indent}have heq := positionTest_filter_ne_one {r} {q} (by decide) {neutral_spec}
+{indent}rw [hneutral] at heq
+{indent}exact heq.symm.trans hh''')
     def full(test,q):
         emit(f'  · simpa only [{test}, hspec] using\n      hfull {q} (by decide) (by decide) (by decide)')
     if r in [15,21,33,39,57,63]:
@@ -84,7 +105,7 @@ for r,fs in FACTORS.items():
         q=33 if r in [15,33] else 3
         emit('  apply exclude'+str(r)+' '+' '.join(f'(pos {i})' for i in idx))
         # This application leaves exactly one goal, so no unnecessary bullet.
-        emit(f'  simpa [test{r}, projectedTokenSpec, hspec] using\n    hprojected {q} (by decide) (by decide) (by decide)\n')
+        projected(f'test{r}',q,bullet=False)
     elif r==35:
         emit('  apply exclude35 (pos 1) (pos 2) (pos 3) (pos 4)')
         projected('test35_5',5)
@@ -95,10 +116,7 @@ for r,fs in FACTORS.items():
         emit('  apply exclude45 (pos 0) (pos 1) (pos 2) (pos 4) (pos 5) (pos 6)')
         projected('test45_3',3)
         spec45='[(3, (pos 0).val), (3, (pos 1).val), (3, (pos 2).val), (11, 0), (19, (pos 4).val)]'
-        emit(f'''  · change positionTest 45 5 {spec45} = true
-    rw [← positionTest_filter_ne_one 45 5 (by decide) {spec45}]
-    simpa [projectedTokenSpec, hspec] using
-      hprojected 5 (by decide) (by decide) (by decide)''')
+        projected('test45_5',5,neutral_spec=spec45)
         for q in [7,13,19]: full('test45',q)
         emit()
     elif r==51:

@@ -53,8 +53,13 @@ theorem no_fixed_count15 {n : Nat} (hs : Squarefree n)
     positionTest_of_projected_token_cycle (by decide) q hq ho factors15 pos p
       hfactor hrec (fun i => (hp i).1) (fun i => lt_of_le_of_lt hb (hlarge i))
   apply exclude15 (pos 1) (pos 2)
-  simpa [test15, projectedTokenSpec, hspec] using
-    hprojected 33 (by decide) (by decide) (by decide)
+  have hfiltered : projectedTokenSpec 33 factors15 pos = [(3, 0), (3, (pos 1).val), (11, (pos 2).val)] := by
+    change (tokenSpec factors15 pos).filter (fun tp => decide (tp.1 % 33 ≠ 1)) = [(3, 0), (3, (pos 1).val), (11, (pos 2).val)]
+    rw [hspec]
+    norm_num [List.filter_cons, List.filter_nil]
+  have hh := hprojected 33 (by decide) (by decide) (by decide)
+  rw [hfiltered] at hh
+  exact hh
 abbrev factors21 : List Nat := [3, 3, 43, 5419]
 theorem no_fixed_count21 {n : Nat} (hs : Squarefree n)
     (hr : n.primeFactors.card = 21) (ha : OeisA245211.a n = n) : False := by
@@ -73,8 +78,13 @@ theorem no_fixed_count21 {n : Nat} (hs : Squarefree n)
     positionTest_of_projected_token_cycle (by decide) q hq ho factors21 pos p
       hfactor hrec (fun i => (hp i).1) (fun i => lt_of_le_of_lt hb (hlarge i))
   apply exclude21 (pos 1)
-  simpa [test21, projectedTokenSpec, hspec] using
-    hprojected 3 (by decide) (by decide) (by decide)
+  have hfiltered : projectedTokenSpec 3 factors21 pos = [(3, 0), (3, (pos 1).val)] := by
+    change (tokenSpec factors21 pos).filter (fun tp => decide (tp.1 % 3 ≠ 1)) = [(3, 0), (3, (pos 1).val)]
+    rw [hspec]
+    norm_num [List.filter_cons, List.filter_nil]
+  have hh := hprojected 3 (by decide) (by decide) (by decide)
+  rw [hfiltered] at hh
+  exact hh
 abbrev factors33 : List Nat := [3, 3, 67, 683, 20857]
 theorem no_fixed_count33 {n : Nat} (hs : Squarefree n)
     (hr : n.primeFactors.card = 33) (ha : OeisA245211.a n = n) : False := by
@@ -93,8 +103,13 @@ theorem no_fixed_count33 {n : Nat} (hs : Squarefree n)
     positionTest_of_projected_token_cycle (by decide) q hq ho factors33 pos p
       hfactor hrec (fun i => (hp i).1) (fun i => lt_of_le_of_lt hb (hlarge i))
   apply exclude33 (pos 1) (pos 3)
-  simpa [test33, projectedTokenSpec, hspec] using
-    hprojected 33 (by decide) (by decide) (by decide)
+  have hfiltered : projectedTokenSpec 33 factors33 pos = [(3, 0), (3, (pos 1).val), (683, (pos 3).val)] := by
+    change (tokenSpec factors33 pos).filter (fun tp => decide (tp.1 % 33 ≠ 1)) = [(3, 0), (3, (pos 1).val), (683, (pos 3).val)]
+    rw [hspec]
+    norm_num [List.filter_cons, List.filter_nil]
+  have hh := hprojected 33 (by decide) (by decide) (by decide)
+  rw [hfiltered] at hh
+  exact hh
 abbrev factors35 : List Nat := [3, 11, 43, 281, 86171]
 theorem no_fixed_count35 {n : Nat} (hs : Squarefree n)
     (hr : n.primeFactors.card = 35) (ha : OeisA245211.a n = n) : False := by
@@ -117,10 +132,20 @@ theorem no_fixed_count35 {n : Nat} (hs : Squarefree n)
     positionTest_of_token_cycle (by decide) q hq ho factors35 pos p
       hfactor hrec (fun i => (hp i).1) (fun i => lt_of_le_of_lt hb (hlarge i))
   apply exclude35 (pos 1) (pos 2) (pos 3) (pos 4)
-  · simpa [test35_5, projectedTokenSpec, hspec] using
-      hprojected 5 (by decide) (by decide) (by decide)
-  · simpa [test35_3, projectedTokenSpec, hspec] using
-      hprojected 3 (by decide) (by decide) (by decide)
+  · have hfiltered : projectedTokenSpec 5 factors35 pos = [(3, 0), (43, (pos 2).val)] := by
+      change (tokenSpec factors35 pos).filter (fun tp => decide (tp.1 % 5 ≠ 1)) = [(3, 0), (43, (pos 2).val)]
+      rw [hspec]
+      norm_num [List.filter_cons, List.filter_nil]
+    have hh := hprojected 5 (by decide) (by decide) (by decide)
+    rw [hfiltered] at hh
+    exact hh
+  · have hfiltered : projectedTokenSpec 3 factors35 pos = [(3, 0), (11, (pos 1).val), (281, (pos 3).val), (86171, (pos 4).val)] := by
+      change (tokenSpec factors35 pos).filter (fun tp => decide (tp.1 % 3 ≠ 1)) = [(3, 0), (11, (pos 1).val), (281, (pos 3).val), (86171, (pos 4).val)]
+      rw [hspec]
+      norm_num [List.filter_cons, List.filter_nil]
+    have hh := hprojected 3 (by decide) (by decide) (by decide)
+    rw [hfiltered] at hh
+    exact hh
   · simpa only [test35, hspec] using
       hfull 7 (by decide) (by decide) (by decide)
   · simpa only [test35, hspec] using
@@ -146,8 +171,13 @@ theorem no_fixed_count39 {n : Nat} (hs : Squarefree n)
     positionTest_of_projected_token_cycle (by decide) q hq ho factors39 pos p
       hfactor hrec (fun i => (hp i).1) (fun i => lt_of_le_of_lt hb (hlarge i))
   apply exclude39 (pos 1)
-  simpa [test39, projectedTokenSpec, hspec] using
-    hprojected 3 (by decide) (by decide) (by decide)
+  have hfiltered : projectedTokenSpec 3 factors39 pos = [(3, 0), (3, (pos 1).val)] := by
+    change (tokenSpec factors39 pos).filter (fun tp => decide (tp.1 % 3 ≠ 1)) = [(3, 0), (3, (pos 1).val)]
+    rw [hspec]
+    norm_num [List.filter_cons, List.filter_nil]
+  have hh := hprojected 3 (by decide) (by decide) (by decide)
+  rw [hfiltered] at hh
+  exact hh
 abbrev factors45 : List Nat := [3, 3, 3, 11, 19, 331, 18837001]
 theorem no_fixed_count45 {n : Nat} (hs : Squarefree n)
     (hr : n.primeFactors.card = 45) (ha : OeisA245211.a n = n) : False := by
@@ -170,12 +200,25 @@ theorem no_fixed_count45 {n : Nat} (hs : Squarefree n)
     positionTest_of_token_cycle (by decide) q hq ho factors45 pos p
       hfactor hrec (fun i => (hp i).1) (fun i => lt_of_le_of_lt hb (hlarge i))
   apply exclude45 (pos 0) (pos 1) (pos 2) (pos 4) (pos 5) (pos 6)
-  · simpa [test45_3, projectedTokenSpec, hspec] using
-      hprojected 3 (by decide) (by decide) (by decide)
-  · change positionTest 45 5 [(3, (pos 0).val), (3, (pos 1).val), (3, (pos 2).val), (11, 0), (19, (pos 4).val)] = true
-    rw [← positionTest_filter_ne_one 45 5 (by decide) [(3, (pos 0).val), (3, (pos 1).val), (3, (pos 2).val), (11, 0), (19, (pos 4).val)]]
-    simpa [projectedTokenSpec, hspec] using
-      hprojected 5 (by decide) (by decide) (by decide)
+  · have hfiltered : projectedTokenSpec 3 factors45 pos = [(3, (pos 0).val), (3, (pos 1).val), (3, (pos 2).val), (11, 0)] := by
+      change (tokenSpec factors45 pos).filter (fun tp => decide (tp.1 % 3 ≠ 1)) = [(3, (pos 0).val), (3, (pos 1).val), (3, (pos 2).val), (11, 0)]
+      rw [hspec]
+      norm_num [List.filter_cons, List.filter_nil]
+    have hh := hprojected 3 (by decide) (by decide) (by decide)
+    rw [hfiltered] at hh
+    exact hh
+  · have hfiltered : projectedTokenSpec 5 factors45 pos = [(3, (pos 0).val), (3, (pos 1).val), (3, (pos 2).val), (19, (pos 4).val)] := by
+      change (tokenSpec factors45 pos).filter (fun tp => decide (tp.1 % 5 ≠ 1)) = [(3, (pos 0).val), (3, (pos 1).val), (3, (pos 2).val), (19, (pos 4).val)]
+      rw [hspec]
+      norm_num [List.filter_cons, List.filter_nil]
+    have hh := hprojected 5 (by decide) (by decide) (by decide)
+    rw [hfiltered] at hh
+    have hneutral : ([(3, (pos 0).val), (3, (pos 1).val), (3, (pos 2).val), (11, 0), (19, (pos 4).val)] : List (Nat × Nat)).filter
+        (fun tp => decide (tp.1 % 5 ≠ 1)) = [(3, (pos 0).val), (3, (pos 1).val), (3, (pos 2).val), (19, (pos 4).val)] := by
+      norm_num [List.filter_cons, List.filter_nil]
+    have heq := positionTest_filter_ne_one 45 5 (by decide) [(3, (pos 0).val), (3, (pos 1).val), (3, (pos 2).val), (11, 0), (19, (pos 4).val)]
+    rw [hneutral] at heq
+    exact heq.symm.trans hh
   · simpa only [test45, hspec] using
       hfull 7 (by decide) (by decide) (by decide)
   · simpa only [test45, hspec] using
@@ -205,10 +248,20 @@ theorem no_fixed_count51 {n : Nat} (hs : Squarefree n)
     positionTest_of_token_cycle (by decide) q hq ho factors51 pos p
       hfactor hrec (fun i => (hp i).1) (fun i => lt_of_le_of_lt hb (hlarge i))
   apply exclude51 (pos 0) (pos 1) (pos 2) (pos 3) (pos 4)
-  · simpa [test51_3, projectedTokenSpec, hspec] using
-      hprojected 3 (by decide) (by decide) (by decide)
-  · simpa [test51_7, projectedTokenSpec, hspec] using
-      hprojected 7 (by decide) (by decide) (by decide)
+  · have hfiltered : projectedTokenSpec 3 factors51 pos = [(3, (pos 0).val), (3, (pos 1).val), (43691, 0)] := by
+      change (tokenSpec factors51 pos).filter (fun tp => decide (tp.1 % 3 ≠ 1)) = [(3, (pos 0).val), (3, (pos 1).val), (43691, 0)]
+      rw [hspec]
+      norm_num [List.filter_cons, List.filter_nil]
+    have hh := hprojected 3 (by decide) (by decide) (by decide)
+    rw [hfiltered] at hh
+    exact hh
+  · have hfiltered : projectedTokenSpec 7 factors51 pos = [(3, (pos 0).val), (3, (pos 1).val), (307, (pos 2).val), (6529, (pos 4).val), (43691, 0)] := by
+      change (tokenSpec factors51 pos).filter (fun tp => decide (tp.1 % 7 ≠ 1)) = [(3, (pos 0).val), (3, (pos 1).val), (307, (pos 2).val), (6529, (pos 4).val), (43691, 0)]
+      rw [hspec]
+      norm_num [List.filter_cons, List.filter_nil]
+    have hh := hprojected 7 (by decide) (by decide) (by decide)
+    rw [hfiltered] at hh
+    exact hh
   · simpa only [test51, hspec] using
       hfull 5 (by decide) (by decide) (by decide)
   · simpa only [test51, hspec] using
@@ -238,10 +291,20 @@ theorem no_fixed_count55 {n : Nat} (hs : Squarefree n)
     positionTest_of_token_cycle (by decide) q hq ho factors55 pos p
       hfactor hrec (fun i => (hp i).1) (fun i => lt_of_le_of_lt hb (hlarge i))
   apply exclude55 (pos 1) (pos 2) (pos 3) (pos 4) (pos 5)
-  · simpa [test55_5, projectedTokenSpec, hspec] using
-      hprojected 5 (by decide) (by decide) (by decide)
-  · simpa [test55_11, projectedTokenSpec, hspec] using
-      hprojected 11 (by decide) (by decide) (by decide)
+  · have hfiltered : projectedTokenSpec 5 factors55 pos = [(3, 0), (683, (pos 3).val)] := by
+      change (tokenSpec factors55 pos).filter (fun tp => decide (tp.1 % 5 ≠ 1)) = [(3, 0), (683, (pos 3).val)]
+      rw [hspec]
+      norm_num [List.filter_cons, List.filter_nil]
+    have hh := hprojected 5 (by decide) (by decide) (by decide)
+    rw [hfiltered] at hh
+    exact hh
+  · have hfiltered : projectedTokenSpec 11 factors55 pos = [(3, 0), (11, (pos 1).val), (11, (pos 2).val)] := by
+      change (tokenSpec factors55 pos).filter (fun tp => decide (tp.1 % 11 ≠ 1)) = [(3, 0), (11, (pos 1).val), (11, (pos 2).val)]
+      rw [hspec]
+      norm_num [List.filter_cons, List.filter_nil]
+    have hh := hprojected 11 (by decide) (by decide) (by decide)
+    rw [hfiltered] at hh
+    exact hh
   · simpa only [test55, hspec] using
       hfull 3 (by decide) (by decide) (by decide)
   · simpa only [test55, hspec] using
@@ -267,8 +330,13 @@ theorem no_fixed_count57 {n : Nat} (hs : Squarefree n)
     positionTest_of_projected_token_cycle (by decide) q hq ho factors57 pos p
       hfactor hrec (fun i => (hp i).1) (fun i => lt_of_le_of_lt hb (hlarge i))
   apply exclude57 (pos 1)
-  simpa [test57, projectedTokenSpec, hspec] using
-    hprojected 3 (by decide) (by decide) (by decide)
+  have hfiltered : projectedTokenSpec 3 factors57 pos = [(3, 0), (3, (pos 1).val)] := by
+    change (tokenSpec factors57 pos).filter (fun tp => decide (tp.1 % 3 ≠ 1)) = [(3, 0), (3, (pos 1).val)]
+    rw [hspec]
+    norm_num [List.filter_cons, List.filter_nil]
+  have hh := hprojected 3 (by decide) (by decide) (by decide)
+  rw [hfiltered] at hh
+  exact hh
 abbrev factors63 : List Nat := [3, 3, 3, 19, 43, 5419, 77158673929]
 theorem no_fixed_count63 {n : Nat} (hs : Squarefree n)
     (hr : n.primeFactors.card = 63) (ha : OeisA245211.a n = n) : False := by
@@ -287,8 +355,13 @@ theorem no_fixed_count63 {n : Nat} (hs : Squarefree n)
     positionTest_of_projected_token_cycle (by decide) q hq ho factors63 pos p
       hfactor hrec (fun i => (hp i).1) (fun i => lt_of_le_of_lt hb (hlarge i))
   apply exclude63 (pos 1) (pos 2)
-  simpa [test63, projectedTokenSpec, hspec] using
-    hprojected 3 (by decide) (by decide) (by decide)
+  have hfiltered : projectedTokenSpec 3 factors63 pos = [(3, 0), (3, (pos 1).val), (3, (pos 2).val)] := by
+    change (tokenSpec factors63 pos).filter (fun tp => decide (tp.1 % 3 ≠ 1)) = [(3, 0), (3, (pos 1).val), (3, (pos 2).val)]
+    rw [hspec]
+    norm_num [List.filter_cons, List.filter_nil]
+  have hh := hprojected 3 (by decide) (by decide) (by decide)
+  rw [hfiltered] at hh
+  exact hh
 end A245211New
 
 /-- The exact second hypothesis of the accepted R2 reduction. -/
