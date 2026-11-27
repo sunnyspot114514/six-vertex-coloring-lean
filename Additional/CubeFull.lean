@@ -102,7 +102,8 @@ theorem check_sound : ∀ (count start : Nat) (witnesses : List Nat),
   | succ count ih =>
       intro start witnesses hcheck n hlow hhigh
       by_cases hsmall : SmallWitness start
-      · rw [check.eq_def, if_pos hsmall] at hcheck
+      · rw [check.eq_def] at hcheck
+        simp only [Nat.add_one, if_pos hsmall] at hcheck
         by_cases hn : n = start
         · subst n
           rcases hsmall with h | h | h | h
@@ -111,7 +112,8 @@ theorem check_sound : ∀ (count start : Nat) (witnesses : List Nat),
           · exact ⟨5, h⟩
           · exact ⟨7, h⟩
         · exact ih (start + 1) witnesses hcheck n (by omega) (by omega)
-      · rw [check.eq_def, if_neg hsmall] at hcheck
+      · rw [check.eq_def] at hcheck
+        simp only [Nat.add_one, if_neg hsmall] at hcheck
         cases witnesses with
         | nil => simp at hcheck
         | cons p rest =>
