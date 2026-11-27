@@ -3,7 +3,8 @@ name: A245211 proof development
 on:
   push:
     paths:
-      - 'A245211/**'
+      - 'A245211/*.lean'
+      - 'A245211/assemble.py'
       - '.github/workflows/a245211.yml'
   workflow_dispatch:
 
@@ -17,9 +18,9 @@ concurrency:
 jobs:
   proof:
     runs-on: ubuntu-latest
-    timeout-minutes: 35
+    timeout-minutes: 65
     env:
-      LEAN_NUM_THREADS: '1'
+      LEAN_NUM_THREADS: '2'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/checkout@v4
@@ -66,9 +67,9 @@ jobs:
             .verification/formal-conjectures/.lake/build/ir/A245211
           key: a245211-modules-4331-${{ github.sha }}
           restore-keys: a245211-modules-4331-
-      - name: Compile the structural lemmas
+      - name: Compile the complete modular proof
         working-directory: .verification/formal-conjectures
-        run: lake build A245211.Projection
+        run: lake build A245211.Main
       - uses: actions/cache/save@v4
         if: ${{ !cancelled() }}
         with:
@@ -76,3 +77,10 @@ jobs:
             .verification/formal-conjectures/.lake/build/lib/lean/A245211
             .verification/formal-conjectures/.lake/build/ir/A245211
           key: a245211-modules-4331-${{ github.sha }}
+      - name: Verify the single-file submission and audit its axioms
+        working-directory: .verification/open-math-agents
+        run: |
+          status=0
+          OMA_FC="$GITHUB_WORKSPACE/.verification/formal-conjectures" bash tools/check.sh proofs/OeisA245211.conjecture.R2.H2.lean verdict.json || status=$?
+          cat verdict.json
+          exit "$status"

@@ -59,4 +59,27 @@ def exactSeed (d : Nat → Nat) : Nat → Nat
   | 0 => 0
   | k + 1 => d k * exactSeed d k + 2 ^ k
 
+/-- Reordering tokens leaves every modular coefficient unchanged. -/
+theorem coefficient_perm (q : Nat) {spec spec' : List (Nat × Nat)}
+    (hperm : List.Perm spec spec') (j : Nat) :
+    coefficient q spec j = coefficient q spec' j := by
+  induction hperm with
+  | nil => rfl
+  | cons tp h ih =>
+      simpa only [coefficient, List.foldr_cons] using
+        congrArg (fun acc : Nat =>
+          if tp.2 = j then (tp.1 % q * acc) % q else acc) ih
+  | swap a b spec =>
+      by_cases ha : a.2 = j <;> by_cases hb : b.2 = j <;>
+        simp [coefficient, ha, hb, Nat.mul_comm, Nat.mul_left_comm]
+  | trans h₁ h₂ ih₁ ih₂ => exact ih₁.trans ih₂
+
+/-- The complete modular test depends only on the multiset of tokens. -/
+theorem positionTest_perm (r q : Nat) {spec spec' : List (Nat × Nat)}
+    (hperm : List.Perm spec spec') :
+    positionTest r q spec = positionTest r q spec' := by
+  have hcoef : coefficient q spec = coefficient q spec' :=
+    funext (coefficient_perm q hperm)
+  simp only [positionTest, fastPrefix, anchorPrefix, closedPrefix, hcoef]
+
 end A245211New
