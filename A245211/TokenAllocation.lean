@@ -111,7 +111,7 @@ theorem normalize_token_cycle {r : ℕ} [NeZero r]
     unfold tokenMultiplier
     apply prod_congr rfl
     intro j _
-    rw [sub_eq_iff_eq_add]
+    simp only [sub_eq_iff_eq_add]
 
 /-- A squarefree fixed point gives a normalized prime-token cycle whenever
 the prescribed multiplier product has been factored into a list of primes. -/

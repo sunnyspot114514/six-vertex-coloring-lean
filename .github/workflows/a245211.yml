@@ -45,6 +45,10 @@ jobs:
           with (fc / 'lakefile.toml').open('a') as f:
               f.write('\n[[lean_lib]]\nname = "OMAReductions"\n\n[[lean_lib]]\nname = "A245211"\n')
           PY
+          python3 A245211/assemble.py --output .verification/open-math-agents/proofs/OeisA245211.conjecture.R2.H2.lean
+      - name: Check the upstream submission rules
+        working-directory: .verification/open-math-agents
+        run: python3 -I tools/lint.py proofs/OeisA245211.conjecture.R2.H2.lean data/catalog.json
       - name: Build the pinned dependencies
         uses: leanprover/lean-action@v1
         with:
@@ -57,4 +61,4 @@ jobs:
           use-mathlib-cache: 'true'
       - name: Compile the proof modules
         working-directory: .verification/formal-conjectures
-        run: lake build A245211.TokenAllocation A245211.Checker
+        run: lake build A245211.Projection A245211.Finite A245211.Main
