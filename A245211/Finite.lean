@@ -1,4 +1,4 @@
-import A245211.Core
+import A245211.Projection
 
 /-!
 # Finite modular obstructions for ten odd non-prime-power cycle lengths
@@ -347,8 +347,15 @@ abbrev test45_3 (a b c : Nat) : Bool :=
   positionTest 45 3 [(3, a), (3, b), (3, c), (11, 0)]
 abbrev test45_5 (a b c d : Nat) : Bool :=
   positionTest 45 5 [(3, a), (3, b), (3, c), (11, 0), (19, d)]
+abbrev test45_7 (a b c d e : Nat) : Bool :=
+  positionTest 45 7 [(3, a), (3, b), (3, c), (11, 0), (19, d), (331, e)]
 abbrev test45 (q a b c d e f : Nat) : Bool :=
   positionTest 45 q [(3, a), (3, b), (3, c), (11, 0), (19, d), (331, e), (18837001, f)]
+private theorem test45_neutral (a b c d e f : Nat) :
+    test45 7 a b c d e f = test45_7 a b c d e := by
+  exact positionTest_append_mod_one 45 7 (by decide)
+    [(3, a), (3, b), (3, c), (11, 0), (19, d), (331, e)] []
+    (18837001, f) (by change 18837001 % 7 = 1; decide)
 private theorem classify45_3_block0 :
     ∀ b c : Fin 45, test45_3 0 b.val c.val = true →
       ∃ i : Fin 13, 0 = (forms45_3 i).1 ∧
@@ -635,47 +642,47 @@ private theorem classify45_5 :
   decide +kernel
 private theorem exclude45_forms_block0_slice0 :
     ∀ e : Fin 45, 0 ≤ e.val → e.val < 9 →
+      test45_7 (forms45_5 (0 : Fin 13)).1 (forms45_5 (0 : Fin 13)).2.1 (forms45_5 (0 : Fin 13)).2.2.1 (forms45_5 (0 : Fin 13)).2.2.2 e.val = true →
       ∀ f : Fin 45,
-      test45 7 (forms45_5 (0 : Fin 13)).1 (forms45_5 (0 : Fin 13)).2.1 (forms45_5 (0 : Fin 13)).2.2.1 (forms45_5 (0 : Fin 13)).2.2.2 e.val f.val = true →
       test45 13 (forms45_5 (0 : Fin 13)).1 (forms45_5 (0 : Fin 13)).2.1 (forms45_5 (0 : Fin 13)).2.2.1 (forms45_5 (0 : Fin 13)).2.2.2 e.val f.val = true →
       test45 19 (forms45_5 (0 : Fin 13)).1 (forms45_5 (0 : Fin 13)).2.1 (forms45_5 (0 : Fin 13)).2.2.1 (forms45_5 (0 : Fin 13)).2.2.2 e.val f.val = true →
       False := by
   decide +kernel
 private theorem exclude45_forms_block0_slice1 :
     ∀ e : Fin 45, 9 ≤ e.val → e.val < 18 →
+      test45_7 (forms45_5 (0 : Fin 13)).1 (forms45_5 (0 : Fin 13)).2.1 (forms45_5 (0 : Fin 13)).2.2.1 (forms45_5 (0 : Fin 13)).2.2.2 e.val = true →
       ∀ f : Fin 45,
-      test45 7 (forms45_5 (0 : Fin 13)).1 (forms45_5 (0 : Fin 13)).2.1 (forms45_5 (0 : Fin 13)).2.2.1 (forms45_5 (0 : Fin 13)).2.2.2 e.val f.val = true →
       test45 13 (forms45_5 (0 : Fin 13)).1 (forms45_5 (0 : Fin 13)).2.1 (forms45_5 (0 : Fin 13)).2.2.1 (forms45_5 (0 : Fin 13)).2.2.2 e.val f.val = true →
       test45 19 (forms45_5 (0 : Fin 13)).1 (forms45_5 (0 : Fin 13)).2.1 (forms45_5 (0 : Fin 13)).2.2.1 (forms45_5 (0 : Fin 13)).2.2.2 e.val f.val = true →
       False := by
   decide +kernel
 private theorem exclude45_forms_block0_slice2 :
     ∀ e : Fin 45, 18 ≤ e.val → e.val < 27 →
+      test45_7 (forms45_5 (0 : Fin 13)).1 (forms45_5 (0 : Fin 13)).2.1 (forms45_5 (0 : Fin 13)).2.2.1 (forms45_5 (0 : Fin 13)).2.2.2 e.val = true →
       ∀ f : Fin 45,
-      test45 7 (forms45_5 (0 : Fin 13)).1 (forms45_5 (0 : Fin 13)).2.1 (forms45_5 (0 : Fin 13)).2.2.1 (forms45_5 (0 : Fin 13)).2.2.2 e.val f.val = true →
       test45 13 (forms45_5 (0 : Fin 13)).1 (forms45_5 (0 : Fin 13)).2.1 (forms45_5 (0 : Fin 13)).2.2.1 (forms45_5 (0 : Fin 13)).2.2.2 e.val f.val = true →
       test45 19 (forms45_5 (0 : Fin 13)).1 (forms45_5 (0 : Fin 13)).2.1 (forms45_5 (0 : Fin 13)).2.2.1 (forms45_5 (0 : Fin 13)).2.2.2 e.val f.val = true →
       False := by
   decide +kernel
 private theorem exclude45_forms_block0_slice3 :
     ∀ e : Fin 45, 27 ≤ e.val → e.val < 36 →
+      test45_7 (forms45_5 (0 : Fin 13)).1 (forms45_5 (0 : Fin 13)).2.1 (forms45_5 (0 : Fin 13)).2.2.1 (forms45_5 (0 : Fin 13)).2.2.2 e.val = true →
       ∀ f : Fin 45,
-      test45 7 (forms45_5 (0 : Fin 13)).1 (forms45_5 (0 : Fin 13)).2.1 (forms45_5 (0 : Fin 13)).2.2.1 (forms45_5 (0 : Fin 13)).2.2.2 e.val f.val = true →
       test45 13 (forms45_5 (0 : Fin 13)).1 (forms45_5 (0 : Fin 13)).2.1 (forms45_5 (0 : Fin 13)).2.2.1 (forms45_5 (0 : Fin 13)).2.2.2 e.val f.val = true →
       test45 19 (forms45_5 (0 : Fin 13)).1 (forms45_5 (0 : Fin 13)).2.1 (forms45_5 (0 : Fin 13)).2.2.1 (forms45_5 (0 : Fin 13)).2.2.2 e.val f.val = true →
       False := by
   decide +kernel
 private theorem exclude45_forms_block0_slice4 :
     ∀ e : Fin 45, 36 ≤ e.val → e.val < 45 →
+      test45_7 (forms45_5 (0 : Fin 13)).1 (forms45_5 (0 : Fin 13)).2.1 (forms45_5 (0 : Fin 13)).2.2.1 (forms45_5 (0 : Fin 13)).2.2.2 e.val = true →
       ∀ f : Fin 45,
-      test45 7 (forms45_5 (0 : Fin 13)).1 (forms45_5 (0 : Fin 13)).2.1 (forms45_5 (0 : Fin 13)).2.2.1 (forms45_5 (0 : Fin 13)).2.2.2 e.val f.val = true →
       test45 13 (forms45_5 (0 : Fin 13)).1 (forms45_5 (0 : Fin 13)).2.1 (forms45_5 (0 : Fin 13)).2.2.1 (forms45_5 (0 : Fin 13)).2.2.2 e.val f.val = true →
       test45 19 (forms45_5 (0 : Fin 13)).1 (forms45_5 (0 : Fin 13)).2.1 (forms45_5 (0 : Fin 13)).2.2.1 (forms45_5 (0 : Fin 13)).2.2.2 e.val f.val = true →
       False := by
   decide +kernel
 private theorem exclude45_forms_block0 (e : Fin 45) :
-    ∀ f : Fin 45,
-      test45 7 (forms45_5 (0 : Fin 13)).1 (forms45_5 (0 : Fin 13)).2.1 (forms45_5 (0 : Fin 13)).2.2.1 (forms45_5 (0 : Fin 13)).2.2.2 e.val f.val = true →
+    test45_7 (forms45_5 (0 : Fin 13)).1 (forms45_5 (0 : Fin 13)).2.1 (forms45_5 (0 : Fin 13)).2.2.1 (forms45_5 (0 : Fin 13)).2.2.2 e.val = true →
+      ∀ f : Fin 45,
       test45 13 (forms45_5 (0 : Fin 13)).1 (forms45_5 (0 : Fin 13)).2.1 (forms45_5 (0 : Fin 13)).2.2.1 (forms45_5 (0 : Fin 13)).2.2.2 e.val f.val = true →
       test45 19 (forms45_5 (0 : Fin 13)).1 (forms45_5 (0 : Fin 13)).2.1 (forms45_5 (0 : Fin 13)).2.2.1 (forms45_5 (0 : Fin 13)).2.2.2 e.val f.val = true →
       False := by
@@ -691,89 +698,98 @@ private theorem exclude45_forms_block0 (e : Fin 45) :
   exact exclude45_forms_block0_slice4 e (by omega) (by omega)
 private theorem exclude45_forms_block1 :
     ∀ e : Fin 45,
+      test45_7 (forms45_5 (1 : Fin 13)).1 (forms45_5 (1 : Fin 13)).2.1 (forms45_5 (1 : Fin 13)).2.2.1 (forms45_5 (1 : Fin 13)).2.2.2 e.val = true →
       ∀ f : Fin 45,
-      test45 7 (forms45_5 (1 : Fin 13)).1 (forms45_5 (1 : Fin 13)).2.1 (forms45_5 (1 : Fin 13)).2.2.1 (forms45_5 (1 : Fin 13)).2.2.2 e.val f.val = true →
       test45 13 (forms45_5 (1 : Fin 13)).1 (forms45_5 (1 : Fin 13)).2.1 (forms45_5 (1 : Fin 13)).2.2.1 (forms45_5 (1 : Fin 13)).2.2.2 e.val f.val = true →
       test45 19 (forms45_5 (1 : Fin 13)).1 (forms45_5 (1 : Fin 13)).2.1 (forms45_5 (1 : Fin 13)).2.2.1 (forms45_5 (1 : Fin 13)).2.2.2 e.val f.val = true →
       False := by
-  intro e f h7 h13 h19
+  intro e h7 f h13 h19
+  have hperm : List.Perm [(3, 42), (3, 44), (3, 43)] [(3, 42), (3, 43), (3, 44)] := by decide
+  have ht7 : test45_7 42 44 43 1 e.val =
+      test45_7 42 43 44 1 e.val :=
+    positionTest_perm 45 7 (List.Perm.append_right [(11, 0), (19, 1), (331, e.val)] hperm)
   have htest (q : Nat) : test45 q 42 44 43 1 e.val f.val =
       test45 q 42 43 44 1 e.val f.val := by
-    exact positionTest_perm 45 q (List.Perm.append_right [(11, 0), (19, 1), (331, e.val), (18837001, f.val)]
-      (by decide : List.Perm [(3, 42), (3, 44), (3, 43)] [(3, 42), (3, 43), (3, 44)]))
-  exact exclude45_forms_block0 e f
-    ((htest 7).symm.trans h7) ((htest 13).symm.trans h13) ((htest 19).symm.trans h19)
+    exact positionTest_perm 45 q (List.Perm.append_right [(11, 0), (19, 1), (331, e.val), (18837001, f.val)] hperm)
+  exact exclude45_forms_block0 e (ht7.symm.trans h7) f
+    ((htest 13).symm.trans h13) ((htest 19).symm.trans h19)
 private theorem exclude45_forms_block2 :
     ∀ e : Fin 45,
+      test45_7 (forms45_5 (2 : Fin 13)).1 (forms45_5 (2 : Fin 13)).2.1 (forms45_5 (2 : Fin 13)).2.2.1 (forms45_5 (2 : Fin 13)).2.2.2 e.val = true →
       ∀ f : Fin 45,
-      test45 7 (forms45_5 (2 : Fin 13)).1 (forms45_5 (2 : Fin 13)).2.1 (forms45_5 (2 : Fin 13)).2.2.1 (forms45_5 (2 : Fin 13)).2.2.2 e.val f.val = true →
       test45 13 (forms45_5 (2 : Fin 13)).1 (forms45_5 (2 : Fin 13)).2.1 (forms45_5 (2 : Fin 13)).2.2.1 (forms45_5 (2 : Fin 13)).2.2.2 e.val f.val = true →
       test45 19 (forms45_5 (2 : Fin 13)).1 (forms45_5 (2 : Fin 13)).2.1 (forms45_5 (2 : Fin 13)).2.2.1 (forms45_5 (2 : Fin 13)).2.2.2 e.val f.val = true →
       False := by
-  intro e f h7 h13 h19
+  intro e h7 f h13 h19
+  have hperm : List.Perm [(3, 43), (3, 42), (3, 44)] [(3, 42), (3, 43), (3, 44)] := by decide
+  have ht7 : test45_7 43 42 44 1 e.val =
+      test45_7 42 43 44 1 e.val :=
+    positionTest_perm 45 7 (List.Perm.append_right [(11, 0), (19, 1), (331, e.val)] hperm)
   have htest (q : Nat) : test45 q 43 42 44 1 e.val f.val =
       test45 q 42 43 44 1 e.val f.val := by
-    exact positionTest_perm 45 q (List.Perm.append_right [(11, 0), (19, 1), (331, e.val), (18837001, f.val)]
-      (by decide : List.Perm [(3, 43), (3, 42), (3, 44)] [(3, 42), (3, 43), (3, 44)]))
-  exact exclude45_forms_block0 e f
-    ((htest 7).symm.trans h7) ((htest 13).symm.trans h13) ((htest 19).symm.trans h19)
+    exact positionTest_perm 45 q (List.Perm.append_right [(11, 0), (19, 1), (331, e.val), (18837001, f.val)] hperm)
+  exact exclude45_forms_block0 e (ht7.symm.trans h7) f
+    ((htest 13).symm.trans h13) ((htest 19).symm.trans h19)
 private theorem exclude45_forms_block3 :
     ∀ e : Fin 45,
+      test45_7 (forms45_5 (3 : Fin 13)).1 (forms45_5 (3 : Fin 13)).2.1 (forms45_5 (3 : Fin 13)).2.2.1 (forms45_5 (3 : Fin 13)).2.2.2 e.val = true →
       ∀ f : Fin 45,
-      test45 7 (forms45_5 (3 : Fin 13)).1 (forms45_5 (3 : Fin 13)).2.1 (forms45_5 (3 : Fin 13)).2.2.1 (forms45_5 (3 : Fin 13)).2.2.2 e.val f.val = true →
       test45 13 (forms45_5 (3 : Fin 13)).1 (forms45_5 (3 : Fin 13)).2.1 (forms45_5 (3 : Fin 13)).2.2.1 (forms45_5 (3 : Fin 13)).2.2.2 e.val f.val = true →
       test45 19 (forms45_5 (3 : Fin 13)).1 (forms45_5 (3 : Fin 13)).2.1 (forms45_5 (3 : Fin 13)).2.2.1 (forms45_5 (3 : Fin 13)).2.2.2 e.val f.val = true →
       False := by
-  intro e f h7 h13 h19
+  intro e h7 f h13 h19
+  have hperm : List.Perm [(3, 43), (3, 44), (3, 42)] [(3, 42), (3, 43), (3, 44)] := by decide
+  have ht7 : test45_7 43 44 42 1 e.val =
+      test45_7 42 43 44 1 e.val :=
+    positionTest_perm 45 7 (List.Perm.append_right [(11, 0), (19, 1), (331, e.val)] hperm)
   have htest (q : Nat) : test45 q 43 44 42 1 e.val f.val =
       test45 q 42 43 44 1 e.val f.val := by
-    exact positionTest_perm 45 q (List.Perm.append_right [(11, 0), (19, 1), (331, e.val), (18837001, f.val)]
-      (by decide : List.Perm [(3, 43), (3, 44), (3, 42)] [(3, 42), (3, 43), (3, 44)]))
-  exact exclude45_forms_block0 e f
-    ((htest 7).symm.trans h7) ((htest 13).symm.trans h13) ((htest 19).symm.trans h19)
+    exact positionTest_perm 45 q (List.Perm.append_right [(11, 0), (19, 1), (331, e.val), (18837001, f.val)] hperm)
+  exact exclude45_forms_block0 e (ht7.symm.trans h7) f
+    ((htest 13).symm.trans h13) ((htest 19).symm.trans h19)
 private theorem exclude45_forms_block4_slice0 :
     ∀ e : Fin 45, 0 ≤ e.val → e.val < 9 →
+      test45_7 (forms45_5 (4 : Fin 13)).1 (forms45_5 (4 : Fin 13)).2.1 (forms45_5 (4 : Fin 13)).2.2.1 (forms45_5 (4 : Fin 13)).2.2.2 e.val = true →
       ∀ f : Fin 45,
-      test45 7 (forms45_5 (4 : Fin 13)).1 (forms45_5 (4 : Fin 13)).2.1 (forms45_5 (4 : Fin 13)).2.2.1 (forms45_5 (4 : Fin 13)).2.2.2 e.val f.val = true →
       test45 13 (forms45_5 (4 : Fin 13)).1 (forms45_5 (4 : Fin 13)).2.1 (forms45_5 (4 : Fin 13)).2.2.1 (forms45_5 (4 : Fin 13)).2.2.2 e.val f.val = true →
       test45 19 (forms45_5 (4 : Fin 13)).1 (forms45_5 (4 : Fin 13)).2.1 (forms45_5 (4 : Fin 13)).2.2.1 (forms45_5 (4 : Fin 13)).2.2.2 e.val f.val = true →
       False := by
   decide +kernel
 private theorem exclude45_forms_block4_slice1 :
     ∀ e : Fin 45, 9 ≤ e.val → e.val < 18 →
+      test45_7 (forms45_5 (4 : Fin 13)).1 (forms45_5 (4 : Fin 13)).2.1 (forms45_5 (4 : Fin 13)).2.2.1 (forms45_5 (4 : Fin 13)).2.2.2 e.val = true →
       ∀ f : Fin 45,
-      test45 7 (forms45_5 (4 : Fin 13)).1 (forms45_5 (4 : Fin 13)).2.1 (forms45_5 (4 : Fin 13)).2.2.1 (forms45_5 (4 : Fin 13)).2.2.2 e.val f.val = true →
       test45 13 (forms45_5 (4 : Fin 13)).1 (forms45_5 (4 : Fin 13)).2.1 (forms45_5 (4 : Fin 13)).2.2.1 (forms45_5 (4 : Fin 13)).2.2.2 e.val f.val = true →
       test45 19 (forms45_5 (4 : Fin 13)).1 (forms45_5 (4 : Fin 13)).2.1 (forms45_5 (4 : Fin 13)).2.2.1 (forms45_5 (4 : Fin 13)).2.2.2 e.val f.val = true →
       False := by
   decide +kernel
 private theorem exclude45_forms_block4_slice2 :
     ∀ e : Fin 45, 18 ≤ e.val → e.val < 27 →
+      test45_7 (forms45_5 (4 : Fin 13)).1 (forms45_5 (4 : Fin 13)).2.1 (forms45_5 (4 : Fin 13)).2.2.1 (forms45_5 (4 : Fin 13)).2.2.2 e.val = true →
       ∀ f : Fin 45,
-      test45 7 (forms45_5 (4 : Fin 13)).1 (forms45_5 (4 : Fin 13)).2.1 (forms45_5 (4 : Fin 13)).2.2.1 (forms45_5 (4 : Fin 13)).2.2.2 e.val f.val = true →
       test45 13 (forms45_5 (4 : Fin 13)).1 (forms45_5 (4 : Fin 13)).2.1 (forms45_5 (4 : Fin 13)).2.2.1 (forms45_5 (4 : Fin 13)).2.2.2 e.val f.val = true →
       test45 19 (forms45_5 (4 : Fin 13)).1 (forms45_5 (4 : Fin 13)).2.1 (forms45_5 (4 : Fin 13)).2.2.1 (forms45_5 (4 : Fin 13)).2.2.2 e.val f.val = true →
       False := by
   decide +kernel
 private theorem exclude45_forms_block4_slice3 :
     ∀ e : Fin 45, 27 ≤ e.val → e.val < 36 →
+      test45_7 (forms45_5 (4 : Fin 13)).1 (forms45_5 (4 : Fin 13)).2.1 (forms45_5 (4 : Fin 13)).2.2.1 (forms45_5 (4 : Fin 13)).2.2.2 e.val = true →
       ∀ f : Fin 45,
-      test45 7 (forms45_5 (4 : Fin 13)).1 (forms45_5 (4 : Fin 13)).2.1 (forms45_5 (4 : Fin 13)).2.2.1 (forms45_5 (4 : Fin 13)).2.2.2 e.val f.val = true →
       test45 13 (forms45_5 (4 : Fin 13)).1 (forms45_5 (4 : Fin 13)).2.1 (forms45_5 (4 : Fin 13)).2.2.1 (forms45_5 (4 : Fin 13)).2.2.2 e.val f.val = true →
       test45 19 (forms45_5 (4 : Fin 13)).1 (forms45_5 (4 : Fin 13)).2.1 (forms45_5 (4 : Fin 13)).2.2.1 (forms45_5 (4 : Fin 13)).2.2.2 e.val f.val = true →
       False := by
   decide +kernel
 private theorem exclude45_forms_block4_slice4 :
     ∀ e : Fin 45, 36 ≤ e.val → e.val < 45 →
+      test45_7 (forms45_5 (4 : Fin 13)).1 (forms45_5 (4 : Fin 13)).2.1 (forms45_5 (4 : Fin 13)).2.2.1 (forms45_5 (4 : Fin 13)).2.2.2 e.val = true →
       ∀ f : Fin 45,
-      test45 7 (forms45_5 (4 : Fin 13)).1 (forms45_5 (4 : Fin 13)).2.1 (forms45_5 (4 : Fin 13)).2.2.1 (forms45_5 (4 : Fin 13)).2.2.2 e.val f.val = true →
       test45 13 (forms45_5 (4 : Fin 13)).1 (forms45_5 (4 : Fin 13)).2.1 (forms45_5 (4 : Fin 13)).2.2.1 (forms45_5 (4 : Fin 13)).2.2.2 e.val f.val = true →
       test45 19 (forms45_5 (4 : Fin 13)).1 (forms45_5 (4 : Fin 13)).2.1 (forms45_5 (4 : Fin 13)).2.2.1 (forms45_5 (4 : Fin 13)).2.2.2 e.val f.val = true →
       False := by
   decide +kernel
 private theorem exclude45_forms_block4 (e : Fin 45) :
-    ∀ f : Fin 45,
-      test45 7 (forms45_5 (4 : Fin 13)).1 (forms45_5 (4 : Fin 13)).2.1 (forms45_5 (4 : Fin 13)).2.2.1 (forms45_5 (4 : Fin 13)).2.2.2 e.val f.val = true →
+    test45_7 (forms45_5 (4 : Fin 13)).1 (forms45_5 (4 : Fin 13)).2.1 (forms45_5 (4 : Fin 13)).2.2.1 (forms45_5 (4 : Fin 13)).2.2.2 e.val = true →
+      ∀ f : Fin 45,
       test45 13 (forms45_5 (4 : Fin 13)).1 (forms45_5 (4 : Fin 13)).2.1 (forms45_5 (4 : Fin 13)).2.2.1 (forms45_5 (4 : Fin 13)).2.2.2 e.val f.val = true →
       test45 19 (forms45_5 (4 : Fin 13)).1 (forms45_5 (4 : Fin 13)).2.1 (forms45_5 (4 : Fin 13)).2.2.1 (forms45_5 (4 : Fin 13)).2.2.2 e.val f.val = true →
       False := by
@@ -789,47 +805,47 @@ private theorem exclude45_forms_block4 (e : Fin 45) :
   exact exclude45_forms_block4_slice4 e (by omega) (by omega)
 private theorem exclude45_forms_block5_slice0 :
     ∀ e : Fin 45, 0 ≤ e.val → e.val < 9 →
+      test45_7 (forms45_5 (5 : Fin 13)).1 (forms45_5 (5 : Fin 13)).2.1 (forms45_5 (5 : Fin 13)).2.2.1 (forms45_5 (5 : Fin 13)).2.2.2 e.val = true →
       ∀ f : Fin 45,
-      test45 7 (forms45_5 (5 : Fin 13)).1 (forms45_5 (5 : Fin 13)).2.1 (forms45_5 (5 : Fin 13)).2.2.1 (forms45_5 (5 : Fin 13)).2.2.2 e.val f.val = true →
       test45 13 (forms45_5 (5 : Fin 13)).1 (forms45_5 (5 : Fin 13)).2.1 (forms45_5 (5 : Fin 13)).2.2.1 (forms45_5 (5 : Fin 13)).2.2.2 e.val f.val = true →
       test45 19 (forms45_5 (5 : Fin 13)).1 (forms45_5 (5 : Fin 13)).2.1 (forms45_5 (5 : Fin 13)).2.2.1 (forms45_5 (5 : Fin 13)).2.2.2 e.val f.val = true →
       False := by
   decide +kernel
 private theorem exclude45_forms_block5_slice1 :
     ∀ e : Fin 45, 9 ≤ e.val → e.val < 18 →
+      test45_7 (forms45_5 (5 : Fin 13)).1 (forms45_5 (5 : Fin 13)).2.1 (forms45_5 (5 : Fin 13)).2.2.1 (forms45_5 (5 : Fin 13)).2.2.2 e.val = true →
       ∀ f : Fin 45,
-      test45 7 (forms45_5 (5 : Fin 13)).1 (forms45_5 (5 : Fin 13)).2.1 (forms45_5 (5 : Fin 13)).2.2.1 (forms45_5 (5 : Fin 13)).2.2.2 e.val f.val = true →
       test45 13 (forms45_5 (5 : Fin 13)).1 (forms45_5 (5 : Fin 13)).2.1 (forms45_5 (5 : Fin 13)).2.2.1 (forms45_5 (5 : Fin 13)).2.2.2 e.val f.val = true →
       test45 19 (forms45_5 (5 : Fin 13)).1 (forms45_5 (5 : Fin 13)).2.1 (forms45_5 (5 : Fin 13)).2.2.1 (forms45_5 (5 : Fin 13)).2.2.2 e.val f.val = true →
       False := by
   decide +kernel
 private theorem exclude45_forms_block5_slice2 :
     ∀ e : Fin 45, 18 ≤ e.val → e.val < 27 →
+      test45_7 (forms45_5 (5 : Fin 13)).1 (forms45_5 (5 : Fin 13)).2.1 (forms45_5 (5 : Fin 13)).2.2.1 (forms45_5 (5 : Fin 13)).2.2.2 e.val = true →
       ∀ f : Fin 45,
-      test45 7 (forms45_5 (5 : Fin 13)).1 (forms45_5 (5 : Fin 13)).2.1 (forms45_5 (5 : Fin 13)).2.2.1 (forms45_5 (5 : Fin 13)).2.2.2 e.val f.val = true →
       test45 13 (forms45_5 (5 : Fin 13)).1 (forms45_5 (5 : Fin 13)).2.1 (forms45_5 (5 : Fin 13)).2.2.1 (forms45_5 (5 : Fin 13)).2.2.2 e.val f.val = true →
       test45 19 (forms45_5 (5 : Fin 13)).1 (forms45_5 (5 : Fin 13)).2.1 (forms45_5 (5 : Fin 13)).2.2.1 (forms45_5 (5 : Fin 13)).2.2.2 e.val f.val = true →
       False := by
   decide +kernel
 private theorem exclude45_forms_block5_slice3 :
     ∀ e : Fin 45, 27 ≤ e.val → e.val < 36 →
+      test45_7 (forms45_5 (5 : Fin 13)).1 (forms45_5 (5 : Fin 13)).2.1 (forms45_5 (5 : Fin 13)).2.2.1 (forms45_5 (5 : Fin 13)).2.2.2 e.val = true →
       ∀ f : Fin 45,
-      test45 7 (forms45_5 (5 : Fin 13)).1 (forms45_5 (5 : Fin 13)).2.1 (forms45_5 (5 : Fin 13)).2.2.1 (forms45_5 (5 : Fin 13)).2.2.2 e.val f.val = true →
       test45 13 (forms45_5 (5 : Fin 13)).1 (forms45_5 (5 : Fin 13)).2.1 (forms45_5 (5 : Fin 13)).2.2.1 (forms45_5 (5 : Fin 13)).2.2.2 e.val f.val = true →
       test45 19 (forms45_5 (5 : Fin 13)).1 (forms45_5 (5 : Fin 13)).2.1 (forms45_5 (5 : Fin 13)).2.2.1 (forms45_5 (5 : Fin 13)).2.2.2 e.val f.val = true →
       False := by
   decide +kernel
 private theorem exclude45_forms_block5_slice4 :
     ∀ e : Fin 45, 36 ≤ e.val → e.val < 45 →
+      test45_7 (forms45_5 (5 : Fin 13)).1 (forms45_5 (5 : Fin 13)).2.1 (forms45_5 (5 : Fin 13)).2.2.1 (forms45_5 (5 : Fin 13)).2.2.2 e.val = true →
       ∀ f : Fin 45,
-      test45 7 (forms45_5 (5 : Fin 13)).1 (forms45_5 (5 : Fin 13)).2.1 (forms45_5 (5 : Fin 13)).2.2.1 (forms45_5 (5 : Fin 13)).2.2.2 e.val f.val = true →
       test45 13 (forms45_5 (5 : Fin 13)).1 (forms45_5 (5 : Fin 13)).2.1 (forms45_5 (5 : Fin 13)).2.2.1 (forms45_5 (5 : Fin 13)).2.2.2 e.val f.val = true →
       test45 19 (forms45_5 (5 : Fin 13)).1 (forms45_5 (5 : Fin 13)).2.1 (forms45_5 (5 : Fin 13)).2.2.1 (forms45_5 (5 : Fin 13)).2.2.2 e.val f.val = true →
       False := by
   decide +kernel
 private theorem exclude45_forms_block5 (e : Fin 45) :
-    ∀ f : Fin 45,
-      test45 7 (forms45_5 (5 : Fin 13)).1 (forms45_5 (5 : Fin 13)).2.1 (forms45_5 (5 : Fin 13)).2.2.1 (forms45_5 (5 : Fin 13)).2.2.2 e.val f.val = true →
+    test45_7 (forms45_5 (5 : Fin 13)).1 (forms45_5 (5 : Fin 13)).2.1 (forms45_5 (5 : Fin 13)).2.2.1 (forms45_5 (5 : Fin 13)).2.2.2 e.val = true →
+      ∀ f : Fin 45,
       test45 13 (forms45_5 (5 : Fin 13)).1 (forms45_5 (5 : Fin 13)).2.1 (forms45_5 (5 : Fin 13)).2.2.1 (forms45_5 (5 : Fin 13)).2.2.2 e.val f.val = true →
       test45 19 (forms45_5 (5 : Fin 13)).1 (forms45_5 (5 : Fin 13)).2.1 (forms45_5 (5 : Fin 13)).2.2.1 (forms45_5 (5 : Fin 13)).2.2.2 e.val f.val = true →
       False := by
@@ -845,131 +861,149 @@ private theorem exclude45_forms_block5 (e : Fin 45) :
   exact exclude45_forms_block5_slice4 e (by omega) (by omega)
 private theorem exclude45_forms_block6 :
     ∀ e : Fin 45,
+      test45_7 (forms45_5 (6 : Fin 13)).1 (forms45_5 (6 : Fin 13)).2.1 (forms45_5 (6 : Fin 13)).2.2.1 (forms45_5 (6 : Fin 13)).2.2.2 e.val = true →
       ∀ f : Fin 45,
-      test45 7 (forms45_5 (6 : Fin 13)).1 (forms45_5 (6 : Fin 13)).2.1 (forms45_5 (6 : Fin 13)).2.2.1 (forms45_5 (6 : Fin 13)).2.2.2 e.val f.val = true →
       test45 13 (forms45_5 (6 : Fin 13)).1 (forms45_5 (6 : Fin 13)).2.1 (forms45_5 (6 : Fin 13)).2.2.1 (forms45_5 (6 : Fin 13)).2.2.2 e.val f.val = true →
       test45 19 (forms45_5 (6 : Fin 13)).1 (forms45_5 (6 : Fin 13)).2.1 (forms45_5 (6 : Fin 13)).2.2.1 (forms45_5 (6 : Fin 13)).2.2.2 e.val f.val = true →
       False := by
-  intro e f h7 h13 h19
+  intro e h7 f h13 h19
+  have hperm : List.Perm [(3, 44), (3, 42), (3, 43)] [(3, 42), (3, 43), (3, 44)] := by decide
+  have ht7 : test45_7 44 42 43 1 e.val =
+      test45_7 42 43 44 1 e.val :=
+    positionTest_perm 45 7 (List.Perm.append_right [(11, 0), (19, 1), (331, e.val)] hperm)
   have htest (q : Nat) : test45 q 44 42 43 1 e.val f.val =
       test45 q 42 43 44 1 e.val f.val := by
-    exact positionTest_perm 45 q (List.Perm.append_right [(11, 0), (19, 1), (331, e.val), (18837001, f.val)]
-      (by decide : List.Perm [(3, 44), (3, 42), (3, 43)] [(3, 42), (3, 43), (3, 44)]))
-  exact exclude45_forms_block0 e f
-    ((htest 7).symm.trans h7) ((htest 13).symm.trans h13) ((htest 19).symm.trans h19)
+    exact positionTest_perm 45 q (List.Perm.append_right [(11, 0), (19, 1), (331, e.val), (18837001, f.val)] hperm)
+  exact exclude45_forms_block0 e (ht7.symm.trans h7) f
+    ((htest 13).symm.trans h13) ((htest 19).symm.trans h19)
 private theorem exclude45_forms_block7 :
     ∀ e : Fin 45,
+      test45_7 (forms45_5 (7 : Fin 13)).1 (forms45_5 (7 : Fin 13)).2.1 (forms45_5 (7 : Fin 13)).2.2.1 (forms45_5 (7 : Fin 13)).2.2.2 e.val = true →
       ∀ f : Fin 45,
-      test45 7 (forms45_5 (7 : Fin 13)).1 (forms45_5 (7 : Fin 13)).2.1 (forms45_5 (7 : Fin 13)).2.2.1 (forms45_5 (7 : Fin 13)).2.2.2 e.val f.val = true →
       test45 13 (forms45_5 (7 : Fin 13)).1 (forms45_5 (7 : Fin 13)).2.1 (forms45_5 (7 : Fin 13)).2.2.1 (forms45_5 (7 : Fin 13)).2.2.2 e.val f.val = true →
       test45 19 (forms45_5 (7 : Fin 13)).1 (forms45_5 (7 : Fin 13)).2.1 (forms45_5 (7 : Fin 13)).2.2.1 (forms45_5 (7 : Fin 13)).2.2.2 e.val f.val = true →
       False := by
-  intro e f h7 h13 h19
+  intro e h7 f h13 h19
+  have hperm : List.Perm [(3, 44), (3, 43), (3, 42)] [(3, 42), (3, 43), (3, 44)] := by decide
+  have ht7 : test45_7 44 43 42 1 e.val =
+      test45_7 42 43 44 1 e.val :=
+    positionTest_perm 45 7 (List.Perm.append_right [(11, 0), (19, 1), (331, e.val)] hperm)
   have htest (q : Nat) : test45 q 44 43 42 1 e.val f.val =
       test45 q 42 43 44 1 e.val f.val := by
-    exact positionTest_perm 45 q (List.Perm.append_right [(11, 0), (19, 1), (331, e.val), (18837001, f.val)]
-      (by decide : List.Perm [(3, 44), (3, 43), (3, 42)] [(3, 42), (3, 43), (3, 44)]))
-  exact exclude45_forms_block0 e f
-    ((htest 7).symm.trans h7) ((htest 13).symm.trans h13) ((htest 19).symm.trans h19)
+    exact positionTest_perm 45 q (List.Perm.append_right [(11, 0), (19, 1), (331, e.val), (18837001, f.val)] hperm)
+  exact exclude45_forms_block0 e (ht7.symm.trans h7) f
+    ((htest 13).symm.trans h13) ((htest 19).symm.trans h19)
 private theorem exclude45_forms_block8 :
     ∀ e : Fin 45,
+      test45_7 (forms45_5 (8 : Fin 13)).1 (forms45_5 (8 : Fin 13)).2.1 (forms45_5 (8 : Fin 13)).2.2.1 (forms45_5 (8 : Fin 13)).2.2.2 e.val = true →
       ∀ f : Fin 45,
-      test45 7 (forms45_5 (8 : Fin 13)).1 (forms45_5 (8 : Fin 13)).2.1 (forms45_5 (8 : Fin 13)).2.2.1 (forms45_5 (8 : Fin 13)).2.2.2 e.val f.val = true →
       test45 13 (forms45_5 (8 : Fin 13)).1 (forms45_5 (8 : Fin 13)).2.1 (forms45_5 (8 : Fin 13)).2.2.1 (forms45_5 (8 : Fin 13)).2.2.2 e.val f.val = true →
       test45 19 (forms45_5 (8 : Fin 13)).1 (forms45_5 (8 : Fin 13)).2.1 (forms45_5 (8 : Fin 13)).2.2.1 (forms45_5 (8 : Fin 13)).2.2.2 e.val f.val = true →
       False := by
-  intro e f h7 h13 h19
+  intro e h7 f h13 h19
+  have hperm : List.Perm [(3, 44), (3, 43), (3, 44)] [(3, 43), (3, 44), (3, 44)] := by decide
+  have ht7 : test45_7 44 43 44 1 e.val =
+      test45_7 43 44 44 1 e.val :=
+    positionTest_perm 45 7 (List.Perm.append_right [(11, 0), (19, 1), (331, e.val)] hperm)
   have htest (q : Nat) : test45 q 44 43 44 1 e.val f.val =
       test45 q 43 44 44 1 e.val f.val := by
-    exact positionTest_perm 45 q (List.Perm.append_right [(11, 0), (19, 1), (331, e.val), (18837001, f.val)]
-      (by decide : List.Perm [(3, 44), (3, 43), (3, 44)] [(3, 43), (3, 44), (3, 44)]))
-  exact exclude45_forms_block4 e f
-    ((htest 7).symm.trans h7) ((htest 13).symm.trans h13) ((htest 19).symm.trans h19)
+    exact positionTest_perm 45 q (List.Perm.append_right [(11, 0), (19, 1), (331, e.val), (18837001, f.val)] hperm)
+  exact exclude45_forms_block4 e (ht7.symm.trans h7) f
+    ((htest 13).symm.trans h13) ((htest 19).symm.trans h19)
 private theorem exclude45_forms_block9 :
     ∀ e : Fin 45,
+      test45_7 (forms45_5 (9 : Fin 13)).1 (forms45_5 (9 : Fin 13)).2.1 (forms45_5 (9 : Fin 13)).2.2.1 (forms45_5 (9 : Fin 13)).2.2.2 e.val = true →
       ∀ f : Fin 45,
-      test45 7 (forms45_5 (9 : Fin 13)).1 (forms45_5 (9 : Fin 13)).2.1 (forms45_5 (9 : Fin 13)).2.2.1 (forms45_5 (9 : Fin 13)).2.2.2 e.val f.val = true →
       test45 13 (forms45_5 (9 : Fin 13)).1 (forms45_5 (9 : Fin 13)).2.1 (forms45_5 (9 : Fin 13)).2.2.1 (forms45_5 (9 : Fin 13)).2.2.2 e.val f.val = true →
       test45 19 (forms45_5 (9 : Fin 13)).1 (forms45_5 (9 : Fin 13)).2.1 (forms45_5 (9 : Fin 13)).2.2.1 (forms45_5 (9 : Fin 13)).2.2.2 e.val f.val = true →
       False := by
-  intro e f h7 h13 h19
+  intro e h7 f h13 h19
+  have hperm : List.Perm [(3, 44), (3, 43), (3, 44)] [(3, 43), (3, 44), (3, 44)] := by decide
+  have ht7 : test45_7 44 43 44 43 e.val =
+      test45_7 43 44 44 43 e.val :=
+    positionTest_perm 45 7 (List.Perm.append_right [(11, 0), (19, 43), (331, e.val)] hperm)
   have htest (q : Nat) : test45 q 44 43 44 43 e.val f.val =
       test45 q 43 44 44 43 e.val f.val := by
-    exact positionTest_perm 45 q (List.Perm.append_right [(11, 0), (19, 43), (331, e.val), (18837001, f.val)]
-      (by decide : List.Perm [(3, 44), (3, 43), (3, 44)] [(3, 43), (3, 44), (3, 44)]))
-  exact exclude45_forms_block5 e f
-    ((htest 7).symm.trans h7) ((htest 13).symm.trans h13) ((htest 19).symm.trans h19)
+    exact positionTest_perm 45 q (List.Perm.append_right [(11, 0), (19, 43), (331, e.val), (18837001, f.val)] hperm)
+  exact exclude45_forms_block5 e (ht7.symm.trans h7) f
+    ((htest 13).symm.trans h13) ((htest 19).symm.trans h19)
 private theorem exclude45_forms_block10 :
     ∀ e : Fin 45,
+      test45_7 (forms45_5 (10 : Fin 13)).1 (forms45_5 (10 : Fin 13)).2.1 (forms45_5 (10 : Fin 13)).2.2.1 (forms45_5 (10 : Fin 13)).2.2.2 e.val = true →
       ∀ f : Fin 45,
-      test45 7 (forms45_5 (10 : Fin 13)).1 (forms45_5 (10 : Fin 13)).2.1 (forms45_5 (10 : Fin 13)).2.2.1 (forms45_5 (10 : Fin 13)).2.2.2 e.val f.val = true →
       test45 13 (forms45_5 (10 : Fin 13)).1 (forms45_5 (10 : Fin 13)).2.1 (forms45_5 (10 : Fin 13)).2.2.1 (forms45_5 (10 : Fin 13)).2.2.2 e.val f.val = true →
       test45 19 (forms45_5 (10 : Fin 13)).1 (forms45_5 (10 : Fin 13)).2.1 (forms45_5 (10 : Fin 13)).2.2.1 (forms45_5 (10 : Fin 13)).2.2.2 e.val f.val = true →
       False := by
-  intro e f h7 h13 h19
+  intro e h7 f h13 h19
+  have hperm : List.Perm [(3, 44), (3, 44), (3, 43)] [(3, 43), (3, 44), (3, 44)] := by decide
+  have ht7 : test45_7 44 44 43 1 e.val =
+      test45_7 43 44 44 1 e.val :=
+    positionTest_perm 45 7 (List.Perm.append_right [(11, 0), (19, 1), (331, e.val)] hperm)
   have htest (q : Nat) : test45 q 44 44 43 1 e.val f.val =
       test45 q 43 44 44 1 e.val f.val := by
-    exact positionTest_perm 45 q (List.Perm.append_right [(11, 0), (19, 1), (331, e.val), (18837001, f.val)]
-      (by decide : List.Perm [(3, 44), (3, 44), (3, 43)] [(3, 43), (3, 44), (3, 44)]))
-  exact exclude45_forms_block4 e f
-    ((htest 7).symm.trans h7) ((htest 13).symm.trans h13) ((htest 19).symm.trans h19)
+    exact positionTest_perm 45 q (List.Perm.append_right [(11, 0), (19, 1), (331, e.val), (18837001, f.val)] hperm)
+  exact exclude45_forms_block4 e (ht7.symm.trans h7) f
+    ((htest 13).symm.trans h13) ((htest 19).symm.trans h19)
 private theorem exclude45_forms_block11 :
     ∀ e : Fin 45,
+      test45_7 (forms45_5 (11 : Fin 13)).1 (forms45_5 (11 : Fin 13)).2.1 (forms45_5 (11 : Fin 13)).2.2.1 (forms45_5 (11 : Fin 13)).2.2.2 e.val = true →
       ∀ f : Fin 45,
-      test45 7 (forms45_5 (11 : Fin 13)).1 (forms45_5 (11 : Fin 13)).2.1 (forms45_5 (11 : Fin 13)).2.2.1 (forms45_5 (11 : Fin 13)).2.2.2 e.val f.val = true →
       test45 13 (forms45_5 (11 : Fin 13)).1 (forms45_5 (11 : Fin 13)).2.1 (forms45_5 (11 : Fin 13)).2.2.1 (forms45_5 (11 : Fin 13)).2.2.2 e.val f.val = true →
       test45 19 (forms45_5 (11 : Fin 13)).1 (forms45_5 (11 : Fin 13)).2.1 (forms45_5 (11 : Fin 13)).2.2.1 (forms45_5 (11 : Fin 13)).2.2.2 e.val f.val = true →
       False := by
-  intro e f h7 h13 h19
+  intro e h7 f h13 h19
+  have hperm : List.Perm [(3, 44), (3, 44), (3, 43)] [(3, 43), (3, 44), (3, 44)] := by decide
+  have ht7 : test45_7 44 44 43 43 e.val =
+      test45_7 43 44 44 43 e.val :=
+    positionTest_perm 45 7 (List.Perm.append_right [(11, 0), (19, 43), (331, e.val)] hperm)
   have htest (q : Nat) : test45 q 44 44 43 43 e.val f.val =
       test45 q 43 44 44 43 e.val f.val := by
-    exact positionTest_perm 45 q (List.Perm.append_right [(11, 0), (19, 43), (331, e.val), (18837001, f.val)]
-      (by decide : List.Perm [(3, 44), (3, 44), (3, 43)] [(3, 43), (3, 44), (3, 44)]))
-  exact exclude45_forms_block5 e f
-    ((htest 7).symm.trans h7) ((htest 13).symm.trans h13) ((htest 19).symm.trans h19)
+    exact positionTest_perm 45 q (List.Perm.append_right [(11, 0), (19, 43), (331, e.val), (18837001, f.val)] hperm)
+  exact exclude45_forms_block5 e (ht7.symm.trans h7) f
+    ((htest 13).symm.trans h13) ((htest 19).symm.trans h19)
 private theorem exclude45_forms_block12_slice0 :
     ∀ e : Fin 45, 0 ≤ e.val → e.val < 9 →
+      test45_7 (forms45_5 (12 : Fin 13)).1 (forms45_5 (12 : Fin 13)).2.1 (forms45_5 (12 : Fin 13)).2.2.1 (forms45_5 (12 : Fin 13)).2.2.2 e.val = true →
       ∀ f : Fin 45,
-      test45 7 (forms45_5 (12 : Fin 13)).1 (forms45_5 (12 : Fin 13)).2.1 (forms45_5 (12 : Fin 13)).2.2.1 (forms45_5 (12 : Fin 13)).2.2.2 e.val f.val = true →
       test45 13 (forms45_5 (12 : Fin 13)).1 (forms45_5 (12 : Fin 13)).2.1 (forms45_5 (12 : Fin 13)).2.2.1 (forms45_5 (12 : Fin 13)).2.2.2 e.val f.val = true →
       test45 19 (forms45_5 (12 : Fin 13)).1 (forms45_5 (12 : Fin 13)).2.1 (forms45_5 (12 : Fin 13)).2.2.1 (forms45_5 (12 : Fin 13)).2.2.2 e.val f.val = true →
       False := by
   decide +kernel
 private theorem exclude45_forms_block12_slice1 :
     ∀ e : Fin 45, 9 ≤ e.val → e.val < 18 →
+      test45_7 (forms45_5 (12 : Fin 13)).1 (forms45_5 (12 : Fin 13)).2.1 (forms45_5 (12 : Fin 13)).2.2.1 (forms45_5 (12 : Fin 13)).2.2.2 e.val = true →
       ∀ f : Fin 45,
-      test45 7 (forms45_5 (12 : Fin 13)).1 (forms45_5 (12 : Fin 13)).2.1 (forms45_5 (12 : Fin 13)).2.2.1 (forms45_5 (12 : Fin 13)).2.2.2 e.val f.val = true →
       test45 13 (forms45_5 (12 : Fin 13)).1 (forms45_5 (12 : Fin 13)).2.1 (forms45_5 (12 : Fin 13)).2.2.1 (forms45_5 (12 : Fin 13)).2.2.2 e.val f.val = true →
       test45 19 (forms45_5 (12 : Fin 13)).1 (forms45_5 (12 : Fin 13)).2.1 (forms45_5 (12 : Fin 13)).2.2.1 (forms45_5 (12 : Fin 13)).2.2.2 e.val f.val = true →
       False := by
   decide +kernel
 private theorem exclude45_forms_block12_slice2 :
     ∀ e : Fin 45, 18 ≤ e.val → e.val < 27 →
+      test45_7 (forms45_5 (12 : Fin 13)).1 (forms45_5 (12 : Fin 13)).2.1 (forms45_5 (12 : Fin 13)).2.2.1 (forms45_5 (12 : Fin 13)).2.2.2 e.val = true →
       ∀ f : Fin 45,
-      test45 7 (forms45_5 (12 : Fin 13)).1 (forms45_5 (12 : Fin 13)).2.1 (forms45_5 (12 : Fin 13)).2.2.1 (forms45_5 (12 : Fin 13)).2.2.2 e.val f.val = true →
       test45 13 (forms45_5 (12 : Fin 13)).1 (forms45_5 (12 : Fin 13)).2.1 (forms45_5 (12 : Fin 13)).2.2.1 (forms45_5 (12 : Fin 13)).2.2.2 e.val f.val = true →
       test45 19 (forms45_5 (12 : Fin 13)).1 (forms45_5 (12 : Fin 13)).2.1 (forms45_5 (12 : Fin 13)).2.2.1 (forms45_5 (12 : Fin 13)).2.2.2 e.val f.val = true →
       False := by
   decide +kernel
 private theorem exclude45_forms_block12_slice3 :
     ∀ e : Fin 45, 27 ≤ e.val → e.val < 36 →
+      test45_7 (forms45_5 (12 : Fin 13)).1 (forms45_5 (12 : Fin 13)).2.1 (forms45_5 (12 : Fin 13)).2.2.1 (forms45_5 (12 : Fin 13)).2.2.2 e.val = true →
       ∀ f : Fin 45,
-      test45 7 (forms45_5 (12 : Fin 13)).1 (forms45_5 (12 : Fin 13)).2.1 (forms45_5 (12 : Fin 13)).2.2.1 (forms45_5 (12 : Fin 13)).2.2.2 e.val f.val = true →
       test45 13 (forms45_5 (12 : Fin 13)).1 (forms45_5 (12 : Fin 13)).2.1 (forms45_5 (12 : Fin 13)).2.2.1 (forms45_5 (12 : Fin 13)).2.2.2 e.val f.val = true →
       test45 19 (forms45_5 (12 : Fin 13)).1 (forms45_5 (12 : Fin 13)).2.1 (forms45_5 (12 : Fin 13)).2.2.1 (forms45_5 (12 : Fin 13)).2.2.2 e.val f.val = true →
       False := by
   decide +kernel
 private theorem exclude45_forms_block12_slice4 :
     ∀ e : Fin 45, 36 ≤ e.val → e.val < 45 →
+      test45_7 (forms45_5 (12 : Fin 13)).1 (forms45_5 (12 : Fin 13)).2.1 (forms45_5 (12 : Fin 13)).2.2.1 (forms45_5 (12 : Fin 13)).2.2.2 e.val = true →
       ∀ f : Fin 45,
-      test45 7 (forms45_5 (12 : Fin 13)).1 (forms45_5 (12 : Fin 13)).2.1 (forms45_5 (12 : Fin 13)).2.2.1 (forms45_5 (12 : Fin 13)).2.2.2 e.val f.val = true →
       test45 13 (forms45_5 (12 : Fin 13)).1 (forms45_5 (12 : Fin 13)).2.1 (forms45_5 (12 : Fin 13)).2.2.1 (forms45_5 (12 : Fin 13)).2.2.2 e.val f.val = true →
       test45 19 (forms45_5 (12 : Fin 13)).1 (forms45_5 (12 : Fin 13)).2.1 (forms45_5 (12 : Fin 13)).2.2.1 (forms45_5 (12 : Fin 13)).2.2.2 e.val f.val = true →
       False := by
   decide +kernel
 private theorem exclude45_forms_block12 (e : Fin 45) :
-    ∀ f : Fin 45,
-      test45 7 (forms45_5 (12 : Fin 13)).1 (forms45_5 (12 : Fin 13)).2.1 (forms45_5 (12 : Fin 13)).2.2.1 (forms45_5 (12 : Fin 13)).2.2.2 e.val f.val = true →
+    test45_7 (forms45_5 (12 : Fin 13)).1 (forms45_5 (12 : Fin 13)).2.1 (forms45_5 (12 : Fin 13)).2.2.1 (forms45_5 (12 : Fin 13)).2.2.2 e.val = true →
+      ∀ f : Fin 45,
       test45 13 (forms45_5 (12 : Fin 13)).1 (forms45_5 (12 : Fin 13)).2.1 (forms45_5 (12 : Fin 13)).2.2.1 (forms45_5 (12 : Fin 13)).2.2.2 e.val f.val = true →
       test45 19 (forms45_5 (12 : Fin 13)).1 (forms45_5 (12 : Fin 13)).2.1 (forms45_5 (12 : Fin 13)).2.2.1 (forms45_5 (12 : Fin 13)).2.2.2 e.val f.val = true →
       False := by
@@ -985,8 +1019,8 @@ private theorem exclude45_forms_block12 (e : Fin 45) :
   exact exclude45_forms_block12_slice4 e (by omega) (by omega)
 private theorem exclude45_forms (j : Fin 13) :
     ∀ e : Fin 45,
+      test45_7 (forms45_5 j).1 (forms45_5 j).2.1 (forms45_5 j).2.2.1 (forms45_5 j).2.2.2 e.val = true →
       ∀ f : Fin 45,
-      test45 7 (forms45_5 j).1 (forms45_5 j).2.1 (forms45_5 j).2.2.1 (forms45_5 j).2.2.2 e.val f.val = true →
       test45 13 (forms45_5 j).1 (forms45_5 j).2.1 (forms45_5 j).2.2.1 (forms45_5 j).2.2.2 e.val f.val = true →
       test45 19 (forms45_5 j).1 (forms45_5 j).2.1 (forms45_5 j).2.2.1 (forms45_5 j).2.2.2 e.val f.val = true →
       False := by
@@ -1011,11 +1045,13 @@ theorem exclude45 (a b c d e f : Fin 45)
     (h7 : test45 7 a.val b.val c.val d.val e.val f.val = true)
     (h13 : test45 13 a.val b.val c.val d.val e.val f.val = true)
     (h19 : test45 19 a.val b.val c.val d.val e.val f.val = true) : False := by
+  have h7' : test45_7 a.val b.val c.val d.val e.val = true :=
+    (test45_neutral a.val b.val c.val d.val e.val f.val).symm.trans h7
   obtain ⟨i, ha, hb, hc⟩ := classify45_3 a b c h3
   obtain ⟨j, hja, hjb, hjc, hjd⟩ := classify45_5 i d
     (by simpa only [ha, hb, hc] using h5)
-  exact exclude45_forms j e f
-    (by simpa only [ha, hb, hc, hja, hjb, hjc, hjd] using h7)
+  exact exclude45_forms j e
+    (by simpa only [ha, hb, hc, hja, hjb, hjc, hjd] using h7') f
     (by simpa only [ha, hb, hc, hja, hjb, hjc, hjd] using h13)
     (by simpa only [ha, hb, hc, hja, hjb, hjc, hjd] using h19)
 /-! ## Fifty-one factors -/
@@ -1029,10 +1065,266 @@ abbrev test51_7 (a b c e : Nat) : Bool :=
   positionTest 51 7 [(3, a), (3, b), (307, c), (6529, e), (43691, 0)]
 abbrev test51 (q a b c d e : Nat) : Bool :=
   positionTest 51 q [(3, a), (3, b), (307, c), (2857, d), (6529, e), (43691, 0)]
-private theorem classify51_3 :
-    ∀ a b : Fin 51, test51_3 a.val b.val = true →
-      ∃ i : Fin 3, a.val = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+private theorem classify51_3_block0 :
+    ∀ b : Fin 51, test51_3 0 b.val = true →
+      ∃ i : Fin 3, 0 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
   decide +kernel
+private theorem classify51_3_block1 :
+    ∀ b : Fin 51, test51_3 1 b.val = true →
+      ∃ i : Fin 3, 1 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block2 :
+    ∀ b : Fin 51, test51_3 2 b.val = true →
+      ∃ i : Fin 3, 2 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block3 :
+    ∀ b : Fin 51, test51_3 3 b.val = true →
+      ∃ i : Fin 3, 3 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block4 :
+    ∀ b : Fin 51, test51_3 4 b.val = true →
+      ∃ i : Fin 3, 4 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block5 :
+    ∀ b : Fin 51, test51_3 5 b.val = true →
+      ∃ i : Fin 3, 5 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block6 :
+    ∀ b : Fin 51, test51_3 6 b.val = true →
+      ∃ i : Fin 3, 6 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block7 :
+    ∀ b : Fin 51, test51_3 7 b.val = true →
+      ∃ i : Fin 3, 7 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block8 :
+    ∀ b : Fin 51, test51_3 8 b.val = true →
+      ∃ i : Fin 3, 8 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block9 :
+    ∀ b : Fin 51, test51_3 9 b.val = true →
+      ∃ i : Fin 3, 9 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block10 :
+    ∀ b : Fin 51, test51_3 10 b.val = true →
+      ∃ i : Fin 3, 10 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block11 :
+    ∀ b : Fin 51, test51_3 11 b.val = true →
+      ∃ i : Fin 3, 11 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block12 :
+    ∀ b : Fin 51, test51_3 12 b.val = true →
+      ∃ i : Fin 3, 12 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block13 :
+    ∀ b : Fin 51, test51_3 13 b.val = true →
+      ∃ i : Fin 3, 13 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block14 :
+    ∀ b : Fin 51, test51_3 14 b.val = true →
+      ∃ i : Fin 3, 14 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block15 :
+    ∀ b : Fin 51, test51_3 15 b.val = true →
+      ∃ i : Fin 3, 15 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block16 :
+    ∀ b : Fin 51, test51_3 16 b.val = true →
+      ∃ i : Fin 3, 16 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block17 :
+    ∀ b : Fin 51, test51_3 17 b.val = true →
+      ∃ i : Fin 3, 17 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block18 :
+    ∀ b : Fin 51, test51_3 18 b.val = true →
+      ∃ i : Fin 3, 18 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block19 :
+    ∀ b : Fin 51, test51_3 19 b.val = true →
+      ∃ i : Fin 3, 19 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block20 :
+    ∀ b : Fin 51, test51_3 20 b.val = true →
+      ∃ i : Fin 3, 20 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block21 :
+    ∀ b : Fin 51, test51_3 21 b.val = true →
+      ∃ i : Fin 3, 21 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block22 :
+    ∀ b : Fin 51, test51_3 22 b.val = true →
+      ∃ i : Fin 3, 22 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block23 :
+    ∀ b : Fin 51, test51_3 23 b.val = true →
+      ∃ i : Fin 3, 23 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block24 :
+    ∀ b : Fin 51, test51_3 24 b.val = true →
+      ∃ i : Fin 3, 24 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block25 :
+    ∀ b : Fin 51, test51_3 25 b.val = true →
+      ∃ i : Fin 3, 25 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block26 :
+    ∀ b : Fin 51, test51_3 26 b.val = true →
+      ∃ i : Fin 3, 26 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block27 :
+    ∀ b : Fin 51, test51_3 27 b.val = true →
+      ∃ i : Fin 3, 27 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block28 :
+    ∀ b : Fin 51, test51_3 28 b.val = true →
+      ∃ i : Fin 3, 28 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block29 :
+    ∀ b : Fin 51, test51_3 29 b.val = true →
+      ∃ i : Fin 3, 29 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block30 :
+    ∀ b : Fin 51, test51_3 30 b.val = true →
+      ∃ i : Fin 3, 30 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block31 :
+    ∀ b : Fin 51, test51_3 31 b.val = true →
+      ∃ i : Fin 3, 31 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block32 :
+    ∀ b : Fin 51, test51_3 32 b.val = true →
+      ∃ i : Fin 3, 32 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block33 :
+    ∀ b : Fin 51, test51_3 33 b.val = true →
+      ∃ i : Fin 3, 33 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block34 :
+    ∀ b : Fin 51, test51_3 34 b.val = true →
+      ∃ i : Fin 3, 34 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block35 :
+    ∀ b : Fin 51, test51_3 35 b.val = true →
+      ∃ i : Fin 3, 35 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block36 :
+    ∀ b : Fin 51, test51_3 36 b.val = true →
+      ∃ i : Fin 3, 36 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block37 :
+    ∀ b : Fin 51, test51_3 37 b.val = true →
+      ∃ i : Fin 3, 37 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block38 :
+    ∀ b : Fin 51, test51_3 38 b.val = true →
+      ∃ i : Fin 3, 38 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block39 :
+    ∀ b : Fin 51, test51_3 39 b.val = true →
+      ∃ i : Fin 3, 39 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block40 :
+    ∀ b : Fin 51, test51_3 40 b.val = true →
+      ∃ i : Fin 3, 40 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block41 :
+    ∀ b : Fin 51, test51_3 41 b.val = true →
+      ∃ i : Fin 3, 41 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block42 :
+    ∀ b : Fin 51, test51_3 42 b.val = true →
+      ∃ i : Fin 3, 42 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block43 :
+    ∀ b : Fin 51, test51_3 43 b.val = true →
+      ∃ i : Fin 3, 43 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block44 :
+    ∀ b : Fin 51, test51_3 44 b.val = true →
+      ∃ i : Fin 3, 44 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block45 :
+    ∀ b : Fin 51, test51_3 45 b.val = true →
+      ∃ i : Fin 3, 45 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block46 :
+    ∀ b : Fin 51, test51_3 46 b.val = true →
+      ∃ i : Fin 3, 46 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block47 :
+    ∀ b : Fin 51, test51_3 47 b.val = true →
+      ∃ i : Fin 3, 47 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block48 :
+    ∀ b : Fin 51, test51_3 48 b.val = true →
+      ∃ i : Fin 3, 48 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block49 :
+    ∀ b : Fin 51, test51_3 49 b.val = true →
+      ∃ i : Fin 3, 49 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3_block50 :
+    ∀ b : Fin 51, test51_3 50 b.val = true →
+      ∃ i : Fin 3, 50 = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  decide +kernel
+private theorem classify51_3 (a : Fin 51) :
+    ∀ b : Fin 51, test51_3 a.val b.val = true →
+      ∃ i : Fin 3, a.val = (forms51_3 i).1 ∧ b.val = (forms51_3 i).2 := by
+  fin_cases a
+  · simpa using classify51_3_block0
+  · simpa using classify51_3_block1
+  · simpa using classify51_3_block2
+  · simpa using classify51_3_block3
+  · simpa using classify51_3_block4
+  · simpa using classify51_3_block5
+  · simpa using classify51_3_block6
+  · simpa using classify51_3_block7
+  · simpa using classify51_3_block8
+  · simpa using classify51_3_block9
+  · simpa using classify51_3_block10
+  · simpa using classify51_3_block11
+  · simpa using classify51_3_block12
+  · simpa using classify51_3_block13
+  · simpa using classify51_3_block14
+  · simpa using classify51_3_block15
+  · simpa using classify51_3_block16
+  · simpa using classify51_3_block17
+  · simpa using classify51_3_block18
+  · simpa using classify51_3_block19
+  · simpa using classify51_3_block20
+  · simpa using classify51_3_block21
+  · simpa using classify51_3_block22
+  · simpa using classify51_3_block23
+  · simpa using classify51_3_block24
+  · simpa using classify51_3_block25
+  · simpa using classify51_3_block26
+  · simpa using classify51_3_block27
+  · simpa using classify51_3_block28
+  · simpa using classify51_3_block29
+  · simpa using classify51_3_block30
+  · simpa using classify51_3_block31
+  · simpa using classify51_3_block32
+  · simpa using classify51_3_block33
+  · simpa using classify51_3_block34
+  · simpa using classify51_3_block35
+  · simpa using classify51_3_block36
+  · simpa using classify51_3_block37
+  · simpa using classify51_3_block38
+  · simpa using classify51_3_block39
+  · simpa using classify51_3_block40
+  · simpa using classify51_3_block41
+  · simpa using classify51_3_block42
+  · simpa using classify51_3_block43
+  · simpa using classify51_3_block44
+  · simpa using classify51_3_block45
+  · simpa using classify51_3_block46
+  · simpa using classify51_3_block47
+  · simpa using classify51_3_block48
+  · simpa using classify51_3_block49
+  · simpa using classify51_3_block50
+
 private theorem exclude51_forms_block0_slot0_slice0 :
     ∀ e : Fin 51, 0 ≤ e.val → e.val < 20 →
       test51_7 (forms51_3 (0 : Fin 3)).1 (forms51_3 (0 : Fin 3)).2 0 e.val = true →
@@ -2912,705 +3204,544 @@ abbrev test55_5 (a : Nat) : Bool :=
   positionTest 55 5 [(3, 0), (683, a)]
 abbrev test55_11 (b c : Nat) : Bool :=
   positionTest 55 11 [(3, 0), (11, b), (11, c)]
+abbrev test55_3 (b c a e : Nat) : Bool :=
+  positionTest 55 3 [(3, 0), (11, b), (11, c), (683, a), (48912491, e)]
 abbrev test55 (q b c a d e : Nat) : Bool :=
   positionTest 55 q [(3, 0), (11, b), (11, c), (683, a), (2971, d), (48912491, e)]
+private theorem test55_neutral (b c a d e : Nat) :
+    test55 3 b c a d e = test55_3 b c a e := by
+  exact positionTest_append_mod_one 55 3 (by decide)
+    [(3, 0), (11, b), (11, c), (683, a)] [(48912491, e)]
+    (2971, d) (by change 2971 % 3 = 1; decide)
 private theorem classify55_5 :
     ∀ a : Fin 55, test55_5 a.val = true → a.val = 1 ∨ a.val = 54 := by
   decide +kernel
-private theorem classify55_11 :
-    ∀ b c : Fin 55, test55_11 b.val c.val = true →
+private theorem classify55_11_block0 :
+    ∀ c : Fin 55, test55_11 0 c.val = true →
+      ∃ i : Fin 19, 0 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block1 :
+    ∀ c : Fin 55, test55_11 1 c.val = true →
+      ∃ i : Fin 19, 1 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block2 :
+    ∀ c : Fin 55, test55_11 2 c.val = true →
+      ∃ i : Fin 19, 2 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block3 :
+    ∀ c : Fin 55, test55_11 3 c.val = true →
+      ∃ i : Fin 19, 3 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block4 :
+    ∀ c : Fin 55, test55_11 4 c.val = true →
+      ∃ i : Fin 19, 4 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block5 :
+    ∀ c : Fin 55, test55_11 5 c.val = true →
+      ∃ i : Fin 19, 5 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block6 :
+    ∀ c : Fin 55, test55_11 6 c.val = true →
+      ∃ i : Fin 19, 6 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block7 :
+    ∀ c : Fin 55, test55_11 7 c.val = true →
+      ∃ i : Fin 19, 7 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block8 :
+    ∀ c : Fin 55, test55_11 8 c.val = true →
+      ∃ i : Fin 19, 8 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block9 :
+    ∀ c : Fin 55, test55_11 9 c.val = true →
+      ∃ i : Fin 19, 9 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block10 :
+    ∀ c : Fin 55, test55_11 10 c.val = true →
+      ∃ i : Fin 19, 10 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block11 :
+    ∀ c : Fin 55, test55_11 11 c.val = true →
+      ∃ i : Fin 19, 11 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block12 :
+    ∀ c : Fin 55, test55_11 12 c.val = true →
+      ∃ i : Fin 19, 12 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block13 :
+    ∀ c : Fin 55, test55_11 13 c.val = true →
+      ∃ i : Fin 19, 13 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block14 :
+    ∀ c : Fin 55, test55_11 14 c.val = true →
+      ∃ i : Fin 19, 14 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block15 :
+    ∀ c : Fin 55, test55_11 15 c.val = true →
+      ∃ i : Fin 19, 15 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block16 :
+    ∀ c : Fin 55, test55_11 16 c.val = true →
+      ∃ i : Fin 19, 16 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block17 :
+    ∀ c : Fin 55, test55_11 17 c.val = true →
+      ∃ i : Fin 19, 17 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block18 :
+    ∀ c : Fin 55, test55_11 18 c.val = true →
+      ∃ i : Fin 19, 18 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block19 :
+    ∀ c : Fin 55, test55_11 19 c.val = true →
+      ∃ i : Fin 19, 19 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block20 :
+    ∀ c : Fin 55, test55_11 20 c.val = true →
+      ∃ i : Fin 19, 20 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block21 :
+    ∀ c : Fin 55, test55_11 21 c.val = true →
+      ∃ i : Fin 19, 21 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block22 :
+    ∀ c : Fin 55, test55_11 22 c.val = true →
+      ∃ i : Fin 19, 22 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block23 :
+    ∀ c : Fin 55, test55_11 23 c.val = true →
+      ∃ i : Fin 19, 23 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block24 :
+    ∀ c : Fin 55, test55_11 24 c.val = true →
+      ∃ i : Fin 19, 24 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block25 :
+    ∀ c : Fin 55, test55_11 25 c.val = true →
+      ∃ i : Fin 19, 25 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block26 :
+    ∀ c : Fin 55, test55_11 26 c.val = true →
+      ∃ i : Fin 19, 26 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block27 :
+    ∀ c : Fin 55, test55_11 27 c.val = true →
+      ∃ i : Fin 19, 27 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block28 :
+    ∀ c : Fin 55, test55_11 28 c.val = true →
+      ∃ i : Fin 19, 28 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block29 :
+    ∀ c : Fin 55, test55_11 29 c.val = true →
+      ∃ i : Fin 19, 29 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block30 :
+    ∀ c : Fin 55, test55_11 30 c.val = true →
+      ∃ i : Fin 19, 30 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block31 :
+    ∀ c : Fin 55, test55_11 31 c.val = true →
+      ∃ i : Fin 19, 31 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block32 :
+    ∀ c : Fin 55, test55_11 32 c.val = true →
+      ∃ i : Fin 19, 32 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block33 :
+    ∀ c : Fin 55, test55_11 33 c.val = true →
+      ∃ i : Fin 19, 33 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block34 :
+    ∀ c : Fin 55, test55_11 34 c.val = true →
+      ∃ i : Fin 19, 34 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block35 :
+    ∀ c : Fin 55, test55_11 35 c.val = true →
+      ∃ i : Fin 19, 35 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block36 :
+    ∀ c : Fin 55, test55_11 36 c.val = true →
+      ∃ i : Fin 19, 36 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block37 :
+    ∀ c : Fin 55, test55_11 37 c.val = true →
+      ∃ i : Fin 19, 37 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block38 :
+    ∀ c : Fin 55, test55_11 38 c.val = true →
+      ∃ i : Fin 19, 38 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block39 :
+    ∀ c : Fin 55, test55_11 39 c.val = true →
+      ∃ i : Fin 19, 39 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block40 :
+    ∀ c : Fin 55, test55_11 40 c.val = true →
+      ∃ i : Fin 19, 40 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block41 :
+    ∀ c : Fin 55, test55_11 41 c.val = true →
+      ∃ i : Fin 19, 41 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block42 :
+    ∀ c : Fin 55, test55_11 42 c.val = true →
+      ∃ i : Fin 19, 42 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block43 :
+    ∀ c : Fin 55, test55_11 43 c.val = true →
+      ∃ i : Fin 19, 43 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block44 :
+    ∀ c : Fin 55, test55_11 44 c.val = true →
+      ∃ i : Fin 19, 44 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block45 :
+    ∀ c : Fin 55, test55_11 45 c.val = true →
+      ∃ i : Fin 19, 45 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block46 :
+    ∀ c : Fin 55, test55_11 46 c.val = true →
+      ∃ i : Fin 19, 46 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block47 :
+    ∀ c : Fin 55, test55_11 47 c.val = true →
+      ∃ i : Fin 19, 47 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block48 :
+    ∀ c : Fin 55, test55_11 48 c.val = true →
+      ∃ i : Fin 19, 48 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block49 :
+    ∀ c : Fin 55, test55_11 49 c.val = true →
+      ∃ i : Fin 19, 49 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block50 :
+    ∀ c : Fin 55, test55_11 50 c.val = true →
+      ∃ i : Fin 19, 50 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block51 :
+    ∀ c : Fin 55, test55_11 51 c.val = true →
+      ∃ i : Fin 19, 51 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block52 :
+    ∀ c : Fin 55, test55_11 52 c.val = true →
+      ∃ i : Fin 19, 52 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block53 :
+    ∀ c : Fin 55, test55_11 53 c.val = true →
+      ∃ i : Fin 19, 53 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11_block54 :
+    ∀ c : Fin 55, test55_11 54 c.val = true →
+      ∃ i : Fin 19, 54 = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
+  decide +kernel
+private theorem classify55_11 (b : Fin 55) :
+    ∀ c : Fin 55, test55_11 b.val c.val = true →
       ∃ i : Fin 19, b.val = (forms55_11 i).1 ∧ c.val = (forms55_11 i).2 := by
-  decide +kernel
-private theorem exclude55_a1_block0_slice0 :
-    ∀ d : Fin 55, 0 ≤ d.val → d.val < 11 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (0 : Fin 19)).1 (forms55_11 (0 : Fin 19)).2 1 d.val e.val = true →
+  fin_cases b
+  · simpa using classify55_11_block0
+  · simpa using classify55_11_block1
+  · simpa using classify55_11_block2
+  · simpa using classify55_11_block3
+  · simpa using classify55_11_block4
+  · simpa using classify55_11_block5
+  · simpa using classify55_11_block6
+  · simpa using classify55_11_block7
+  · simpa using classify55_11_block8
+  · simpa using classify55_11_block9
+  · simpa using classify55_11_block10
+  · simpa using classify55_11_block11
+  · simpa using classify55_11_block12
+  · simpa using classify55_11_block13
+  · simpa using classify55_11_block14
+  · simpa using classify55_11_block15
+  · simpa using classify55_11_block16
+  · simpa using classify55_11_block17
+  · simpa using classify55_11_block18
+  · simpa using classify55_11_block19
+  · simpa using classify55_11_block20
+  · simpa using classify55_11_block21
+  · simpa using classify55_11_block22
+  · simpa using classify55_11_block23
+  · simpa using classify55_11_block24
+  · simpa using classify55_11_block25
+  · simpa using classify55_11_block26
+  · simpa using classify55_11_block27
+  · simpa using classify55_11_block28
+  · simpa using classify55_11_block29
+  · simpa using classify55_11_block30
+  · simpa using classify55_11_block31
+  · simpa using classify55_11_block32
+  · simpa using classify55_11_block33
+  · simpa using classify55_11_block34
+  · simpa using classify55_11_block35
+  · simpa using classify55_11_block36
+  · simpa using classify55_11_block37
+  · simpa using classify55_11_block38
+  · simpa using classify55_11_block39
+  · simpa using classify55_11_block40
+  · simpa using classify55_11_block41
+  · simpa using classify55_11_block42
+  · simpa using classify55_11_block43
+  · simpa using classify55_11_block44
+  · simpa using classify55_11_block45
+  · simpa using classify55_11_block46
+  · simpa using classify55_11_block47
+  · simpa using classify55_11_block48
+  · simpa using classify55_11_block49
+  · simpa using classify55_11_block50
+  · simpa using classify55_11_block51
+  · simpa using classify55_11_block52
+  · simpa using classify55_11_block53
+  · simpa using classify55_11_block54
+
+private theorem exclude55_a1_block0 :
+    ∀ e : Fin 55,
+      test55_3 (forms55_11 (0 : Fin 19)).1 (forms55_11 (0 : Fin 19)).2 1 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 (0 : Fin 19)).1 (forms55_11 (0 : Fin 19)).2 1 d.val e.val = true →
       test55 17 (forms55_11 (0 : Fin 19)).1 (forms55_11 (0 : Fin 19)).2 1 d.val e.val = true →
       False := by
   decide +kernel
-private theorem exclude55_a1_block0_slice1 :
-    ∀ d : Fin 55, 11 ≤ d.val → d.val < 22 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (0 : Fin 19)).1 (forms55_11 (0 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (0 : Fin 19)).1 (forms55_11 (0 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (0 : Fin 19)).1 (forms55_11 (0 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block0_slice2 :
-    ∀ d : Fin 55, 22 ≤ d.val → d.val < 33 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (0 : Fin 19)).1 (forms55_11 (0 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (0 : Fin 19)).1 (forms55_11 (0 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (0 : Fin 19)).1 (forms55_11 (0 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block0_slice3 :
-    ∀ d : Fin 55, 33 ≤ d.val → d.val < 44 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (0 : Fin 19)).1 (forms55_11 (0 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (0 : Fin 19)).1 (forms55_11 (0 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (0 : Fin 19)).1 (forms55_11 (0 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block0_slice4 :
-    ∀ d : Fin 55, 44 ≤ d.val → d.val < 55 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (0 : Fin 19)).1 (forms55_11 (0 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (0 : Fin 19)).1 (forms55_11 (0 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (0 : Fin 19)).1 (forms55_11 (0 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block0 (d : Fin 55) :
+private theorem exclude55_a1_block1 :
     ∀ e : Fin 55,
-      test55 3 (forms55_11 (0 : Fin 19)).1 (forms55_11 (0 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (0 : Fin 19)).1 (forms55_11 (0 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (0 : Fin 19)).1 (forms55_11 (0 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  have hbound := d.isLt
-  by_cases h0 : d.val < 11
-  · exact exclude55_a1_block0_slice0 d (by omega) h0
-  by_cases h1 : d.val < 22
-  · exact exclude55_a1_block0_slice1 d (by omega) h1
-  by_cases h2 : d.val < 33
-  · exact exclude55_a1_block0_slice2 d (by omega) h2
-  by_cases h3 : d.val < 44
-  · exact exclude55_a1_block0_slice3 d (by omega) h3
-  exact exclude55_a1_block0_slice4 d (by omega) (by omega)
-private theorem exclude55_a1_block1_slice0 :
-    ∀ d : Fin 55, 0 ≤ d.val → d.val < 11 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (1 : Fin 19)).1 (forms55_11 (1 : Fin 19)).2 1 d.val e.val = true →
+      test55_3 (forms55_11 (1 : Fin 19)).1 (forms55_11 (1 : Fin 19)).2 1 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 (1 : Fin 19)).1 (forms55_11 (1 : Fin 19)).2 1 d.val e.val = true →
       test55 17 (forms55_11 (1 : Fin 19)).1 (forms55_11 (1 : Fin 19)).2 1 d.val e.val = true →
       False := by
   decide +kernel
-private theorem exclude55_a1_block1_slice1 :
-    ∀ d : Fin 55, 11 ≤ d.val → d.val < 22 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (1 : Fin 19)).1 (forms55_11 (1 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (1 : Fin 19)).1 (forms55_11 (1 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (1 : Fin 19)).1 (forms55_11 (1 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block1_slice2 :
-    ∀ d : Fin 55, 22 ≤ d.val → d.val < 33 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (1 : Fin 19)).1 (forms55_11 (1 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (1 : Fin 19)).1 (forms55_11 (1 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (1 : Fin 19)).1 (forms55_11 (1 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block1_slice3 :
-    ∀ d : Fin 55, 33 ≤ d.val → d.val < 44 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (1 : Fin 19)).1 (forms55_11 (1 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (1 : Fin 19)).1 (forms55_11 (1 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (1 : Fin 19)).1 (forms55_11 (1 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block1_slice4 :
-    ∀ d : Fin 55, 44 ≤ d.val → d.val < 55 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (1 : Fin 19)).1 (forms55_11 (1 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (1 : Fin 19)).1 (forms55_11 (1 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (1 : Fin 19)).1 (forms55_11 (1 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block1 (d : Fin 55) :
+private theorem exclude55_a1_block2 :
     ∀ e : Fin 55,
-      test55 3 (forms55_11 (1 : Fin 19)).1 (forms55_11 (1 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (1 : Fin 19)).1 (forms55_11 (1 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (1 : Fin 19)).1 (forms55_11 (1 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  have hbound := d.isLt
-  by_cases h0 : d.val < 11
-  · exact exclude55_a1_block1_slice0 d (by omega) h0
-  by_cases h1 : d.val < 22
-  · exact exclude55_a1_block1_slice1 d (by omega) h1
-  by_cases h2 : d.val < 33
-  · exact exclude55_a1_block1_slice2 d (by omega) h2
-  by_cases h3 : d.val < 44
-  · exact exclude55_a1_block1_slice3 d (by omega) h3
-  exact exclude55_a1_block1_slice4 d (by omega) (by omega)
-private theorem exclude55_a1_block2_slice0 :
-    ∀ d : Fin 55, 0 ≤ d.val → d.val < 11 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (2 : Fin 19)).1 (forms55_11 (2 : Fin 19)).2 1 d.val e.val = true →
+      test55_3 (forms55_11 (2 : Fin 19)).1 (forms55_11 (2 : Fin 19)).2 1 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 (2 : Fin 19)).1 (forms55_11 (2 : Fin 19)).2 1 d.val e.val = true →
       test55 17 (forms55_11 (2 : Fin 19)).1 (forms55_11 (2 : Fin 19)).2 1 d.val e.val = true →
       False := by
   decide +kernel
-private theorem exclude55_a1_block2_slice1 :
-    ∀ d : Fin 55, 11 ≤ d.val → d.val < 22 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (2 : Fin 19)).1 (forms55_11 (2 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (2 : Fin 19)).1 (forms55_11 (2 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (2 : Fin 19)).1 (forms55_11 (2 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block2_slice2 :
-    ∀ d : Fin 55, 22 ≤ d.val → d.val < 33 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (2 : Fin 19)).1 (forms55_11 (2 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (2 : Fin 19)).1 (forms55_11 (2 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (2 : Fin 19)).1 (forms55_11 (2 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block2_slice3 :
-    ∀ d : Fin 55, 33 ≤ d.val → d.val < 44 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (2 : Fin 19)).1 (forms55_11 (2 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (2 : Fin 19)).1 (forms55_11 (2 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (2 : Fin 19)).1 (forms55_11 (2 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block2_slice4 :
-    ∀ d : Fin 55, 44 ≤ d.val → d.val < 55 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (2 : Fin 19)).1 (forms55_11 (2 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (2 : Fin 19)).1 (forms55_11 (2 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (2 : Fin 19)).1 (forms55_11 (2 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block2 (d : Fin 55) :
+private theorem exclude55_a1_block3 :
     ∀ e : Fin 55,
-      test55 3 (forms55_11 (2 : Fin 19)).1 (forms55_11 (2 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (2 : Fin 19)).1 (forms55_11 (2 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (2 : Fin 19)).1 (forms55_11 (2 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  have hbound := d.isLt
-  by_cases h0 : d.val < 11
-  · exact exclude55_a1_block2_slice0 d (by omega) h0
-  by_cases h1 : d.val < 22
-  · exact exclude55_a1_block2_slice1 d (by omega) h1
-  by_cases h2 : d.val < 33
-  · exact exclude55_a1_block2_slice2 d (by omega) h2
-  by_cases h3 : d.val < 44
-  · exact exclude55_a1_block2_slice3 d (by omega) h3
-  exact exclude55_a1_block2_slice4 d (by omega) (by omega)
-private theorem exclude55_a1_block3_slice0 :
-    ∀ d : Fin 55, 0 ≤ d.val → d.val < 11 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (3 : Fin 19)).1 (forms55_11 (3 : Fin 19)).2 1 d.val e.val = true →
+      test55_3 (forms55_11 (3 : Fin 19)).1 (forms55_11 (3 : Fin 19)).2 1 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 (3 : Fin 19)).1 (forms55_11 (3 : Fin 19)).2 1 d.val e.val = true →
       test55 17 (forms55_11 (3 : Fin 19)).1 (forms55_11 (3 : Fin 19)).2 1 d.val e.val = true →
       False := by
   decide +kernel
-private theorem exclude55_a1_block3_slice1 :
-    ∀ d : Fin 55, 11 ≤ d.val → d.val < 22 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (3 : Fin 19)).1 (forms55_11 (3 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (3 : Fin 19)).1 (forms55_11 (3 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (3 : Fin 19)).1 (forms55_11 (3 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block3_slice2 :
-    ∀ d : Fin 55, 22 ≤ d.val → d.val < 33 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (3 : Fin 19)).1 (forms55_11 (3 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (3 : Fin 19)).1 (forms55_11 (3 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (3 : Fin 19)).1 (forms55_11 (3 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block3_slice3 :
-    ∀ d : Fin 55, 33 ≤ d.val → d.val < 44 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (3 : Fin 19)).1 (forms55_11 (3 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (3 : Fin 19)).1 (forms55_11 (3 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (3 : Fin 19)).1 (forms55_11 (3 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block3_slice4 :
-    ∀ d : Fin 55, 44 ≤ d.val → d.val < 55 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (3 : Fin 19)).1 (forms55_11 (3 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (3 : Fin 19)).1 (forms55_11 (3 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (3 : Fin 19)).1 (forms55_11 (3 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block3 (d : Fin 55) :
+private theorem exclude55_a1_block4 :
     ∀ e : Fin 55,
-      test55 3 (forms55_11 (3 : Fin 19)).1 (forms55_11 (3 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (3 : Fin 19)).1 (forms55_11 (3 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (3 : Fin 19)).1 (forms55_11 (3 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  have hbound := d.isLt
-  by_cases h0 : d.val < 11
-  · exact exclude55_a1_block3_slice0 d (by omega) h0
-  by_cases h1 : d.val < 22
-  · exact exclude55_a1_block3_slice1 d (by omega) h1
-  by_cases h2 : d.val < 33
-  · exact exclude55_a1_block3_slice2 d (by omega) h2
-  by_cases h3 : d.val < 44
-  · exact exclude55_a1_block3_slice3 d (by omega) h3
-  exact exclude55_a1_block3_slice4 d (by omega) (by omega)
-private theorem exclude55_a1_block4_slice0 :
-    ∀ d : Fin 55, 0 ≤ d.val → d.val < 11 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (4 : Fin 19)).1 (forms55_11 (4 : Fin 19)).2 1 d.val e.val = true →
+      test55_3 (forms55_11 (4 : Fin 19)).1 (forms55_11 (4 : Fin 19)).2 1 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 (4 : Fin 19)).1 (forms55_11 (4 : Fin 19)).2 1 d.val e.val = true →
       test55 17 (forms55_11 (4 : Fin 19)).1 (forms55_11 (4 : Fin 19)).2 1 d.val e.val = true →
       False := by
   decide +kernel
-private theorem exclude55_a1_block4_slice1 :
-    ∀ d : Fin 55, 11 ≤ d.val → d.val < 22 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (4 : Fin 19)).1 (forms55_11 (4 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (4 : Fin 19)).1 (forms55_11 (4 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (4 : Fin 19)).1 (forms55_11 (4 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block4_slice2 :
-    ∀ d : Fin 55, 22 ≤ d.val → d.val < 33 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (4 : Fin 19)).1 (forms55_11 (4 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (4 : Fin 19)).1 (forms55_11 (4 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (4 : Fin 19)).1 (forms55_11 (4 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block4_slice3 :
-    ∀ d : Fin 55, 33 ≤ d.val → d.val < 44 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (4 : Fin 19)).1 (forms55_11 (4 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (4 : Fin 19)).1 (forms55_11 (4 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (4 : Fin 19)).1 (forms55_11 (4 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block4_slice4 :
-    ∀ d : Fin 55, 44 ≤ d.val → d.val < 55 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (4 : Fin 19)).1 (forms55_11 (4 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (4 : Fin 19)).1 (forms55_11 (4 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (4 : Fin 19)).1 (forms55_11 (4 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block4 (d : Fin 55) :
+private theorem exclude55_a1_block5 :
     ∀ e : Fin 55,
-      test55 3 (forms55_11 (4 : Fin 19)).1 (forms55_11 (4 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (4 : Fin 19)).1 (forms55_11 (4 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (4 : Fin 19)).1 (forms55_11 (4 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  have hbound := d.isLt
-  by_cases h0 : d.val < 11
-  · exact exclude55_a1_block4_slice0 d (by omega) h0
-  by_cases h1 : d.val < 22
-  · exact exclude55_a1_block4_slice1 d (by omega) h1
-  by_cases h2 : d.val < 33
-  · exact exclude55_a1_block4_slice2 d (by omega) h2
-  by_cases h3 : d.val < 44
-  · exact exclude55_a1_block4_slice3 d (by omega) h3
-  exact exclude55_a1_block4_slice4 d (by omega) (by omega)
-private theorem exclude55_a1_block5_slice0 :
-    ∀ d : Fin 55, 0 ≤ d.val → d.val < 11 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (5 : Fin 19)).1 (forms55_11 (5 : Fin 19)).2 1 d.val e.val = true →
+      test55_3 (forms55_11 (5 : Fin 19)).1 (forms55_11 (5 : Fin 19)).2 1 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 (5 : Fin 19)).1 (forms55_11 (5 : Fin 19)).2 1 d.val e.val = true →
       test55 17 (forms55_11 (5 : Fin 19)).1 (forms55_11 (5 : Fin 19)).2 1 d.val e.val = true →
       False := by
   decide +kernel
-private theorem exclude55_a1_block5_slice1 :
-    ∀ d : Fin 55, 11 ≤ d.val → d.val < 22 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (5 : Fin 19)).1 (forms55_11 (5 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (5 : Fin 19)).1 (forms55_11 (5 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (5 : Fin 19)).1 (forms55_11 (5 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block5_slice2 :
-    ∀ d : Fin 55, 22 ≤ d.val → d.val < 33 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (5 : Fin 19)).1 (forms55_11 (5 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (5 : Fin 19)).1 (forms55_11 (5 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (5 : Fin 19)).1 (forms55_11 (5 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block5_slice3 :
-    ∀ d : Fin 55, 33 ≤ d.val → d.val < 44 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (5 : Fin 19)).1 (forms55_11 (5 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (5 : Fin 19)).1 (forms55_11 (5 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (5 : Fin 19)).1 (forms55_11 (5 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block5_slice4 :
-    ∀ d : Fin 55, 44 ≤ d.val → d.val < 55 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (5 : Fin 19)).1 (forms55_11 (5 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (5 : Fin 19)).1 (forms55_11 (5 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (5 : Fin 19)).1 (forms55_11 (5 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block5 (d : Fin 55) :
+private theorem exclude55_a1_block6 :
     ∀ e : Fin 55,
-      test55 3 (forms55_11 (5 : Fin 19)).1 (forms55_11 (5 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (5 : Fin 19)).1 (forms55_11 (5 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (5 : Fin 19)).1 (forms55_11 (5 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  have hbound := d.isLt
-  by_cases h0 : d.val < 11
-  · exact exclude55_a1_block5_slice0 d (by omega) h0
-  by_cases h1 : d.val < 22
-  · exact exclude55_a1_block5_slice1 d (by omega) h1
-  by_cases h2 : d.val < 33
-  · exact exclude55_a1_block5_slice2 d (by omega) h2
-  by_cases h3 : d.val < 44
-  · exact exclude55_a1_block5_slice3 d (by omega) h3
-  exact exclude55_a1_block5_slice4 d (by omega) (by omega)
-private theorem exclude55_a1_block6_slice0 :
-    ∀ d : Fin 55, 0 ≤ d.val → d.val < 11 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (6 : Fin 19)).1 (forms55_11 (6 : Fin 19)).2 1 d.val e.val = true →
+      test55_3 (forms55_11 (6 : Fin 19)).1 (forms55_11 (6 : Fin 19)).2 1 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 (6 : Fin 19)).1 (forms55_11 (6 : Fin 19)).2 1 d.val e.val = true →
       test55 17 (forms55_11 (6 : Fin 19)).1 (forms55_11 (6 : Fin 19)).2 1 d.val e.val = true →
       False := by
   decide +kernel
-private theorem exclude55_a1_block6_slice1 :
-    ∀ d : Fin 55, 11 ≤ d.val → d.val < 22 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (6 : Fin 19)).1 (forms55_11 (6 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (6 : Fin 19)).1 (forms55_11 (6 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (6 : Fin 19)).1 (forms55_11 (6 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block6_slice2 :
-    ∀ d : Fin 55, 22 ≤ d.val → d.val < 33 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (6 : Fin 19)).1 (forms55_11 (6 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (6 : Fin 19)).1 (forms55_11 (6 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (6 : Fin 19)).1 (forms55_11 (6 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block6_slice3 :
-    ∀ d : Fin 55, 33 ≤ d.val → d.val < 44 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (6 : Fin 19)).1 (forms55_11 (6 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (6 : Fin 19)).1 (forms55_11 (6 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (6 : Fin 19)).1 (forms55_11 (6 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block6_slice4 :
-    ∀ d : Fin 55, 44 ≤ d.val → d.val < 55 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (6 : Fin 19)).1 (forms55_11 (6 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (6 : Fin 19)).1 (forms55_11 (6 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (6 : Fin 19)).1 (forms55_11 (6 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block6 (d : Fin 55) :
+private theorem exclude55_a1_block7 :
     ∀ e : Fin 55,
-      test55 3 (forms55_11 (6 : Fin 19)).1 (forms55_11 (6 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (6 : Fin 19)).1 (forms55_11 (6 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (6 : Fin 19)).1 (forms55_11 (6 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  have hbound := d.isLt
-  by_cases h0 : d.val < 11
-  · exact exclude55_a1_block6_slice0 d (by omega) h0
-  by_cases h1 : d.val < 22
-  · exact exclude55_a1_block6_slice1 d (by omega) h1
-  by_cases h2 : d.val < 33
-  · exact exclude55_a1_block6_slice2 d (by omega) h2
-  by_cases h3 : d.val < 44
-  · exact exclude55_a1_block6_slice3 d (by omega) h3
-  exact exclude55_a1_block6_slice4 d (by omega) (by omega)
-private theorem exclude55_a1_block7_slice0 :
-    ∀ d : Fin 55, 0 ≤ d.val → d.val < 11 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (7 : Fin 19)).1 (forms55_11 (7 : Fin 19)).2 1 d.val e.val = true →
+      test55_3 (forms55_11 (7 : Fin 19)).1 (forms55_11 (7 : Fin 19)).2 1 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 (7 : Fin 19)).1 (forms55_11 (7 : Fin 19)).2 1 d.val e.val = true →
       test55 17 (forms55_11 (7 : Fin 19)).1 (forms55_11 (7 : Fin 19)).2 1 d.val e.val = true →
       False := by
   decide +kernel
-private theorem exclude55_a1_block7_slice1 :
-    ∀ d : Fin 55, 11 ≤ d.val → d.val < 22 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (7 : Fin 19)).1 (forms55_11 (7 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (7 : Fin 19)).1 (forms55_11 (7 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (7 : Fin 19)).1 (forms55_11 (7 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block7_slice2 :
-    ∀ d : Fin 55, 22 ≤ d.val → d.val < 33 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (7 : Fin 19)).1 (forms55_11 (7 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (7 : Fin 19)).1 (forms55_11 (7 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (7 : Fin 19)).1 (forms55_11 (7 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block7_slice3 :
-    ∀ d : Fin 55, 33 ≤ d.val → d.val < 44 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (7 : Fin 19)).1 (forms55_11 (7 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (7 : Fin 19)).1 (forms55_11 (7 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (7 : Fin 19)).1 (forms55_11 (7 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block7_slice4 :
-    ∀ d : Fin 55, 44 ≤ d.val → d.val < 55 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (7 : Fin 19)).1 (forms55_11 (7 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (7 : Fin 19)).1 (forms55_11 (7 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (7 : Fin 19)).1 (forms55_11 (7 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block7 (d : Fin 55) :
+private theorem exclude55_a1_block8 :
     ∀ e : Fin 55,
-      test55 3 (forms55_11 (7 : Fin 19)).1 (forms55_11 (7 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (7 : Fin 19)).1 (forms55_11 (7 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (7 : Fin 19)).1 (forms55_11 (7 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  have hbound := d.isLt
-  by_cases h0 : d.val < 11
-  · exact exclude55_a1_block7_slice0 d (by omega) h0
-  by_cases h1 : d.val < 22
-  · exact exclude55_a1_block7_slice1 d (by omega) h1
-  by_cases h2 : d.val < 33
-  · exact exclude55_a1_block7_slice2 d (by omega) h2
-  by_cases h3 : d.val < 44
-  · exact exclude55_a1_block7_slice3 d (by omega) h3
-  exact exclude55_a1_block7_slice4 d (by omega) (by omega)
-private theorem exclude55_a1_block8_slice0 :
-    ∀ d : Fin 55, 0 ≤ d.val → d.val < 11 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (8 : Fin 19)).1 (forms55_11 (8 : Fin 19)).2 1 d.val e.val = true →
+      test55_3 (forms55_11 (8 : Fin 19)).1 (forms55_11 (8 : Fin 19)).2 1 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 (8 : Fin 19)).1 (forms55_11 (8 : Fin 19)).2 1 d.val e.val = true →
       test55 17 (forms55_11 (8 : Fin 19)).1 (forms55_11 (8 : Fin 19)).2 1 d.val e.val = true →
       False := by
   decide +kernel
-private theorem exclude55_a1_block8_slice1 :
-    ∀ d : Fin 55, 11 ≤ d.val → d.val < 22 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (8 : Fin 19)).1 (forms55_11 (8 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (8 : Fin 19)).1 (forms55_11 (8 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (8 : Fin 19)).1 (forms55_11 (8 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block8_slice2 :
-    ∀ d : Fin 55, 22 ≤ d.val → d.val < 33 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (8 : Fin 19)).1 (forms55_11 (8 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (8 : Fin 19)).1 (forms55_11 (8 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (8 : Fin 19)).1 (forms55_11 (8 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block8_slice3 :
-    ∀ d : Fin 55, 33 ≤ d.val → d.val < 44 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (8 : Fin 19)).1 (forms55_11 (8 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (8 : Fin 19)).1 (forms55_11 (8 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (8 : Fin 19)).1 (forms55_11 (8 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block8_slice4 :
-    ∀ d : Fin 55, 44 ≤ d.val → d.val < 55 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (8 : Fin 19)).1 (forms55_11 (8 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (8 : Fin 19)).1 (forms55_11 (8 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (8 : Fin 19)).1 (forms55_11 (8 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block8 (d : Fin 55) :
-    ∀ e : Fin 55,
-      test55 3 (forms55_11 (8 : Fin 19)).1 (forms55_11 (8 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (8 : Fin 19)).1 (forms55_11 (8 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (8 : Fin 19)).1 (forms55_11 (8 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  have hbound := d.isLt
-  by_cases h0 : d.val < 11
-  · exact exclude55_a1_block8_slice0 d (by omega) h0
-  by_cases h1 : d.val < 22
-  · exact exclude55_a1_block8_slice1 d (by omega) h1
-  by_cases h2 : d.val < 33
-  · exact exclude55_a1_block8_slice2 d (by omega) h2
-  by_cases h3 : d.val < 44
-  · exact exclude55_a1_block8_slice3 d (by omega) h3
-  exact exclude55_a1_block8_slice4 d (by omega) (by omega)
 private theorem exclude55_a1_block9 :
-    ∀ d : Fin 55,
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (9 : Fin 19)).1 (forms55_11 (9 : Fin 19)).2 1 d.val e.val = true →
+    ∀ e : Fin 55,
+      test55_3 (forms55_11 (9 : Fin 19)).1 (forms55_11 (9 : Fin 19)).2 1 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 (9 : Fin 19)).1 (forms55_11 (9 : Fin 19)).2 1 d.val e.val = true →
       test55 17 (forms55_11 (9 : Fin 19)).1 (forms55_11 (9 : Fin 19)).2 1 d.val e.val = true →
       False := by
-  intro d e h3 h13 h17
+  intro e h3 d h13 h17
+  have hperm : List.Perm [(11, 48), (11, 39)] [(11, 39), (11, 48)] := by decide
+  have ht3 : test55_3 48 39 1 e.val =
+      test55_3 39 48 1 e.val :=
+    positionTest_perm 55 3 (List.Perm.cons (3, 0) (List.Perm.append_right [(683, 1), (48912491, e.val)] hperm))
   have htest (q : Nat) : test55 q 48 39 1 d.val e.val =
       test55 q 39 48 1 d.val e.val := by
     exact positionTest_perm 55 q (List.Perm.cons (3, 0) (List.Perm.append_right [(683, 1), (2971, d.val), (48912491, e.val)]
-      (by decide : List.Perm [(11, 48), (11, 39)] [(11, 39), (11, 48)])))
-  exact exclude55_a1_block0 d e
-    ((htest 3).symm.trans h3) ((htest 13).symm.trans h13) ((htest 17).symm.trans h17)
+      hperm))
+  exact exclude55_a1_block0 e (ht3.symm.trans h3) d
+    ((htest 13).symm.trans h13) ((htest 17).symm.trans h17)
 private theorem exclude55_a1_block10 :
-    ∀ d : Fin 55,
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (10 : Fin 19)).1 (forms55_11 (10 : Fin 19)).2 1 d.val e.val = true →
+    ∀ e : Fin 55,
+      test55_3 (forms55_11 (10 : Fin 19)).1 (forms55_11 (10 : Fin 19)).2 1 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 (10 : Fin 19)).1 (forms55_11 (10 : Fin 19)).2 1 d.val e.val = true →
       test55 17 (forms55_11 (10 : Fin 19)).1 (forms55_11 (10 : Fin 19)).2 1 d.val e.val = true →
       False := by
-  intro d e h3 h13 h17
+  intro e h3 d h13 h17
+  have hperm : List.Perm [(11, 48), (11, 40)] [(11, 40), (11, 48)] := by decide
+  have ht3 : test55_3 48 40 1 e.val =
+      test55_3 40 48 1 e.val :=
+    positionTest_perm 55 3 (List.Perm.cons (3, 0) (List.Perm.append_right [(683, 1), (48912491, e.val)] hperm))
   have htest (q : Nat) : test55 q 48 40 1 d.val e.val =
       test55 q 40 48 1 d.val e.val := by
     exact positionTest_perm 55 q (List.Perm.cons (3, 0) (List.Perm.append_right [(683, 1), (2971, d.val), (48912491, e.val)]
-      (by decide : List.Perm [(11, 48), (11, 40)] [(11, 40), (11, 48)])))
-  exact exclude55_a1_block1 d e
-    ((htest 3).symm.trans h3) ((htest 13).symm.trans h13) ((htest 17).symm.trans h17)
+      hperm))
+  exact exclude55_a1_block1 e (ht3.symm.trans h3) d
+    ((htest 13).symm.trans h13) ((htest 17).symm.trans h17)
 private theorem exclude55_a1_block11 :
-    ∀ d : Fin 55,
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (11 : Fin 19)).1 (forms55_11 (11 : Fin 19)).2 1 d.val e.val = true →
+    ∀ e : Fin 55,
+      test55_3 (forms55_11 (11 : Fin 19)).1 (forms55_11 (11 : Fin 19)).2 1 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 (11 : Fin 19)).1 (forms55_11 (11 : Fin 19)).2 1 d.val e.val = true →
       test55 17 (forms55_11 (11 : Fin 19)).1 (forms55_11 (11 : Fin 19)).2 1 d.val e.val = true →
       False := by
-  intro d e h3 h13 h17
+  intro e h3 d h13 h17
+  have hperm : List.Perm [(11, 48), (11, 41)] [(11, 41), (11, 48)] := by decide
+  have ht3 : test55_3 48 41 1 e.val =
+      test55_3 41 48 1 e.val :=
+    positionTest_perm 55 3 (List.Perm.cons (3, 0) (List.Perm.append_right [(683, 1), (48912491, e.val)] hperm))
   have htest (q : Nat) : test55 q 48 41 1 d.val e.val =
       test55 q 41 48 1 d.val e.val := by
     exact positionTest_perm 55 q (List.Perm.cons (3, 0) (List.Perm.append_right [(683, 1), (2971, d.val), (48912491, e.val)]
-      (by decide : List.Perm [(11, 48), (11, 41)] [(11, 41), (11, 48)])))
-  exact exclude55_a1_block2 d e
-    ((htest 3).symm.trans h3) ((htest 13).symm.trans h13) ((htest 17).symm.trans h17)
+      hperm))
+  exact exclude55_a1_block2 e (ht3.symm.trans h3) d
+    ((htest 13).symm.trans h13) ((htest 17).symm.trans h17)
 private theorem exclude55_a1_block12 :
-    ∀ d : Fin 55,
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (12 : Fin 19)).1 (forms55_11 (12 : Fin 19)).2 1 d.val e.val = true →
+    ∀ e : Fin 55,
+      test55_3 (forms55_11 (12 : Fin 19)).1 (forms55_11 (12 : Fin 19)).2 1 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 (12 : Fin 19)).1 (forms55_11 (12 : Fin 19)).2 1 d.val e.val = true →
       test55 17 (forms55_11 (12 : Fin 19)).1 (forms55_11 (12 : Fin 19)).2 1 d.val e.val = true →
       False := by
-  intro d e h3 h13 h17
+  intro e h3 d h13 h17
+  have hperm : List.Perm [(11, 48), (11, 42)] [(11, 42), (11, 48)] := by decide
+  have ht3 : test55_3 48 42 1 e.val =
+      test55_3 42 48 1 e.val :=
+    positionTest_perm 55 3 (List.Perm.cons (3, 0) (List.Perm.append_right [(683, 1), (48912491, e.val)] hperm))
   have htest (q : Nat) : test55 q 48 42 1 d.val e.val =
       test55 q 42 48 1 d.val e.val := by
     exact positionTest_perm 55 q (List.Perm.cons (3, 0) (List.Perm.append_right [(683, 1), (2971, d.val), (48912491, e.val)]
-      (by decide : List.Perm [(11, 48), (11, 42)] [(11, 42), (11, 48)])))
-  exact exclude55_a1_block3 d e
-    ((htest 3).symm.trans h3) ((htest 13).symm.trans h13) ((htest 17).symm.trans h17)
+      hperm))
+  exact exclude55_a1_block3 e (ht3.symm.trans h3) d
+    ((htest 13).symm.trans h13) ((htest 17).symm.trans h17)
 private theorem exclude55_a1_block13 :
-    ∀ d : Fin 55,
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (13 : Fin 19)).1 (forms55_11 (13 : Fin 19)).2 1 d.val e.val = true →
+    ∀ e : Fin 55,
+      test55_3 (forms55_11 (13 : Fin 19)).1 (forms55_11 (13 : Fin 19)).2 1 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 (13 : Fin 19)).1 (forms55_11 (13 : Fin 19)).2 1 d.val e.val = true →
       test55 17 (forms55_11 (13 : Fin 19)).1 (forms55_11 (13 : Fin 19)).2 1 d.val e.val = true →
       False := by
-  intro d e h3 h13 h17
+  intro e h3 d h13 h17
+  have hperm : List.Perm [(11, 48), (11, 43)] [(11, 43), (11, 48)] := by decide
+  have ht3 : test55_3 48 43 1 e.val =
+      test55_3 43 48 1 e.val :=
+    positionTest_perm 55 3 (List.Perm.cons (3, 0) (List.Perm.append_right [(683, 1), (48912491, e.val)] hperm))
   have htest (q : Nat) : test55 q 48 43 1 d.val e.val =
       test55 q 43 48 1 d.val e.val := by
     exact positionTest_perm 55 q (List.Perm.cons (3, 0) (List.Perm.append_right [(683, 1), (2971, d.val), (48912491, e.val)]
-      (by decide : List.Perm [(11, 48), (11, 43)] [(11, 43), (11, 48)])))
-  exact exclude55_a1_block4 d e
-    ((htest 3).symm.trans h3) ((htest 13).symm.trans h13) ((htest 17).symm.trans h17)
+      hperm))
+  exact exclude55_a1_block4 e (ht3.symm.trans h3) d
+    ((htest 13).symm.trans h13) ((htest 17).symm.trans h17)
 private theorem exclude55_a1_block14 :
-    ∀ d : Fin 55,
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (14 : Fin 19)).1 (forms55_11 (14 : Fin 19)).2 1 d.val e.val = true →
+    ∀ e : Fin 55,
+      test55_3 (forms55_11 (14 : Fin 19)).1 (forms55_11 (14 : Fin 19)).2 1 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 (14 : Fin 19)).1 (forms55_11 (14 : Fin 19)).2 1 d.val e.val = true →
       test55 17 (forms55_11 (14 : Fin 19)).1 (forms55_11 (14 : Fin 19)).2 1 d.val e.val = true →
       False := by
-  intro d e h3 h13 h17
+  intro e h3 d h13 h17
+  have hperm : List.Perm [(11, 48), (11, 44)] [(11, 44), (11, 48)] := by decide
+  have ht3 : test55_3 48 44 1 e.val =
+      test55_3 44 48 1 e.val :=
+    positionTest_perm 55 3 (List.Perm.cons (3, 0) (List.Perm.append_right [(683, 1), (48912491, e.val)] hperm))
   have htest (q : Nat) : test55 q 48 44 1 d.val e.val =
       test55 q 44 48 1 d.val e.val := by
     exact positionTest_perm 55 q (List.Perm.cons (3, 0) (List.Perm.append_right [(683, 1), (2971, d.val), (48912491, e.val)]
-      (by decide : List.Perm [(11, 48), (11, 44)] [(11, 44), (11, 48)])))
-  exact exclude55_a1_block5 d e
-    ((htest 3).symm.trans h3) ((htest 13).symm.trans h13) ((htest 17).symm.trans h17)
+      hperm))
+  exact exclude55_a1_block5 e (ht3.symm.trans h3) d
+    ((htest 13).symm.trans h13) ((htest 17).symm.trans h17)
 private theorem exclude55_a1_block15 :
-    ∀ d : Fin 55,
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (15 : Fin 19)).1 (forms55_11 (15 : Fin 19)).2 1 d.val e.val = true →
+    ∀ e : Fin 55,
+      test55_3 (forms55_11 (15 : Fin 19)).1 (forms55_11 (15 : Fin 19)).2 1 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 (15 : Fin 19)).1 (forms55_11 (15 : Fin 19)).2 1 d.val e.val = true →
       test55 17 (forms55_11 (15 : Fin 19)).1 (forms55_11 (15 : Fin 19)).2 1 d.val e.val = true →
       False := by
-  intro d e h3 h13 h17
+  intro e h3 d h13 h17
+  have hperm : List.Perm [(11, 48), (11, 45)] [(11, 45), (11, 48)] := by decide
+  have ht3 : test55_3 48 45 1 e.val =
+      test55_3 45 48 1 e.val :=
+    positionTest_perm 55 3 (List.Perm.cons (3, 0) (List.Perm.append_right [(683, 1), (48912491, e.val)] hperm))
   have htest (q : Nat) : test55 q 48 45 1 d.val e.val =
       test55 q 45 48 1 d.val e.val := by
     exact positionTest_perm 55 q (List.Perm.cons (3, 0) (List.Perm.append_right [(683, 1), (2971, d.val), (48912491, e.val)]
-      (by decide : List.Perm [(11, 48), (11, 45)] [(11, 45), (11, 48)])))
-  exact exclude55_a1_block6 d e
-    ((htest 3).symm.trans h3) ((htest 13).symm.trans h13) ((htest 17).symm.trans h17)
+      hperm))
+  exact exclude55_a1_block6 e (ht3.symm.trans h3) d
+    ((htest 13).symm.trans h13) ((htest 17).symm.trans h17)
 private theorem exclude55_a1_block16 :
-    ∀ d : Fin 55,
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (16 : Fin 19)).1 (forms55_11 (16 : Fin 19)).2 1 d.val e.val = true →
+    ∀ e : Fin 55,
+      test55_3 (forms55_11 (16 : Fin 19)).1 (forms55_11 (16 : Fin 19)).2 1 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 (16 : Fin 19)).1 (forms55_11 (16 : Fin 19)).2 1 d.val e.val = true →
       test55 17 (forms55_11 (16 : Fin 19)).1 (forms55_11 (16 : Fin 19)).2 1 d.val e.val = true →
       False := by
-  intro d e h3 h13 h17
+  intro e h3 d h13 h17
+  have hperm : List.Perm [(11, 48), (11, 46)] [(11, 46), (11, 48)] := by decide
+  have ht3 : test55_3 48 46 1 e.val =
+      test55_3 46 48 1 e.val :=
+    positionTest_perm 55 3 (List.Perm.cons (3, 0) (List.Perm.append_right [(683, 1), (48912491, e.val)] hperm))
   have htest (q : Nat) : test55 q 48 46 1 d.val e.val =
       test55 q 46 48 1 d.val e.val := by
     exact positionTest_perm 55 q (List.Perm.cons (3, 0) (List.Perm.append_right [(683, 1), (2971, d.val), (48912491, e.val)]
-      (by decide : List.Perm [(11, 48), (11, 46)] [(11, 46), (11, 48)])))
-  exact exclude55_a1_block7 d e
-    ((htest 3).symm.trans h3) ((htest 13).symm.trans h13) ((htest 17).symm.trans h17)
+      hperm))
+  exact exclude55_a1_block7 e (ht3.symm.trans h3) d
+    ((htest 13).symm.trans h13) ((htest 17).symm.trans h17)
 private theorem exclude55_a1_block17 :
-    ∀ d : Fin 55,
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (17 : Fin 19)).1 (forms55_11 (17 : Fin 19)).2 1 d.val e.val = true →
+    ∀ e : Fin 55,
+      test55_3 (forms55_11 (17 : Fin 19)).1 (forms55_11 (17 : Fin 19)).2 1 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 (17 : Fin 19)).1 (forms55_11 (17 : Fin 19)).2 1 d.val e.val = true →
       test55 17 (forms55_11 (17 : Fin 19)).1 (forms55_11 (17 : Fin 19)).2 1 d.val e.val = true →
       False := by
-  intro d e h3 h13 h17
+  intro e h3 d h13 h17
+  have hperm : List.Perm [(11, 48), (11, 47)] [(11, 47), (11, 48)] := by decide
+  have ht3 : test55_3 48 47 1 e.val =
+      test55_3 47 48 1 e.val :=
+    positionTest_perm 55 3 (List.Perm.cons (3, 0) (List.Perm.append_right [(683, 1), (48912491, e.val)] hperm))
   have htest (q : Nat) : test55 q 48 47 1 d.val e.val =
       test55 q 47 48 1 d.val e.val := by
     exact positionTest_perm 55 q (List.Perm.cons (3, 0) (List.Perm.append_right [(683, 1), (2971, d.val), (48912491, e.val)]
-      (by decide : List.Perm [(11, 48), (11, 47)] [(11, 47), (11, 48)])))
-  exact exclude55_a1_block8 d e
-    ((htest 3).symm.trans h3) ((htest 13).symm.trans h13) ((htest 17).symm.trans h17)
-private theorem exclude55_a1_block18_slice0 :
-    ∀ d : Fin 55, 0 ≤ d.val → d.val < 11 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (18 : Fin 19)).1 (forms55_11 (18 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (18 : Fin 19)).1 (forms55_11 (18 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (18 : Fin 19)).1 (forms55_11 (18 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block18_slice1 :
-    ∀ d : Fin 55, 11 ≤ d.val → d.val < 22 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (18 : Fin 19)).1 (forms55_11 (18 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (18 : Fin 19)).1 (forms55_11 (18 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (18 : Fin 19)).1 (forms55_11 (18 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block18_slice2 :
-    ∀ d : Fin 55, 22 ≤ d.val → d.val < 33 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (18 : Fin 19)).1 (forms55_11 (18 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (18 : Fin 19)).1 (forms55_11 (18 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (18 : Fin 19)).1 (forms55_11 (18 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block18_slice3 :
-    ∀ d : Fin 55, 33 ≤ d.val → d.val < 44 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (18 : Fin 19)).1 (forms55_11 (18 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (18 : Fin 19)).1 (forms55_11 (18 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (18 : Fin 19)).1 (forms55_11 (18 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block18_slice4 :
-    ∀ d : Fin 55, 44 ≤ d.val → d.val < 55 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (18 : Fin 19)).1 (forms55_11 (18 : Fin 19)).2 1 d.val e.val = true →
-      test55 13 (forms55_11 (18 : Fin 19)).1 (forms55_11 (18 : Fin 19)).2 1 d.val e.val = true →
-      test55 17 (forms55_11 (18 : Fin 19)).1 (forms55_11 (18 : Fin 19)).2 1 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a1_block18 (d : Fin 55) :
+      hperm))
+  exact exclude55_a1_block8 e (ht3.symm.trans h3) d
+    ((htest 13).symm.trans h13) ((htest 17).symm.trans h17)
+private theorem exclude55_a1_block18 :
     ∀ e : Fin 55,
-      test55 3 (forms55_11 (18 : Fin 19)).1 (forms55_11 (18 : Fin 19)).2 1 d.val e.val = true →
+      test55_3 (forms55_11 (18 : Fin 19)).1 (forms55_11 (18 : Fin 19)).2 1 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 (18 : Fin 19)).1 (forms55_11 (18 : Fin 19)).2 1 d.val e.val = true →
       test55 17 (forms55_11 (18 : Fin 19)).1 (forms55_11 (18 : Fin 19)).2 1 d.val e.val = true →
       False := by
-  have hbound := d.isLt
-  by_cases h0 : d.val < 11
-  · exact exclude55_a1_block18_slice0 d (by omega) h0
-  by_cases h1 : d.val < 22
-  · exact exclude55_a1_block18_slice1 d (by omega) h1
-  by_cases h2 : d.val < 33
-  · exact exclude55_a1_block18_slice2 d (by omega) h2
-  by_cases h3 : d.val < 44
-  · exact exclude55_a1_block18_slice3 d (by omega) h3
-  exact exclude55_a1_block18_slice4 d (by omega) (by omega)
+  decide +kernel
 private theorem exclude55_a1 (i : Fin 19) :
-    ∀ d : Fin 55,
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 i).1 (forms55_11 i).2 1 d.val e.val = true →
+    ∀ e : Fin 55,
+      test55_3 (forms55_11 i).1 (forms55_11 i).2 1 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 i).1 (forms55_11 i).2 1 d.val e.val = true →
       test55 17 (forms55_11 i).1 (forms55_11 i).2 1 d.val e.val = true →
       False := by
@@ -3635,696 +3766,252 @@ private theorem exclude55_a1 (i : Fin 19) :
   · simpa using exclude55_a1_block17
   · simpa using exclude55_a1_block18
 
-private theorem exclude55_a54_block0_slice0 :
-    ∀ d : Fin 55, 0 ≤ d.val → d.val < 11 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (0 : Fin 19)).1 (forms55_11 (0 : Fin 19)).2 54 d.val e.val = true →
+private theorem exclude55_a54_block0 :
+    ∀ e : Fin 55,
+      test55_3 (forms55_11 (0 : Fin 19)).1 (forms55_11 (0 : Fin 19)).2 54 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 (0 : Fin 19)).1 (forms55_11 (0 : Fin 19)).2 54 d.val e.val = true →
       test55 17 (forms55_11 (0 : Fin 19)).1 (forms55_11 (0 : Fin 19)).2 54 d.val e.val = true →
       False := by
   decide +kernel
-private theorem exclude55_a54_block0_slice1 :
-    ∀ d : Fin 55, 11 ≤ d.val → d.val < 22 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (0 : Fin 19)).1 (forms55_11 (0 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (0 : Fin 19)).1 (forms55_11 (0 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (0 : Fin 19)).1 (forms55_11 (0 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block0_slice2 :
-    ∀ d : Fin 55, 22 ≤ d.val → d.val < 33 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (0 : Fin 19)).1 (forms55_11 (0 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (0 : Fin 19)).1 (forms55_11 (0 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (0 : Fin 19)).1 (forms55_11 (0 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block0_slice3 :
-    ∀ d : Fin 55, 33 ≤ d.val → d.val < 44 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (0 : Fin 19)).1 (forms55_11 (0 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (0 : Fin 19)).1 (forms55_11 (0 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (0 : Fin 19)).1 (forms55_11 (0 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block0_slice4 :
-    ∀ d : Fin 55, 44 ≤ d.val → d.val < 55 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (0 : Fin 19)).1 (forms55_11 (0 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (0 : Fin 19)).1 (forms55_11 (0 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (0 : Fin 19)).1 (forms55_11 (0 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block0 (d : Fin 55) :
+private theorem exclude55_a54_block1 :
     ∀ e : Fin 55,
-      test55 3 (forms55_11 (0 : Fin 19)).1 (forms55_11 (0 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (0 : Fin 19)).1 (forms55_11 (0 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (0 : Fin 19)).1 (forms55_11 (0 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  have hbound := d.isLt
-  by_cases h0 : d.val < 11
-  · exact exclude55_a54_block0_slice0 d (by omega) h0
-  by_cases h1 : d.val < 22
-  · exact exclude55_a54_block0_slice1 d (by omega) h1
-  by_cases h2 : d.val < 33
-  · exact exclude55_a54_block0_slice2 d (by omega) h2
-  by_cases h3 : d.val < 44
-  · exact exclude55_a54_block0_slice3 d (by omega) h3
-  exact exclude55_a54_block0_slice4 d (by omega) (by omega)
-private theorem exclude55_a54_block1_slice0 :
-    ∀ d : Fin 55, 0 ≤ d.val → d.val < 11 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (1 : Fin 19)).1 (forms55_11 (1 : Fin 19)).2 54 d.val e.val = true →
+      test55_3 (forms55_11 (1 : Fin 19)).1 (forms55_11 (1 : Fin 19)).2 54 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 (1 : Fin 19)).1 (forms55_11 (1 : Fin 19)).2 54 d.val e.val = true →
       test55 17 (forms55_11 (1 : Fin 19)).1 (forms55_11 (1 : Fin 19)).2 54 d.val e.val = true →
       False := by
   decide +kernel
-private theorem exclude55_a54_block1_slice1 :
-    ∀ d : Fin 55, 11 ≤ d.val → d.val < 22 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (1 : Fin 19)).1 (forms55_11 (1 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (1 : Fin 19)).1 (forms55_11 (1 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (1 : Fin 19)).1 (forms55_11 (1 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block1_slice2 :
-    ∀ d : Fin 55, 22 ≤ d.val → d.val < 33 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (1 : Fin 19)).1 (forms55_11 (1 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (1 : Fin 19)).1 (forms55_11 (1 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (1 : Fin 19)).1 (forms55_11 (1 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block1_slice3 :
-    ∀ d : Fin 55, 33 ≤ d.val → d.val < 44 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (1 : Fin 19)).1 (forms55_11 (1 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (1 : Fin 19)).1 (forms55_11 (1 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (1 : Fin 19)).1 (forms55_11 (1 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block1_slice4 :
-    ∀ d : Fin 55, 44 ≤ d.val → d.val < 55 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (1 : Fin 19)).1 (forms55_11 (1 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (1 : Fin 19)).1 (forms55_11 (1 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (1 : Fin 19)).1 (forms55_11 (1 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block1 (d : Fin 55) :
+private theorem exclude55_a54_block2 :
     ∀ e : Fin 55,
-      test55 3 (forms55_11 (1 : Fin 19)).1 (forms55_11 (1 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (1 : Fin 19)).1 (forms55_11 (1 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (1 : Fin 19)).1 (forms55_11 (1 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  have hbound := d.isLt
-  by_cases h0 : d.val < 11
-  · exact exclude55_a54_block1_slice0 d (by omega) h0
-  by_cases h1 : d.val < 22
-  · exact exclude55_a54_block1_slice1 d (by omega) h1
-  by_cases h2 : d.val < 33
-  · exact exclude55_a54_block1_slice2 d (by omega) h2
-  by_cases h3 : d.val < 44
-  · exact exclude55_a54_block1_slice3 d (by omega) h3
-  exact exclude55_a54_block1_slice4 d (by omega) (by omega)
-private theorem exclude55_a54_block2_slice0 :
-    ∀ d : Fin 55, 0 ≤ d.val → d.val < 11 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (2 : Fin 19)).1 (forms55_11 (2 : Fin 19)).2 54 d.val e.val = true →
+      test55_3 (forms55_11 (2 : Fin 19)).1 (forms55_11 (2 : Fin 19)).2 54 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 (2 : Fin 19)).1 (forms55_11 (2 : Fin 19)).2 54 d.val e.val = true →
       test55 17 (forms55_11 (2 : Fin 19)).1 (forms55_11 (2 : Fin 19)).2 54 d.val e.val = true →
       False := by
   decide +kernel
-private theorem exclude55_a54_block2_slice1 :
-    ∀ d : Fin 55, 11 ≤ d.val → d.val < 22 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (2 : Fin 19)).1 (forms55_11 (2 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (2 : Fin 19)).1 (forms55_11 (2 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (2 : Fin 19)).1 (forms55_11 (2 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block2_slice2 :
-    ∀ d : Fin 55, 22 ≤ d.val → d.val < 33 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (2 : Fin 19)).1 (forms55_11 (2 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (2 : Fin 19)).1 (forms55_11 (2 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (2 : Fin 19)).1 (forms55_11 (2 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block2_slice3 :
-    ∀ d : Fin 55, 33 ≤ d.val → d.val < 44 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (2 : Fin 19)).1 (forms55_11 (2 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (2 : Fin 19)).1 (forms55_11 (2 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (2 : Fin 19)).1 (forms55_11 (2 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block2_slice4 :
-    ∀ d : Fin 55, 44 ≤ d.val → d.val < 55 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (2 : Fin 19)).1 (forms55_11 (2 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (2 : Fin 19)).1 (forms55_11 (2 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (2 : Fin 19)).1 (forms55_11 (2 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block2 (d : Fin 55) :
+private theorem exclude55_a54_block3 :
     ∀ e : Fin 55,
-      test55 3 (forms55_11 (2 : Fin 19)).1 (forms55_11 (2 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (2 : Fin 19)).1 (forms55_11 (2 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (2 : Fin 19)).1 (forms55_11 (2 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  have hbound := d.isLt
-  by_cases h0 : d.val < 11
-  · exact exclude55_a54_block2_slice0 d (by omega) h0
-  by_cases h1 : d.val < 22
-  · exact exclude55_a54_block2_slice1 d (by omega) h1
-  by_cases h2 : d.val < 33
-  · exact exclude55_a54_block2_slice2 d (by omega) h2
-  by_cases h3 : d.val < 44
-  · exact exclude55_a54_block2_slice3 d (by omega) h3
-  exact exclude55_a54_block2_slice4 d (by omega) (by omega)
-private theorem exclude55_a54_block3_slice0 :
-    ∀ d : Fin 55, 0 ≤ d.val → d.val < 11 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (3 : Fin 19)).1 (forms55_11 (3 : Fin 19)).2 54 d.val e.val = true →
+      test55_3 (forms55_11 (3 : Fin 19)).1 (forms55_11 (3 : Fin 19)).2 54 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 (3 : Fin 19)).1 (forms55_11 (3 : Fin 19)).2 54 d.val e.val = true →
       test55 17 (forms55_11 (3 : Fin 19)).1 (forms55_11 (3 : Fin 19)).2 54 d.val e.val = true →
       False := by
   decide +kernel
-private theorem exclude55_a54_block3_slice1 :
-    ∀ d : Fin 55, 11 ≤ d.val → d.val < 22 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (3 : Fin 19)).1 (forms55_11 (3 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (3 : Fin 19)).1 (forms55_11 (3 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (3 : Fin 19)).1 (forms55_11 (3 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block3_slice2 :
-    ∀ d : Fin 55, 22 ≤ d.val → d.val < 33 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (3 : Fin 19)).1 (forms55_11 (3 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (3 : Fin 19)).1 (forms55_11 (3 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (3 : Fin 19)).1 (forms55_11 (3 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block3_slice3 :
-    ∀ d : Fin 55, 33 ≤ d.val → d.val < 44 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (3 : Fin 19)).1 (forms55_11 (3 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (3 : Fin 19)).1 (forms55_11 (3 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (3 : Fin 19)).1 (forms55_11 (3 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block3_slice4 :
-    ∀ d : Fin 55, 44 ≤ d.val → d.val < 55 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (3 : Fin 19)).1 (forms55_11 (3 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (3 : Fin 19)).1 (forms55_11 (3 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (3 : Fin 19)).1 (forms55_11 (3 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block3 (d : Fin 55) :
+private theorem exclude55_a54_block4 :
     ∀ e : Fin 55,
-      test55 3 (forms55_11 (3 : Fin 19)).1 (forms55_11 (3 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (3 : Fin 19)).1 (forms55_11 (3 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (3 : Fin 19)).1 (forms55_11 (3 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  have hbound := d.isLt
-  by_cases h0 : d.val < 11
-  · exact exclude55_a54_block3_slice0 d (by omega) h0
-  by_cases h1 : d.val < 22
-  · exact exclude55_a54_block3_slice1 d (by omega) h1
-  by_cases h2 : d.val < 33
-  · exact exclude55_a54_block3_slice2 d (by omega) h2
-  by_cases h3 : d.val < 44
-  · exact exclude55_a54_block3_slice3 d (by omega) h3
-  exact exclude55_a54_block3_slice4 d (by omega) (by omega)
-private theorem exclude55_a54_block4_slice0 :
-    ∀ d : Fin 55, 0 ≤ d.val → d.val < 11 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (4 : Fin 19)).1 (forms55_11 (4 : Fin 19)).2 54 d.val e.val = true →
+      test55_3 (forms55_11 (4 : Fin 19)).1 (forms55_11 (4 : Fin 19)).2 54 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 (4 : Fin 19)).1 (forms55_11 (4 : Fin 19)).2 54 d.val e.val = true →
       test55 17 (forms55_11 (4 : Fin 19)).1 (forms55_11 (4 : Fin 19)).2 54 d.val e.val = true →
       False := by
   decide +kernel
-private theorem exclude55_a54_block4_slice1 :
-    ∀ d : Fin 55, 11 ≤ d.val → d.val < 22 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (4 : Fin 19)).1 (forms55_11 (4 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (4 : Fin 19)).1 (forms55_11 (4 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (4 : Fin 19)).1 (forms55_11 (4 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block4_slice2 :
-    ∀ d : Fin 55, 22 ≤ d.val → d.val < 33 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (4 : Fin 19)).1 (forms55_11 (4 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (4 : Fin 19)).1 (forms55_11 (4 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (4 : Fin 19)).1 (forms55_11 (4 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block4_slice3 :
-    ∀ d : Fin 55, 33 ≤ d.val → d.val < 44 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (4 : Fin 19)).1 (forms55_11 (4 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (4 : Fin 19)).1 (forms55_11 (4 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (4 : Fin 19)).1 (forms55_11 (4 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block4_slice4 :
-    ∀ d : Fin 55, 44 ≤ d.val → d.val < 55 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (4 : Fin 19)).1 (forms55_11 (4 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (4 : Fin 19)).1 (forms55_11 (4 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (4 : Fin 19)).1 (forms55_11 (4 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block4 (d : Fin 55) :
+private theorem exclude55_a54_block5 :
     ∀ e : Fin 55,
-      test55 3 (forms55_11 (4 : Fin 19)).1 (forms55_11 (4 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (4 : Fin 19)).1 (forms55_11 (4 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (4 : Fin 19)).1 (forms55_11 (4 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  have hbound := d.isLt
-  by_cases h0 : d.val < 11
-  · exact exclude55_a54_block4_slice0 d (by omega) h0
-  by_cases h1 : d.val < 22
-  · exact exclude55_a54_block4_slice1 d (by omega) h1
-  by_cases h2 : d.val < 33
-  · exact exclude55_a54_block4_slice2 d (by omega) h2
-  by_cases h3 : d.val < 44
-  · exact exclude55_a54_block4_slice3 d (by omega) h3
-  exact exclude55_a54_block4_slice4 d (by omega) (by omega)
-private theorem exclude55_a54_block5_slice0 :
-    ∀ d : Fin 55, 0 ≤ d.val → d.val < 11 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (5 : Fin 19)).1 (forms55_11 (5 : Fin 19)).2 54 d.val e.val = true →
+      test55_3 (forms55_11 (5 : Fin 19)).1 (forms55_11 (5 : Fin 19)).2 54 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 (5 : Fin 19)).1 (forms55_11 (5 : Fin 19)).2 54 d.val e.val = true →
       test55 17 (forms55_11 (5 : Fin 19)).1 (forms55_11 (5 : Fin 19)).2 54 d.val e.val = true →
       False := by
   decide +kernel
-private theorem exclude55_a54_block5_slice1 :
-    ∀ d : Fin 55, 11 ≤ d.val → d.val < 22 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (5 : Fin 19)).1 (forms55_11 (5 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (5 : Fin 19)).1 (forms55_11 (5 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (5 : Fin 19)).1 (forms55_11 (5 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block5_slice2 :
-    ∀ d : Fin 55, 22 ≤ d.val → d.val < 33 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (5 : Fin 19)).1 (forms55_11 (5 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (5 : Fin 19)).1 (forms55_11 (5 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (5 : Fin 19)).1 (forms55_11 (5 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block5_slice3 :
-    ∀ d : Fin 55, 33 ≤ d.val → d.val < 44 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (5 : Fin 19)).1 (forms55_11 (5 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (5 : Fin 19)).1 (forms55_11 (5 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (5 : Fin 19)).1 (forms55_11 (5 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block5_slice4 :
-    ∀ d : Fin 55, 44 ≤ d.val → d.val < 55 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (5 : Fin 19)).1 (forms55_11 (5 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (5 : Fin 19)).1 (forms55_11 (5 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (5 : Fin 19)).1 (forms55_11 (5 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block5 (d : Fin 55) :
+private theorem exclude55_a54_block6 :
     ∀ e : Fin 55,
-      test55 3 (forms55_11 (5 : Fin 19)).1 (forms55_11 (5 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (5 : Fin 19)).1 (forms55_11 (5 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (5 : Fin 19)).1 (forms55_11 (5 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  have hbound := d.isLt
-  by_cases h0 : d.val < 11
-  · exact exclude55_a54_block5_slice0 d (by omega) h0
-  by_cases h1 : d.val < 22
-  · exact exclude55_a54_block5_slice1 d (by omega) h1
-  by_cases h2 : d.val < 33
-  · exact exclude55_a54_block5_slice2 d (by omega) h2
-  by_cases h3 : d.val < 44
-  · exact exclude55_a54_block5_slice3 d (by omega) h3
-  exact exclude55_a54_block5_slice4 d (by omega) (by omega)
-private theorem exclude55_a54_block6_slice0 :
-    ∀ d : Fin 55, 0 ≤ d.val → d.val < 11 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (6 : Fin 19)).1 (forms55_11 (6 : Fin 19)).2 54 d.val e.val = true →
+      test55_3 (forms55_11 (6 : Fin 19)).1 (forms55_11 (6 : Fin 19)).2 54 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 (6 : Fin 19)).1 (forms55_11 (6 : Fin 19)).2 54 d.val e.val = true →
       test55 17 (forms55_11 (6 : Fin 19)).1 (forms55_11 (6 : Fin 19)).2 54 d.val e.val = true →
       False := by
   decide +kernel
-private theorem exclude55_a54_block6_slice1 :
-    ∀ d : Fin 55, 11 ≤ d.val → d.val < 22 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (6 : Fin 19)).1 (forms55_11 (6 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (6 : Fin 19)).1 (forms55_11 (6 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (6 : Fin 19)).1 (forms55_11 (6 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block6_slice2 :
-    ∀ d : Fin 55, 22 ≤ d.val → d.val < 33 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (6 : Fin 19)).1 (forms55_11 (6 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (6 : Fin 19)).1 (forms55_11 (6 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (6 : Fin 19)).1 (forms55_11 (6 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block6_slice3 :
-    ∀ d : Fin 55, 33 ≤ d.val → d.val < 44 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (6 : Fin 19)).1 (forms55_11 (6 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (6 : Fin 19)).1 (forms55_11 (6 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (6 : Fin 19)).1 (forms55_11 (6 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block6_slice4 :
-    ∀ d : Fin 55, 44 ≤ d.val → d.val < 55 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (6 : Fin 19)).1 (forms55_11 (6 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (6 : Fin 19)).1 (forms55_11 (6 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (6 : Fin 19)).1 (forms55_11 (6 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block6 (d : Fin 55) :
+private theorem exclude55_a54_block7 :
     ∀ e : Fin 55,
-      test55 3 (forms55_11 (6 : Fin 19)).1 (forms55_11 (6 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (6 : Fin 19)).1 (forms55_11 (6 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (6 : Fin 19)).1 (forms55_11 (6 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  have hbound := d.isLt
-  by_cases h0 : d.val < 11
-  · exact exclude55_a54_block6_slice0 d (by omega) h0
-  by_cases h1 : d.val < 22
-  · exact exclude55_a54_block6_slice1 d (by omega) h1
-  by_cases h2 : d.val < 33
-  · exact exclude55_a54_block6_slice2 d (by omega) h2
-  by_cases h3 : d.val < 44
-  · exact exclude55_a54_block6_slice3 d (by omega) h3
-  exact exclude55_a54_block6_slice4 d (by omega) (by omega)
-private theorem exclude55_a54_block7_slice0 :
-    ∀ d : Fin 55, 0 ≤ d.val → d.val < 11 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (7 : Fin 19)).1 (forms55_11 (7 : Fin 19)).2 54 d.val e.val = true →
+      test55_3 (forms55_11 (7 : Fin 19)).1 (forms55_11 (7 : Fin 19)).2 54 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 (7 : Fin 19)).1 (forms55_11 (7 : Fin 19)).2 54 d.val e.val = true →
       test55 17 (forms55_11 (7 : Fin 19)).1 (forms55_11 (7 : Fin 19)).2 54 d.val e.val = true →
       False := by
   decide +kernel
-private theorem exclude55_a54_block7_slice1 :
-    ∀ d : Fin 55, 11 ≤ d.val → d.val < 22 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (7 : Fin 19)).1 (forms55_11 (7 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (7 : Fin 19)).1 (forms55_11 (7 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (7 : Fin 19)).1 (forms55_11 (7 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block7_slice2 :
-    ∀ d : Fin 55, 22 ≤ d.val → d.val < 33 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (7 : Fin 19)).1 (forms55_11 (7 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (7 : Fin 19)).1 (forms55_11 (7 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (7 : Fin 19)).1 (forms55_11 (7 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block7_slice3 :
-    ∀ d : Fin 55, 33 ≤ d.val → d.val < 44 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (7 : Fin 19)).1 (forms55_11 (7 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (7 : Fin 19)).1 (forms55_11 (7 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (7 : Fin 19)).1 (forms55_11 (7 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block7_slice4 :
-    ∀ d : Fin 55, 44 ≤ d.val → d.val < 55 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (7 : Fin 19)).1 (forms55_11 (7 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (7 : Fin 19)).1 (forms55_11 (7 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (7 : Fin 19)).1 (forms55_11 (7 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block7 (d : Fin 55) :
+private theorem exclude55_a54_block8 :
     ∀ e : Fin 55,
-      test55 3 (forms55_11 (7 : Fin 19)).1 (forms55_11 (7 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (7 : Fin 19)).1 (forms55_11 (7 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (7 : Fin 19)).1 (forms55_11 (7 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  have hbound := d.isLt
-  by_cases h0 : d.val < 11
-  · exact exclude55_a54_block7_slice0 d (by omega) h0
-  by_cases h1 : d.val < 22
-  · exact exclude55_a54_block7_slice1 d (by omega) h1
-  by_cases h2 : d.val < 33
-  · exact exclude55_a54_block7_slice2 d (by omega) h2
-  by_cases h3 : d.val < 44
-  · exact exclude55_a54_block7_slice3 d (by omega) h3
-  exact exclude55_a54_block7_slice4 d (by omega) (by omega)
-private theorem exclude55_a54_block8_slice0 :
-    ∀ d : Fin 55, 0 ≤ d.val → d.val < 11 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (8 : Fin 19)).1 (forms55_11 (8 : Fin 19)).2 54 d.val e.val = true →
+      test55_3 (forms55_11 (8 : Fin 19)).1 (forms55_11 (8 : Fin 19)).2 54 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 (8 : Fin 19)).1 (forms55_11 (8 : Fin 19)).2 54 d.val e.val = true →
       test55 17 (forms55_11 (8 : Fin 19)).1 (forms55_11 (8 : Fin 19)).2 54 d.val e.val = true →
       False := by
   decide +kernel
-private theorem exclude55_a54_block8_slice1 :
-    ∀ d : Fin 55, 11 ≤ d.val → d.val < 22 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (8 : Fin 19)).1 (forms55_11 (8 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (8 : Fin 19)).1 (forms55_11 (8 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (8 : Fin 19)).1 (forms55_11 (8 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block8_slice2 :
-    ∀ d : Fin 55, 22 ≤ d.val → d.val < 33 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (8 : Fin 19)).1 (forms55_11 (8 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (8 : Fin 19)).1 (forms55_11 (8 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (8 : Fin 19)).1 (forms55_11 (8 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block8_slice3 :
-    ∀ d : Fin 55, 33 ≤ d.val → d.val < 44 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (8 : Fin 19)).1 (forms55_11 (8 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (8 : Fin 19)).1 (forms55_11 (8 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (8 : Fin 19)).1 (forms55_11 (8 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block8_slice4 :
-    ∀ d : Fin 55, 44 ≤ d.val → d.val < 55 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (8 : Fin 19)).1 (forms55_11 (8 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (8 : Fin 19)).1 (forms55_11 (8 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (8 : Fin 19)).1 (forms55_11 (8 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block8 (d : Fin 55) :
-    ∀ e : Fin 55,
-      test55 3 (forms55_11 (8 : Fin 19)).1 (forms55_11 (8 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (8 : Fin 19)).1 (forms55_11 (8 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (8 : Fin 19)).1 (forms55_11 (8 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  have hbound := d.isLt
-  by_cases h0 : d.val < 11
-  · exact exclude55_a54_block8_slice0 d (by omega) h0
-  by_cases h1 : d.val < 22
-  · exact exclude55_a54_block8_slice1 d (by omega) h1
-  by_cases h2 : d.val < 33
-  · exact exclude55_a54_block8_slice2 d (by omega) h2
-  by_cases h3 : d.val < 44
-  · exact exclude55_a54_block8_slice3 d (by omega) h3
-  exact exclude55_a54_block8_slice4 d (by omega) (by omega)
 private theorem exclude55_a54_block9 :
-    ∀ d : Fin 55,
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (9 : Fin 19)).1 (forms55_11 (9 : Fin 19)).2 54 d.val e.val = true →
+    ∀ e : Fin 55,
+      test55_3 (forms55_11 (9 : Fin 19)).1 (forms55_11 (9 : Fin 19)).2 54 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 (9 : Fin 19)).1 (forms55_11 (9 : Fin 19)).2 54 d.val e.val = true →
       test55 17 (forms55_11 (9 : Fin 19)).1 (forms55_11 (9 : Fin 19)).2 54 d.val e.val = true →
       False := by
-  intro d e h3 h13 h17
+  intro e h3 d h13 h17
+  have hperm : List.Perm [(11, 48), (11, 39)] [(11, 39), (11, 48)] := by decide
+  have ht3 : test55_3 48 39 54 e.val =
+      test55_3 39 48 54 e.val :=
+    positionTest_perm 55 3 (List.Perm.cons (3, 0) (List.Perm.append_right [(683, 54), (48912491, e.val)] hperm))
   have htest (q : Nat) : test55 q 48 39 54 d.val e.val =
       test55 q 39 48 54 d.val e.val := by
     exact positionTest_perm 55 q (List.Perm.cons (3, 0) (List.Perm.append_right [(683, 54), (2971, d.val), (48912491, e.val)]
-      (by decide : List.Perm [(11, 48), (11, 39)] [(11, 39), (11, 48)])))
-  exact exclude55_a54_block0 d e
-    ((htest 3).symm.trans h3) ((htest 13).symm.trans h13) ((htest 17).symm.trans h17)
+      hperm))
+  exact exclude55_a54_block0 e (ht3.symm.trans h3) d
+    ((htest 13).symm.trans h13) ((htest 17).symm.trans h17)
 private theorem exclude55_a54_block10 :
-    ∀ d : Fin 55,
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (10 : Fin 19)).1 (forms55_11 (10 : Fin 19)).2 54 d.val e.val = true →
+    ∀ e : Fin 55,
+      test55_3 (forms55_11 (10 : Fin 19)).1 (forms55_11 (10 : Fin 19)).2 54 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 (10 : Fin 19)).1 (forms55_11 (10 : Fin 19)).2 54 d.val e.val = true →
       test55 17 (forms55_11 (10 : Fin 19)).1 (forms55_11 (10 : Fin 19)).2 54 d.val e.val = true →
       False := by
-  intro d e h3 h13 h17
+  intro e h3 d h13 h17
+  have hperm : List.Perm [(11, 48), (11, 40)] [(11, 40), (11, 48)] := by decide
+  have ht3 : test55_3 48 40 54 e.val =
+      test55_3 40 48 54 e.val :=
+    positionTest_perm 55 3 (List.Perm.cons (3, 0) (List.Perm.append_right [(683, 54), (48912491, e.val)] hperm))
   have htest (q : Nat) : test55 q 48 40 54 d.val e.val =
       test55 q 40 48 54 d.val e.val := by
     exact positionTest_perm 55 q (List.Perm.cons (3, 0) (List.Perm.append_right [(683, 54), (2971, d.val), (48912491, e.val)]
-      (by decide : List.Perm [(11, 48), (11, 40)] [(11, 40), (11, 48)])))
-  exact exclude55_a54_block1 d e
-    ((htest 3).symm.trans h3) ((htest 13).symm.trans h13) ((htest 17).symm.trans h17)
+      hperm))
+  exact exclude55_a54_block1 e (ht3.symm.trans h3) d
+    ((htest 13).symm.trans h13) ((htest 17).symm.trans h17)
 private theorem exclude55_a54_block11 :
-    ∀ d : Fin 55,
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (11 : Fin 19)).1 (forms55_11 (11 : Fin 19)).2 54 d.val e.val = true →
+    ∀ e : Fin 55,
+      test55_3 (forms55_11 (11 : Fin 19)).1 (forms55_11 (11 : Fin 19)).2 54 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 (11 : Fin 19)).1 (forms55_11 (11 : Fin 19)).2 54 d.val e.val = true →
       test55 17 (forms55_11 (11 : Fin 19)).1 (forms55_11 (11 : Fin 19)).2 54 d.val e.val = true →
       False := by
-  intro d e h3 h13 h17
+  intro e h3 d h13 h17
+  have hperm : List.Perm [(11, 48), (11, 41)] [(11, 41), (11, 48)] := by decide
+  have ht3 : test55_3 48 41 54 e.val =
+      test55_3 41 48 54 e.val :=
+    positionTest_perm 55 3 (List.Perm.cons (3, 0) (List.Perm.append_right [(683, 54), (48912491, e.val)] hperm))
   have htest (q : Nat) : test55 q 48 41 54 d.val e.val =
       test55 q 41 48 54 d.val e.val := by
     exact positionTest_perm 55 q (List.Perm.cons (3, 0) (List.Perm.append_right [(683, 54), (2971, d.val), (48912491, e.val)]
-      (by decide : List.Perm [(11, 48), (11, 41)] [(11, 41), (11, 48)])))
-  exact exclude55_a54_block2 d e
-    ((htest 3).symm.trans h3) ((htest 13).symm.trans h13) ((htest 17).symm.trans h17)
+      hperm))
+  exact exclude55_a54_block2 e (ht3.symm.trans h3) d
+    ((htest 13).symm.trans h13) ((htest 17).symm.trans h17)
 private theorem exclude55_a54_block12 :
-    ∀ d : Fin 55,
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (12 : Fin 19)).1 (forms55_11 (12 : Fin 19)).2 54 d.val e.val = true →
+    ∀ e : Fin 55,
+      test55_3 (forms55_11 (12 : Fin 19)).1 (forms55_11 (12 : Fin 19)).2 54 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 (12 : Fin 19)).1 (forms55_11 (12 : Fin 19)).2 54 d.val e.val = true →
       test55 17 (forms55_11 (12 : Fin 19)).1 (forms55_11 (12 : Fin 19)).2 54 d.val e.val = true →
       False := by
-  intro d e h3 h13 h17
+  intro e h3 d h13 h17
+  have hperm : List.Perm [(11, 48), (11, 42)] [(11, 42), (11, 48)] := by decide
+  have ht3 : test55_3 48 42 54 e.val =
+      test55_3 42 48 54 e.val :=
+    positionTest_perm 55 3 (List.Perm.cons (3, 0) (List.Perm.append_right [(683, 54), (48912491, e.val)] hperm))
   have htest (q : Nat) : test55 q 48 42 54 d.val e.val =
       test55 q 42 48 54 d.val e.val := by
     exact positionTest_perm 55 q (List.Perm.cons (3, 0) (List.Perm.append_right [(683, 54), (2971, d.val), (48912491, e.val)]
-      (by decide : List.Perm [(11, 48), (11, 42)] [(11, 42), (11, 48)])))
-  exact exclude55_a54_block3 d e
-    ((htest 3).symm.trans h3) ((htest 13).symm.trans h13) ((htest 17).symm.trans h17)
+      hperm))
+  exact exclude55_a54_block3 e (ht3.symm.trans h3) d
+    ((htest 13).symm.trans h13) ((htest 17).symm.trans h17)
 private theorem exclude55_a54_block13 :
-    ∀ d : Fin 55,
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (13 : Fin 19)).1 (forms55_11 (13 : Fin 19)).2 54 d.val e.val = true →
+    ∀ e : Fin 55,
+      test55_3 (forms55_11 (13 : Fin 19)).1 (forms55_11 (13 : Fin 19)).2 54 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 (13 : Fin 19)).1 (forms55_11 (13 : Fin 19)).2 54 d.val e.val = true →
       test55 17 (forms55_11 (13 : Fin 19)).1 (forms55_11 (13 : Fin 19)).2 54 d.val e.val = true →
       False := by
-  intro d e h3 h13 h17
+  intro e h3 d h13 h17
+  have hperm : List.Perm [(11, 48), (11, 43)] [(11, 43), (11, 48)] := by decide
+  have ht3 : test55_3 48 43 54 e.val =
+      test55_3 43 48 54 e.val :=
+    positionTest_perm 55 3 (List.Perm.cons (3, 0) (List.Perm.append_right [(683, 54), (48912491, e.val)] hperm))
   have htest (q : Nat) : test55 q 48 43 54 d.val e.val =
       test55 q 43 48 54 d.val e.val := by
     exact positionTest_perm 55 q (List.Perm.cons (3, 0) (List.Perm.append_right [(683, 54), (2971, d.val), (48912491, e.val)]
-      (by decide : List.Perm [(11, 48), (11, 43)] [(11, 43), (11, 48)])))
-  exact exclude55_a54_block4 d e
-    ((htest 3).symm.trans h3) ((htest 13).symm.trans h13) ((htest 17).symm.trans h17)
+      hperm))
+  exact exclude55_a54_block4 e (ht3.symm.trans h3) d
+    ((htest 13).symm.trans h13) ((htest 17).symm.trans h17)
 private theorem exclude55_a54_block14 :
-    ∀ d : Fin 55,
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (14 : Fin 19)).1 (forms55_11 (14 : Fin 19)).2 54 d.val e.val = true →
+    ∀ e : Fin 55,
+      test55_3 (forms55_11 (14 : Fin 19)).1 (forms55_11 (14 : Fin 19)).2 54 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 (14 : Fin 19)).1 (forms55_11 (14 : Fin 19)).2 54 d.val e.val = true →
       test55 17 (forms55_11 (14 : Fin 19)).1 (forms55_11 (14 : Fin 19)).2 54 d.val e.val = true →
       False := by
-  intro d e h3 h13 h17
+  intro e h3 d h13 h17
+  have hperm : List.Perm [(11, 48), (11, 44)] [(11, 44), (11, 48)] := by decide
+  have ht3 : test55_3 48 44 54 e.val =
+      test55_3 44 48 54 e.val :=
+    positionTest_perm 55 3 (List.Perm.cons (3, 0) (List.Perm.append_right [(683, 54), (48912491, e.val)] hperm))
   have htest (q : Nat) : test55 q 48 44 54 d.val e.val =
       test55 q 44 48 54 d.val e.val := by
     exact positionTest_perm 55 q (List.Perm.cons (3, 0) (List.Perm.append_right [(683, 54), (2971, d.val), (48912491, e.val)]
-      (by decide : List.Perm [(11, 48), (11, 44)] [(11, 44), (11, 48)])))
-  exact exclude55_a54_block5 d e
-    ((htest 3).symm.trans h3) ((htest 13).symm.trans h13) ((htest 17).symm.trans h17)
+      hperm))
+  exact exclude55_a54_block5 e (ht3.symm.trans h3) d
+    ((htest 13).symm.trans h13) ((htest 17).symm.trans h17)
 private theorem exclude55_a54_block15 :
-    ∀ d : Fin 55,
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (15 : Fin 19)).1 (forms55_11 (15 : Fin 19)).2 54 d.val e.val = true →
+    ∀ e : Fin 55,
+      test55_3 (forms55_11 (15 : Fin 19)).1 (forms55_11 (15 : Fin 19)).2 54 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 (15 : Fin 19)).1 (forms55_11 (15 : Fin 19)).2 54 d.val e.val = true →
       test55 17 (forms55_11 (15 : Fin 19)).1 (forms55_11 (15 : Fin 19)).2 54 d.val e.val = true →
       False := by
-  intro d e h3 h13 h17
+  intro e h3 d h13 h17
+  have hperm : List.Perm [(11, 48), (11, 45)] [(11, 45), (11, 48)] := by decide
+  have ht3 : test55_3 48 45 54 e.val =
+      test55_3 45 48 54 e.val :=
+    positionTest_perm 55 3 (List.Perm.cons (3, 0) (List.Perm.append_right [(683, 54), (48912491, e.val)] hperm))
   have htest (q : Nat) : test55 q 48 45 54 d.val e.val =
       test55 q 45 48 54 d.val e.val := by
     exact positionTest_perm 55 q (List.Perm.cons (3, 0) (List.Perm.append_right [(683, 54), (2971, d.val), (48912491, e.val)]
-      (by decide : List.Perm [(11, 48), (11, 45)] [(11, 45), (11, 48)])))
-  exact exclude55_a54_block6 d e
-    ((htest 3).symm.trans h3) ((htest 13).symm.trans h13) ((htest 17).symm.trans h17)
+      hperm))
+  exact exclude55_a54_block6 e (ht3.symm.trans h3) d
+    ((htest 13).symm.trans h13) ((htest 17).symm.trans h17)
 private theorem exclude55_a54_block16 :
-    ∀ d : Fin 55,
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (16 : Fin 19)).1 (forms55_11 (16 : Fin 19)).2 54 d.val e.val = true →
+    ∀ e : Fin 55,
+      test55_3 (forms55_11 (16 : Fin 19)).1 (forms55_11 (16 : Fin 19)).2 54 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 (16 : Fin 19)).1 (forms55_11 (16 : Fin 19)).2 54 d.val e.val = true →
       test55 17 (forms55_11 (16 : Fin 19)).1 (forms55_11 (16 : Fin 19)).2 54 d.val e.val = true →
       False := by
-  intro d e h3 h13 h17
+  intro e h3 d h13 h17
+  have hperm : List.Perm [(11, 48), (11, 46)] [(11, 46), (11, 48)] := by decide
+  have ht3 : test55_3 48 46 54 e.val =
+      test55_3 46 48 54 e.val :=
+    positionTest_perm 55 3 (List.Perm.cons (3, 0) (List.Perm.append_right [(683, 54), (48912491, e.val)] hperm))
   have htest (q : Nat) : test55 q 48 46 54 d.val e.val =
       test55 q 46 48 54 d.val e.val := by
     exact positionTest_perm 55 q (List.Perm.cons (3, 0) (List.Perm.append_right [(683, 54), (2971, d.val), (48912491, e.val)]
-      (by decide : List.Perm [(11, 48), (11, 46)] [(11, 46), (11, 48)])))
-  exact exclude55_a54_block7 d e
-    ((htest 3).symm.trans h3) ((htest 13).symm.trans h13) ((htest 17).symm.trans h17)
+      hperm))
+  exact exclude55_a54_block7 e (ht3.symm.trans h3) d
+    ((htest 13).symm.trans h13) ((htest 17).symm.trans h17)
 private theorem exclude55_a54_block17 :
-    ∀ d : Fin 55,
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (17 : Fin 19)).1 (forms55_11 (17 : Fin 19)).2 54 d.val e.val = true →
+    ∀ e : Fin 55,
+      test55_3 (forms55_11 (17 : Fin 19)).1 (forms55_11 (17 : Fin 19)).2 54 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 (17 : Fin 19)).1 (forms55_11 (17 : Fin 19)).2 54 d.val e.val = true →
       test55 17 (forms55_11 (17 : Fin 19)).1 (forms55_11 (17 : Fin 19)).2 54 d.val e.val = true →
       False := by
-  intro d e h3 h13 h17
+  intro e h3 d h13 h17
+  have hperm : List.Perm [(11, 48), (11, 47)] [(11, 47), (11, 48)] := by decide
+  have ht3 : test55_3 48 47 54 e.val =
+      test55_3 47 48 54 e.val :=
+    positionTest_perm 55 3 (List.Perm.cons (3, 0) (List.Perm.append_right [(683, 54), (48912491, e.val)] hperm))
   have htest (q : Nat) : test55 q 48 47 54 d.val e.val =
       test55 q 47 48 54 d.val e.val := by
     exact positionTest_perm 55 q (List.Perm.cons (3, 0) (List.Perm.append_right [(683, 54), (2971, d.val), (48912491, e.val)]
-      (by decide : List.Perm [(11, 48), (11, 47)] [(11, 47), (11, 48)])))
-  exact exclude55_a54_block8 d e
-    ((htest 3).symm.trans h3) ((htest 13).symm.trans h13) ((htest 17).symm.trans h17)
-private theorem exclude55_a54_block18_slice0 :
-    ∀ d : Fin 55, 0 ≤ d.val → d.val < 11 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (18 : Fin 19)).1 (forms55_11 (18 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (18 : Fin 19)).1 (forms55_11 (18 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (18 : Fin 19)).1 (forms55_11 (18 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block18_slice1 :
-    ∀ d : Fin 55, 11 ≤ d.val → d.val < 22 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (18 : Fin 19)).1 (forms55_11 (18 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (18 : Fin 19)).1 (forms55_11 (18 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (18 : Fin 19)).1 (forms55_11 (18 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block18_slice2 :
-    ∀ d : Fin 55, 22 ≤ d.val → d.val < 33 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (18 : Fin 19)).1 (forms55_11 (18 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (18 : Fin 19)).1 (forms55_11 (18 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (18 : Fin 19)).1 (forms55_11 (18 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block18_slice3 :
-    ∀ d : Fin 55, 33 ≤ d.val → d.val < 44 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (18 : Fin 19)).1 (forms55_11 (18 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (18 : Fin 19)).1 (forms55_11 (18 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (18 : Fin 19)).1 (forms55_11 (18 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block18_slice4 :
-    ∀ d : Fin 55, 44 ≤ d.val → d.val < 55 →
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 (18 : Fin 19)).1 (forms55_11 (18 : Fin 19)).2 54 d.val e.val = true →
-      test55 13 (forms55_11 (18 : Fin 19)).1 (forms55_11 (18 : Fin 19)).2 54 d.val e.val = true →
-      test55 17 (forms55_11 (18 : Fin 19)).1 (forms55_11 (18 : Fin 19)).2 54 d.val e.val = true →
-      False := by
-  decide +kernel
-private theorem exclude55_a54_block18 (d : Fin 55) :
+      hperm))
+  exact exclude55_a54_block8 e (ht3.symm.trans h3) d
+    ((htest 13).symm.trans h13) ((htest 17).symm.trans h17)
+private theorem exclude55_a54_block18 :
     ∀ e : Fin 55,
-      test55 3 (forms55_11 (18 : Fin 19)).1 (forms55_11 (18 : Fin 19)).2 54 d.val e.val = true →
+      test55_3 (forms55_11 (18 : Fin 19)).1 (forms55_11 (18 : Fin 19)).2 54 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 (18 : Fin 19)).1 (forms55_11 (18 : Fin 19)).2 54 d.val e.val = true →
       test55 17 (forms55_11 (18 : Fin 19)).1 (forms55_11 (18 : Fin 19)).2 54 d.val e.val = true →
       False := by
-  have hbound := d.isLt
-  by_cases h0 : d.val < 11
-  · exact exclude55_a54_block18_slice0 d (by omega) h0
-  by_cases h1 : d.val < 22
-  · exact exclude55_a54_block18_slice1 d (by omega) h1
-  by_cases h2 : d.val < 33
-  · exact exclude55_a54_block18_slice2 d (by omega) h2
-  by_cases h3 : d.val < 44
-  · exact exclude55_a54_block18_slice3 d (by omega) h3
-  exact exclude55_a54_block18_slice4 d (by omega) (by omega)
+  decide +kernel
 private theorem exclude55_a54 (i : Fin 19) :
-    ∀ d : Fin 55,
-      ∀ e : Fin 55,
-      test55 3 (forms55_11 i).1 (forms55_11 i).2 54 d.val e.val = true →
+    ∀ e : Fin 55,
+      test55_3 (forms55_11 i).1 (forms55_11 i).2 54 e.val = true →
+      ∀ d : Fin 55,
       test55 13 (forms55_11 i).1 (forms55_11 i).2 54 d.val e.val = true →
       test55 17 (forms55_11 i).1 (forms55_11 i).2 54 d.val e.val = true →
       False := by
@@ -4355,14 +4042,16 @@ theorem exclude55 (b c a d e : Fin 55)
     (h3 : test55 3 b.val c.val a.val d.val e.val = true)
     (h13 : test55 13 b.val c.val a.val d.val e.val = true)
     (h17 : test55 17 b.val c.val a.val d.val e.val = true) : False := by
+  have h3' : test55_3 b.val c.val a.val e.val = true :=
+    (test55_neutral b.val c.val a.val d.val e.val).symm.trans h3
   obtain ⟨i, hb, hc⟩ := classify55_11 b c h11
   rcases classify55_5 a h5 with ha | ha
-  · exact exclude55_a1 i d e
-      (by simpa only [hb, hc, ha] using h3)
+  · exact exclude55_a1 i e
+      (by simpa only [hb, hc, ha] using h3') d
       (by simpa only [hb, hc, ha] using h13)
       (by simpa only [hb, hc, ha] using h17)
-  · exact exclude55_a54 i d e
-      (by simpa only [hb, hc, ha] using h3)
+  · exact exclude55_a54 i e
+      (by simpa only [hb, hc, ha] using h3') d
       (by simpa only [hb, hc, ha] using h13)
       (by simpa only [hb, hc, ha] using h17)
 
