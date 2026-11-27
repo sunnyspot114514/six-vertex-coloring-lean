@@ -85,7 +85,33 @@ def BadPrime (n p : Nat) : Prop :=
   p.Prime ∧ ((p ∣ n ∧ ¬ p ^ 3 ∣ n) ∨
     (p ∣ n + 1 ∧ ¬ p ^ 3 ∣ n + 1))
 
+/-- Trial division only up to the square root, rather than the default kernel
+primality decider's search through all smaller natural numbers. -/
+private def PrimeSqrtTest (p : Nat) : Prop :=
+  2 ≤ p ∧ ∀ m : Fin (p.sqrt + 1), 2 ≤ m.val → ¬ m.val ∣ p
+
+private instance (p : Nat) : Decidable (PrimeSqrtTest p) :=
+  inferInstanceAs (Decidable
+    (2 ≤ p ∧ ∀ m : Fin (p.sqrt + 1), 2 ≤ m.val → ¬ m.val ∣ p))
+
+private theorem primeSqrtTest_iff (p : Nat) : PrimeSqrtTest p ↔ p.Prime := by
+  unfold PrimeSqrtTest
+  rw [Nat.prime_def_le_sqrt]
+  constructor
+  · rintro ⟨hp, h⟩
+    refine ⟨hp, ?_⟩
+    intro m hm hbound
+    exact h ⟨m, by omega⟩ hm
+  · rintro ⟨hp, h⟩
+    refine ⟨hp, ?_⟩
+    intro m hm
+    exact h m.val hm (by omega)
+
+private def primeDecidable (p : Nat) : Decidable p.Prime :=
+  decidable_of_iff (PrimeSqrtTest p) (primeSqrtTest_iff p)
+
 instance (n p : Nat) : Decidable (BadPrime n p) :=
+  letI : Decidable p.Prime := primeDecidable p
   inferInstanceAs (Decidable (p.Prime ∧ ((p ∣ n ∧ ¬ p ^ 3 ∣ n) ∨
     (p ∣ n + 1 ∧ ¬ p ^ 3 ∣ n + 1))))
 
