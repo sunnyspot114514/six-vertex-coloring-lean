@@ -291,10 +291,8 @@ theorem no_fixed_count63 {n : Nat} (hs : Squarefree n)
     hprojected 3 (by decide) (by decide) (by decide)
 end A245211New
 
-namespace OMA
-
 /-- The exact second hypothesis of the accepted R2 reduction. -/
-theorem solution : R_OeisA245211_conjecture_R2.H2 := by
+theorem OMA.solution : OMA.R_OeisA245211_conjecture_R2.H2 := by
   intro n hs h3 h65 hodd hnp ha
   have hr := A245211New.possible_counts n.primeFactors.card h3 h65 hodd hnp
   rcases hr with h15 | h21 | h33 | h35 | h39 | h45 | h51 | h55 | h57 | h63
@@ -309,4 +307,3 @@ theorem solution : R_OeisA245211_conjecture_R2.H2 := by
   · exact A245211New.no_fixed_count57 hs h57 ha
   · exact A245211New.no_fixed_count63 hs h63 ha
 
-end OMA
