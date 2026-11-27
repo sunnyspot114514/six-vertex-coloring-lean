@@ -35,7 +35,7 @@ theorem possible_counts (r : Nat) (h3 : 3 ≤ r) (h65 : r < 65)
   rcases countTable ⟨r, h65⟩ h3 hodd with h | ⟨q, k, hq, hk, heq⟩
   · exact h
   · exact False.elim (hnp q.val k.val hq hk heq)
-def factors15 : List Nat := [3, 3, 11, 331]
+abbrev factors15 : List Nat := [3, 3, 11, 331]
 theorem no_fixed_count15 {n : Nat} (hs : Squarefree n)
     (hr : n.primeFactors.card = 15) (ha : OeisA245211.a n = n) : False := by
   have hprime : ∀ q ∈ factors15, Nat.Prime q := by
@@ -55,7 +55,7 @@ theorem no_fixed_count15 {n : Nat} (hs : Squarefree n)
   apply exclude15 (pos 1) (pos 2)
   simpa [test15, projectedTokenSpec, hspec] using
     hprojected 33 (by decide) (by decide) (by decide)
-def factors21 : List Nat := [3, 3, 43, 5419]
+abbrev factors21 : List Nat := [3, 3, 43, 5419]
 theorem no_fixed_count21 {n : Nat} (hs : Squarefree n)
     (hr : n.primeFactors.card = 21) (ha : OeisA245211.a n = n) : False := by
   have hprime : ∀ q ∈ factors21, Nat.Prime q := by
@@ -75,7 +75,7 @@ theorem no_fixed_count21 {n : Nat} (hs : Squarefree n)
   apply exclude21 (pos 1)
   simpa [test21, projectedTokenSpec, hspec] using
     hprojected 3 (by decide) (by decide) (by decide)
-def factors33 : List Nat := [3, 3, 67, 683, 20857]
+abbrev factors33 : List Nat := [3, 3, 67, 683, 20857]
 theorem no_fixed_count33 {n : Nat} (hs : Squarefree n)
     (hr : n.primeFactors.card = 33) (ha : OeisA245211.a n = n) : False := by
   have hprime : ∀ q ∈ factors33, Nat.Prime q := by
@@ -95,7 +95,7 @@ theorem no_fixed_count33 {n : Nat} (hs : Squarefree n)
   apply exclude33 (pos 1) (pos 3)
   simpa [test33, projectedTokenSpec, hspec] using
     hprojected 33 (by decide) (by decide) (by decide)
-def factors35 : List Nat := [3, 11, 43, 281, 86171]
+abbrev factors35 : List Nat := [3, 11, 43, 281, 86171]
 theorem no_fixed_count35 {n : Nat} (hs : Squarefree n)
     (hr : n.primeFactors.card = 35) (ha : OeisA245211.a n = n) : False := by
   have hprime : ∀ q ∈ factors35, Nat.Prime q := by
@@ -128,7 +128,7 @@ theorem no_fixed_count35 {n : Nat} (hs : Squarefree n)
   · simpa only [test35, hspec] using
       hfull 13 (by decide) (by decide) (by decide)
 
-def factors39 : List Nat := [3, 3, 2731, 22366891]
+abbrev factors39 : List Nat := [3, 3, 2731, 22366891]
 theorem no_fixed_count39 {n : Nat} (hs : Squarefree n)
     (hr : n.primeFactors.card = 39) (ha : OeisA245211.a n = n) : False := by
   have hprime : ∀ q ∈ factors39, Nat.Prime q := by
@@ -148,7 +148,7 @@ theorem no_fixed_count39 {n : Nat} (hs : Squarefree n)
   apply exclude39 (pos 1)
   simpa [test39, projectedTokenSpec, hspec] using
     hprojected 3 (by decide) (by decide) (by decide)
-def factors45 : List Nat := [3, 3, 3, 11, 19, 331, 18837001]
+abbrev factors45 : List Nat := [3, 3, 3, 11, 19, 331, 18837001]
 theorem no_fixed_count45 {n : Nat} (hs : Squarefree n)
     (hr : n.primeFactors.card = 45) (ha : OeisA245211.a n = n) : False := by
   have hprime : ∀ q ∈ factors45, Nat.Prime q := by
@@ -183,7 +183,7 @@ theorem no_fixed_count45 {n : Nat} (hs : Squarefree n)
   · simpa only [test45, hspec] using
       hfull 19 (by decide) (by decide) (by decide)
 
-def factors51 : List Nat := [3, 3, 307, 2857, 6529, 43691]
+abbrev factors51 : List Nat := [3, 3, 307, 2857, 6529, 43691]
 theorem no_fixed_count51 {n : Nat} (hs : Squarefree n)
     (hr : n.primeFactors.card = 51) (ha : OeisA245211.a n = n) : False := by
   have hprime : ∀ q ∈ factors51, Nat.Prime q := by
@@ -216,7 +216,7 @@ theorem no_fixed_count51 {n : Nat} (hs : Squarefree n)
   · simpa only [test51, hspec] using
       hfull 13 (by decide) (by decide) (by decide)
 
-def factors55 : List Nat := [3, 11, 11, 683, 2971, 48912491]
+abbrev factors55 : List Nat := [3, 11, 11, 683, 2971, 48912491]
 theorem no_fixed_count55 {n : Nat} (hs : Squarefree n)
     (hr : n.primeFactors.card = 55) (ha : OeisA245211.a n = n) : False := by
   have hprime : ∀ q ∈ factors55, Nat.Prime q := by
@@ -249,7 +249,7 @@ theorem no_fixed_count55 {n : Nat} (hs : Squarefree n)
   · simpa only [test55, hspec] using
       hfull 17 (by decide) (by decide) (by decide)
 
-def factors57 : List Nat := [3, 3, 571, 174763, 160465489]
+abbrev factors57 : List Nat := [3, 3, 571, 174763, 160465489]
 theorem no_fixed_count57 {n : Nat} (hs : Squarefree n)
     (hr : n.primeFactors.card = 57) (ha : OeisA245211.a n = n) : False := by
   have hprime : ∀ q ∈ factors57, Nat.Prime q := by
@@ -269,7 +269,7 @@ theorem no_fixed_count57 {n : Nat} (hs : Squarefree n)
   apply exclude57 (pos 1)
   simpa [test57, projectedTokenSpec, hspec] using
     hprojected 3 (by decide) (by decide) (by decide)
-def factors63 : List Nat := [3, 3, 3, 19, 43, 5419, 77158673929]
+abbrev factors63 : List Nat := [3, 3, 3, 19, 43, 5419, 77158673929]
 theorem no_fixed_count63 {n : Nat} (hs : Squarefree n)
     (hr : n.primeFactors.card = 63) (ha : OeisA245211.a n = n) : False := by
   have hprime : ∀ q ∈ factors63, Nat.Prime q := by
