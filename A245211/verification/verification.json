@@ -1,0 +1,63 @@
+{
+  "result": "accepted",
+  "repository": "sunnyspot114514/six-vertex-coloring-lean",
+  "source_commit": "b8dd8c8e5f726ab70812fadb20c39289b2e79444",
+  "workflow_run": 46064959548,
+  "workflow_job": 140727931351,
+  "workflow_url": "https://github.com/sunnyspot114514/six-vertex-coloring-lean/actions/runs/46064959548",
+  "verdict_logged_at": "2026-11-27T20:52:41.9366480Z",
+  "exact_target": "OeisA245211.conjecture.R2.H2",
+  "source_path": "A245211/submission/OeisA245211.conjecture.R2.H2.lean",
+  "source_bytes": 316539,
+  "source_sha256": "8bc73d1427b8c9c4457f0f92dab919a392f46a0ebd9354261cca2656dbf1e015",
+  "scope": {
+    "squarefree": true,
+    "prime_factor_counts": [
+      15,
+      21,
+      33,
+      35,
+      39,
+      45,
+      51,
+      55,
+      57,
+      63
+    ],
+    "upper_bound_on_n": null
+  },
+  "observed_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "formal_conjectures_commit": "9097e2f90e66d2f6244209cb1c07f7120d17ec53",
+  "open_math_agents_commit": "d4827fcc0af9b8327e56e1eb335394e1cf6514c6",
+  "lean_version": "4.33.1",
+  "mathlib_commit": "0df444a360eaa60ab8c11dca51a86af692955474",
+  "checker_sha256": "5be840486aef09c208837ce1fb447a4a0039eb55175774cdd7dab81fa34d4ab0",
+  "linter_sha256": "6d83353f7a6105010571cfec7a7cc33727becc1df9151c86efb848a2ea3844b4",
+  "checker_modified": false,
+  "per_file_timeout_seconds": 1800,
+  "allowed_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "evidence": "github-h2-verdict.json",
+  "provenance": "Verdict JSON extracted verbatim as a JSON object from the GitHub Actions job log.",
+  "upstream_submission": {
+    "created": false,
+    "reason": "This leaf was already solved and merged by MakisChristou in upstream PR #9600; this repository retains an independent implementation.",
+    "prior_pr": "https://github.com/GuillaumeBAUD-coder/open-math-agents/pull/9600"
+  },
+  "additional_local_check": {
+    "result": "accepted",
+    "finished_utc": "2026-11-27T20:58:18.453161+00:00",
+    "wall_seconds": 1224.096,
+    "source_sha256": "8bc73d1427b8c9c4457f0f92dab919a392f46a0ebd9354261cca2656dbf1e015",
+    "copied_input_verified": true,
+    "checker_change": "Only add -j1 to the Lean invocation; original 1800-second limit and all trust checks retained.",
+    "evidence": "local-h2-verdict.json"
+  }
+}

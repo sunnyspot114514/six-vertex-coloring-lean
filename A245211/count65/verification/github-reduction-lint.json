@@ -1,0 +1,17 @@
+{
+  "file": "reductions/OeisA245211.conjecture.R2.H3.R1.lean",
+  "type": "reduction",
+  "problem": "OeisA245211.conjecture.R2.H3.R1",
+  "hypotheses": [
+    "∀ n : ℕ, Squarefree n → n.primeFactors.card = 65 →\n    OeisA245211.a n ≠ n",
+    "∀ n : ℕ, Squarefree n → 67 ≤ n.primeFactors.card →\n    Odd n.primeFactors.card →\n    (∀ q k : ℕ, q.Prime → 0 < k → n.primeFactors.card ≠ q ^ k) →\n    OeisA245211.a n ≠ n"
+  ],
+  "module": "OMAReductions.R_OeisA245211_conjecture_R2_H3_R1",
+  "ok": true,
+  "kind": "open",
+  "polarity": "proof",
+  "theorem": "OMA.R_OeisA245211_conjecture_R2_H3_R1.main",
+  "imports": "OMAReductions.R_OeisA245211_conjecture_R2",
+  "errors": [],
+  "needsReduction": "OeisA245211.conjecture.R2"
+}

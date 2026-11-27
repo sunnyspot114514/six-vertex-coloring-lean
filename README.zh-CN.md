@@ -8,6 +8,57 @@
 
 这个项目提供一份简短的结构证明、一份独立编写的完整穷举程序，以及一个独立的 Lean 形式化项目。
 
+## 新增算术结果：A245211 中恰有 65 个素因子的情形
+
+对加权真因子和
+
+$$
+a(n)=\sum_{\substack{d\mid n\\d<n}} d\,\tau(d),
+$$
+
+其中 $\tau(d)$ 是正因子个数，本次的新定理是：
+
+**任意恰有 65 个不同素因子的无平方因子整数，都满足 $a(n)\ne n$。整数 $n$ 的大小没有上界。**
+
+[H1 单文件证明](A245211/count65/proofs/OeisA245211.conjecture.R2.H3.R1.H1.lean) 的精确目标为：
+
+```lean
+∀ n : ℕ, Squarefree n → n.primeFactors.card = 65 →
+  OeisA245211.a n ≠ n
+```
+
+证明先把假设存在的固定点归约为大素数组成的循环，再利用因子分解
+
+$$
+2^{65}+1=3\cdot11\cdot131\cdot2731\cdot409891\cdot7623851.
+$$
+
+除 3 外，其余因子都模 5 余 1。把因子 3 的位置旋转到首位，使用已经证明的投影引理后，模 5 的投影列表只剩 `[(3, 0)]`。其起始剩余类被迫为 1，接下来的素数剩余类沿 $1\to1\to0\pmod5$ 转移，与这些素数大于 5 矛盾。这里的有限计算是数学归约后的内核证书，没有对原整数设置搜索上界。
+
+配套的[新归约提案](A245211/count65/reductions/OeisA245211.conjecture.R2.H3.R1.lean)把现有 `R2.H3` 分成上述恰好 65 个素因子的情形，以及平方自由整数中，**素因子个数至少为 67、为奇数且不是正指数素数幂**的剩余情形。后者在本项目中仍未解决。**本结果不等于完整解决 H3，也不等于解决整个 OEIS 猜想。** 详见[证明与验证说明](A245211/count65/README.zh-CN.md)。
+
+### A245211 的验证与发布状态
+
+两项独立的 GitHub CI 均已成功：
+
+| 结果 | 成功的 CI 运行 | 对应源码提交 |
+|---|---|---|
+| 新的 65 因子情形及其 H3 归约提案 | [46066283100](https://github.com/sunnyspot114514/six-vertex-coloring-lean/actions/runs/46066283100) | [`109233726473`](https://github.com/sunnyspot114514/six-vertex-coloring-lean/commit/1092337264737c2b8ffc771cb1e1edea6fd28717) |
+| 对既有 R2.H2 结果的独立实现 | [46064959548](https://github.com/sunnyspot114514/six-vertex-coloring-lean/actions/runs/46064959548) | [`b8dd8c8e5f72`](https://github.com/sunnyspot114514/six-vertex-coloring-lean/commit/b8dd8c8e5f726ab70812fadb20c39289b2e79444) |
+
+原版上游检查器对 **H2、新归约、H1 三份提交均返回 `accepted`**；三份公理报告均仅包含 `propext`、`Classical.choice`、`Quot.sound`。
+
+[count65 工作流](.github/workflows/a245211-count65.yml)使用未经修改的上游检查器，分别检查归约与 H1，保留每份提交的时间限制和公理审计，并保存 verdict 与源码哈希。[H2 工作流](.github/workflows/a245211.yml)独立运行。
+
+**新归约与 65 因子证明目前仅发布在本仓库；这两份文件尚未向上游提交 PR，也没有上游合并记录。** 向上游提交时，应先等待新归约被接受，再提交它产生的 H1 叶子证明。
+
+### 已有 H2 结果：独立实现与优先权说明
+
+[H2 实现](A245211/submission/OeisA245211.conjecture.R2.H2.lean)覆盖不同素因子个数为
+`15、21、33、35、39、45、51、55、57、63` 的无平方因子整数，同样不限制整数本身的大小。这正是 3 至 64 之间不是正指数素数幂的奇数个数情形。
+
+**MakisChristou 的[上游 PR #9600](https://github.com/GuillaumeBAUD-coder/open-math-agents/pull/9600)在本实现完成验证前，已经解决 H2 并被合并。** 本仓库保留的是独立、可复现的实现，不声称首次解决，也不向上游重复提交 H2。其[中文说明](A245211/README.zh-CN.md)记录了循环归约、模运算证书及结果范围。
+
 ## 新增有限审计：相邻三次满数
 
 [![Cube-full audit](https://github.com/sunnyspot114514/six-vertex-coloring-lean/actions/workflows/cube-full.yml/badge.svg)](https://github.com/sunnyspot114514/six-vertex-coloring-lean/actions/workflows/cube-full.yml)
@@ -61,3 +112,4 @@ lake env lean Check.lean
 ## 范围
 
 这是一条明确、有限的图论引理及其可复现证明。**它不等于解决 Erdős #151，也不等于解决其 `cliqueFree_four` 变体或该拆分的其他假设。** 人类可读证明使用五边形结构；Lean 实现通过计算验证对应的有限图性质。
+

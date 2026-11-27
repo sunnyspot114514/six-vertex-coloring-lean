@@ -1,0 +1,12 @@
+{
+  "file": "proofs/OeisA245211.conjecture.R2.H2.lean",
+  "type": "step",
+  "problem": "OeisA245211.conjecture.R2.H2",
+  "ok": true,
+  "kind": "open",
+  "polarity": "proof",
+  "theorem": "OMA.solution",
+  "imports": "OMAReductions.R_OeisA245211_conjecture_R2",
+  "errors": [],
+  "needsReduction": "OeisA245211.conjecture.R2"
+}

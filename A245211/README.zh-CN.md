@@ -88,7 +88,11 @@ $$
 
 固定使用 Formal Conjectures 提交 `9097e2f90e66d2f6244209cb1c07f7120d17ec53`、Lean 4.33.1，以及 open-math-agents 提交 `d4827fcc0af9b8327e56e1eb335394e1cf6514c6` 中已接受的 R2 归约。
 
-最终内核检查结果待补入。
+完整单文件证明已通过 [GitHub Actions 运行 46064959548](https://github.com/sunnyspot114514/six-vertex-coloring-lean/actions/runs/46064959548)。原版上游检查器于 2026-11-28 04:52（北京时间）返回 `accepted`；`OMA.solution` 的公理审计结果为 `[propext, Classical.choice, Quot.sound]`。
+
+检查对应源提交 `b8dd8c8e5f726ab70812fadb20c39289b2e79444`，单文件 SHA-256 为 `8bc73d1427b8c9c4457f0f92dab919a392f46a0ebd9354261cca2656dbf1e015`。可查看 [验证清单](verification/verification.json) 和 [检查器原始判定](verification/github-h2-verdict.json)。这里的 `accepted` 是检查器判定；本独立实现未向已关闭的 H2 任务重复发起上游 PR。
+
+在此基础上，另有 [恰好 65 个不同素因子的证明](count65/README.zh-CN.md)。它越过了本目录 H2 的 `r < 65` 范围；新归约和对应 H1 证明也已分别通过原版检查器。
 
 完整复现步骤写在仓库的 [A245211 验证工作流](../.github/workflows/a245211.yml) 中：准备固定版本的 Formal Conjectures 和已接受归约，从各模块源文件组装完整单文件，运行原版上游 `tools/check.sh` 的提交检查与公理审计。工作流保留原有的 30 分钟编译期限、全部证明检查，以及 `OMA.solution` 的公理白名单。该工作流可从 GitHub Actions 手动运行。
 

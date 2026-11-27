@@ -1,0 +1,66 @@
+{
+  "result": "accepted",
+  "repository": "sunnyspot114514/six-vertex-coloring-lean",
+  "source_commit": "1092337264737c2b8ffc771cb1e1edea6fd28717",
+  "workflow_run": 46066283100,
+  "workflow_job": 140732265694,
+  "workflow_url": "https://github.com/sunnyspot114514/six-vertex-coloring-lean/actions/runs/46066283100",
+  "formal_conjectures_commit": "9097e2f90e66d2f6244209cb1c07f7120d17ec53",
+  "open_math_agents_commit": "d4827fcc0af9b8327e56e1eb335394e1cf6514c6",
+  "lean_version": "4.33.1",
+  "mathlib_commit": "0df444a360eaa60ab8c11dca51a86af692955474",
+  "checker_sha256": "5be840486aef09c208837ce1fb447a4a0039eb55175774cdd7dab81fa34d4ab0",
+  "linter_sha256": "6d83353f7a6105010571cfec7a7cc33727becc1df9151c86efb848a2ea3844b4",
+  "checker_modified": false,
+  "per_file_timeout_seconds": 1800,
+  "allowed_axioms": [
+    "propext",
+    "Classical.choice",
+    "Quot.sound"
+  ],
+  "scope": {
+    "squarefree": true,
+    "prime_factor_count": 65,
+    "upper_bound_on_n": null,
+    "conclusion": "OeisA245211.a n ≠ n"
+  },
+  "reduction": {
+    "path": "A245211/count65/reductions/OeisA245211.conjecture.R2.H3.R1.lean",
+    "sha256": "bb3e7240b8401c8aafda54b7bc4e1acbb1f96afb0a1ed9b58b3b0e927a9bf1d7",
+    "bytes": 1062,
+    "result": "accepted",
+    "verdict_logged_at": "2026-11-27T20:52:36.1109201Z",
+    "evidence": "github-reduction-verdict.json",
+    "observed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ]
+  },
+  "proof": {
+    "path": "A245211/count65/proofs/OeisA245211.conjecture.R2.H3.R1.H1.lean",
+    "sha256": "ab8b319b44db4d0b8392b1a6d5c56ee509b742bebba1539c61c43db9034af761",
+    "bytes": 48232,
+    "result": "accepted",
+    "verdict_logged_at": "2026-11-27T20:52:57.2739338Z",
+    "evidence": "github-h1-verdict.json",
+    "observed_axioms": [
+      "propext",
+      "Classical.choice",
+      "Quot.sound"
+    ],
+    "reassembled_byte_identical": true
+  },
+  "remaining_subgoal": "Squarefree n with odd, non-prime-power prime-factor count at least 67.",
+  "provenance": "Verdict JSON objects extracted from the GitHub Actions job log; the workflow also uploads its original verdicts, lints, and SHA-256 manifest.",
+  "upstream_submission": {
+    "created": false,
+    "merged": false,
+    "required_order": [
+      "Submit the H3.R1 reduction.",
+      "After that reduction is merged, submit the H3.R1.H1 proof."
+    ]
+  },
+  "prior_coverage_checked_upstream_tree": "f9f4d2ee7b118f62d260932b88a220dfd71bb3f1",
+  "no_claim_of_first_mathematical_discovery": true
+}
