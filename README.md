@@ -10,6 +10,12 @@ For example, a red edge may connect a red vertex to a blue vertex, or two blue v
 
 This repository packages a short human-readable proof, an independently written exhaustive checker, and a standalone Lean formalization of this finite lemma.
 
+## Additional finite audit: consecutive cube-full integers
+
+[![Cube-full audit](https://github.com/sunnyspot114514/six-vertex-coloring-lean/actions/workflows/cube-full.yml/badge.svg)](https://github.com/sunnyspot114514/six-vertex-coloring-lean/actions/workflows/cube-full.yml)
+
+The [additional audit](docs/cube-full-audit.md) proves that no integer `1 ≤ n ≤ 100000` has both `n` and `n + 1` cube-full. This refutes the bounded hypothesis `Erdos366.erdos_366.variants.weaker.R1.H1` proposed in the upstream reduction. The result includes a [Lean certificate](Additional/CubeFull.lean) and an independent arithmetic checker. The unbounded Erdős #366 question is outside this result's scope.
+
 ## Why it works
 
 Every triangle-free graph on at most six vertices is either bipartite or becomes bipartite after deleting one edge. A non-bipartite example must contain a chordless five-cycle. There is at most one vertex outside that cycle, and triangle-freeness permits at most two neighbors on it. Inspecting those possibilities proves the one-edge deletion claim.

@@ -2,6 +2,16 @@ name: Verify
 
 on:
   push:
+    paths:
+      - 'SixVertex.lean'
+      - 'SixVertex/**'
+      - 'Check.lean'
+      - 'scripts/check_exhaustive.py'
+      - 'scripts/check_axioms.py'
+      - '.github/workflows/verify.yml'
+      - 'lean-toolchain'
+      - 'lakefile.toml'
+      - 'lake-manifest.json'
   pull_request:
   workflow_dispatch:
 

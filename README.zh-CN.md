@@ -8,6 +8,12 @@
 
 这个项目提供一份简短的结构证明、一份独立编写的完整穷举程序，以及一个独立的 Lean 形式化项目。
 
+## 新增有限审计：相邻三次满数
+
+[![Cube-full audit](https://github.com/sunnyspot114514/six-vertex-coloring-lean/actions/workflows/cube-full.yml/badge.svg)](https://github.com/sunnyspot114514/six-vertex-coloring-lean/actions/workflows/cube-full.yml)
+
+[新增审计](docs/cube-full-audit.zh-CN.md)证明：不存在 `1 ≤ n ≤ 100000`，使 `n` 和 `n + 1` 同时为三次满数。它否定了上游拆分提出的有限假设 `Erdos366.erdos_366.variants.weaker.R1.H1`，附有 [Lean 证书](Additional/CubeFull.lean)和独立算术检查程序。结果的范围是这个有限假设；Erdős #366 的无界问题不在其中。
+
 ## 证明的关键
 
 这样的图最多删掉一条边就能成为二分图。如果它原本不是二分图，必然包含一个没有弦的五边形；圈外至多一个顶点，无三角形条件又限制了它的连边方式，因此可以直接分析全部结构。
