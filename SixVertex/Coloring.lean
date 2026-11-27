@@ -58,12 +58,20 @@ theorem encodeMask_triFree {k : Nat} (G : SimpleGraph (Fin k))
   classical
   rw [triFree_iff]
   intro t hmem htriangle
+  have hbounds : t.1 < 15 ∧ t.2.1 < 15 ∧ t.2.2 < 15 := by
+    have hall : triangleEdges.all (fun s =>
+        decide (s.1 < 15 ∧ s.2.1 < 15 ∧ s.2.2 < 15)) = true := by
+      decide
+    exact of_decide_eq_true ((List.all_eq_true.mp hall) t hmem)
+  have ha := (encodeMask_bit G ⟨t.1, hbounds.1⟩).mp htriangle.1
+  have hb := (encodeMask_bit G ⟨t.2.1, hbounds.2.1⟩).mp htriangle.2.1
+  have hc := (encodeMask_bit G ⟨t.2.2, hbounds.2.2⟩).mp htriangle.2.2
   simp only [triangleEdges, List.mem_cons, List.not_mem_nil, or_false] at hmem
   rcases hmem with rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl |
     rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl | rfl
   all_goals
-    simp [encodeMask, edges] at htriangle
-    exact padded_triangle_false ht htriangle.1 htriangle.2.1 htriangle.2.2
+    simp [edges] at ha hb hc
+    exact padded_triangle_false ht ha hb hc
 
 /-- Every unordered pair of distinct vertices occurs in the edge list. -/
 private theorem edge_lookup (x y : Fin 6) (hxy : x ≠ y) :
@@ -93,10 +101,10 @@ theorem exists_atMostOneMono (k : Nat) (G : SimpleGraph (Fin k))
   let v6 : Fin 6 := ⟨v.val, lt_of_lt_of_le v.isLt hk⟩
   have hxy6 : x6 ≠ y6 := by
     intro h
-    exact hxy.ne (Fin.ext (congrArg Fin.val h))
+    exact hxy.ne (Fin.ext (congrArg (fun z : Fin 6 => z.val) h))
   have huv6 : u6 ≠ v6 := by
     intro h
-    exact huv.ne (Fin.ext (congrArg Fin.val h))
+    exact huv.ne (Fin.ext (congrArg (fun z : Fin 6 => z.val) h))
   obtain ⟨i, hi⟩ := edge_lookup x6 y6 hxy6
   obtain ⟨j, hj⟩ := edge_lookup u6 v6 huv6
   have hmi : (encodeMask G).testBit i.val = true := by
@@ -145,23 +153,28 @@ theorem avoidance_of_atMostOneMono {V : Type u} (G : SimpleGraph V)
   by_cases hmono : ∃ a b, G.Adj a b ∧ d a = d b
   · obtain ⟨a, b, hab, hdab⟩ := hmono
     by_cases hbad : d a = c a b
-    · refine ⟨fun x => !(d x), ?_⟩
+    · refine ⟨fun x => Bool.not (d x), ?_⟩
       intro x y hxy hforbidden
       have hsame : d x = d y := by
-        have hflip : !(d x) = !(d y) := hforbidden.1.trans hforbidden.2.symm
+        have hflip : Bool.not (d x) = Bool.not (d y) :=
+          hforbidden.1.trans hforbidden.2.symm
         simpa using congrArg Bool.not hflip
-      rcases hunique x y a b hxy hab hsame hdab with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩
-      · have hcontra : !(d a) = d a := hforbidden.1.trans hbad.symm
+      rcases hunique x y a b hxy hab hsame hdab with ⟨hxa, hyb⟩ | ⟨hxb, hya⟩
+      · subst x y
+        have hcontra : Bool.not (d a) = d a := hforbidden.1.trans hbad.symm
         cases hda : d a <;> simp [hda] at hcontra
-      · have hcontra : !(d a) = d a :=
+      · subst x y
+        have hcontra : Bool.not (d a) = d a :=
           hforbidden.2.trans ((hsym b a).trans hbad.symm)
         cases hda : d a <;> simp [hda] at hcontra
     · refine ⟨d, ?_⟩
       intro x y hxy hforbidden
       have hsame : d x = d y := hforbidden.1.trans hforbidden.2.symm
-      rcases hunique x y a b hxy hab hsame hdab with ⟨rfl, rfl⟩ | ⟨rfl, rfl⟩
-      · exact hbad hforbidden.1
-      · exact hbad (hforbidden.2.trans (hsym b a))
+      rcases hunique x y a b hxy hab hsame hdab with ⟨hxa, hyb⟩ | ⟨hxb, hya⟩
+      · subst x y
+        exact hbad hforbidden.1
+      · subst x y
+        exact hbad (hforbidden.2.trans (hsym b a))
   · refine ⟨d, ?_⟩
     intro x y hxy hforbidden
     exact hmono ⟨x, y, hxy, hforbidden.1.trans hforbidden.2.symm⟩
