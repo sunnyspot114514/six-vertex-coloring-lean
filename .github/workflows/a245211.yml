@@ -19,8 +19,6 @@ jobs:
   proof:
     runs-on: ubuntu-latest
     timeout-minutes: 45
-    env:
-      LEAN_NUM_THREADS: '2'
     steps:
       - uses: actions/checkout@v4
       - uses: actions/checkout@v4
@@ -64,6 +62,20 @@ jobs:
         working-directory: .verification/open-math-agents
         run: |
           status=0
-          OMA_FC="$GITHUB_WORKSPACE/.verification/formal-conjectures" bash tools/check.sh proofs/OeisA245211.conjecture.R2.H2.lean verdict.json || status=$?
-          cat verdict.json
+          OMA_FC="$GITHUB_WORKSPACE/.verification/formal-conjectures" bash tools/check.sh proofs/OeisA245211.conjecture.R2.H2.lean verdict.json &
+          verifier_pid=$!
+          while kill -0 "$verifier_pid" 2>/dev/null; do
+            sleep 30
+            if kill -0 "$verifier_pid" 2>/dev/null; then
+              echo "The unmodified upstream checker is still running."
+              date -u +%FT%TZ
+              ps -C lean -o etime=,pcpu=,rss=,comm= || true
+            fi
+          done
+          wait "$verifier_pid" || status=$?
+          if [ -f verdict.json ]; then
+            cat verdict.json
+          else
+            echo "No verdict was produced."
+          fi
           exit "$status"

@@ -100,4 +100,4 @@ Python 数据不是 Lean 编译的输入。重建发现过程时，可依次运�
 
 循环论证的数学思路也见于上游 [R2.H1 的 PR #7273](https://github.com/GuillaumeBAUD-coder/open-math-agents/pull/7273)。本实现及分阶段的位置证书独立编写。
 
-本实现组装后，任务台返回了 MakisChristou 更早的完成记录，指向 [提交 71b87a97](https://github.com/MakisChristou/open-math-agents/commit/71b87a97ceaf05143fdf1e376e878143e0bd3c65)，当时尚待创建上游 PR。本项目不主张先于该工作完成。
+本实现组装后，任务台返回了 MakisChristou 更早的完成记录，指向 [提交 71b87a97](https://github.com/MakisChristou/open-math-agents/commit/71b87a97ceaf05143fdf1e376e878143e0bd3c65)。该工作随后提交为上游 [PR #9600](https://github.com/GuillaumeBAUD-coder/open-math-agents/pull/9600)。本项目不主张先于该工作完成。
