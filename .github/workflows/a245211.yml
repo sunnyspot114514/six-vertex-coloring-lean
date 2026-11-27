@@ -18,7 +18,7 @@ concurrency:
 jobs:
   proof:
     runs-on: ubuntu-latest
-    timeout-minutes: 65
+    timeout-minutes: 45
     env:
       LEAN_NUM_THREADS: '2'
     steps:
@@ -60,23 +60,6 @@ jobs:
           test: 'false'
           lint: 'false'
           use-mathlib-cache: 'true'
-      - uses: actions/cache/restore@v4
-        with:
-          path: |
-            .verification/formal-conjectures/.lake/build/lib/lean/A245211
-            .verification/formal-conjectures/.lake/build/ir/A245211
-          key: a245211-modules-4331-${{ github.sha }}
-          restore-keys: a245211-modules-4331-
-      - name: Compile the complete modular proof
-        working-directory: .verification/formal-conjectures
-        run: lake build A245211.Main
-      - uses: actions/cache/save@v4
-        if: ${{ !cancelled() }}
-        with:
-          path: |
-            .verification/formal-conjectures/.lake/build/lib/lean/A245211
-            .verification/formal-conjectures/.lake/build/ir/A245211
-          key: a245211-modules-4331-${{ github.sha }}
       - name: Verify the single-file submission and audit its axioms
         working-directory: .verification/open-math-agents
         run: |

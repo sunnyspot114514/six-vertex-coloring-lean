@@ -125,7 +125,7 @@ theorem positionTest_congr (r q : ℕ) (spec spec' : List (ℕ × ℕ))
     (h : ∀ j, coefficient q spec j = coefficient q spec' j) :
     positionTest r q spec = positionTest r q spec' := by
   have hfun : coefficient q spec = coefficient q spec' := funext h
-  simp only [positionTest, fastPrefix, anchorPrefix, closedPrefix, hfun]
+  simp only [positionTest, fastPrefix_eq_legacy, legacyFastPrefix, anchorPrefix, closedPrefix, hfun]
 
 theorem positionTest_filter_ne_one (r q : ℕ) (hq : 1 < q)
     (spec : List (ℕ × ℕ)) :

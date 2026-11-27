@@ -64,6 +64,8 @@ c_0=0,\qquad c_{j+1}=d_jc_j+2^j.
 
 有限分类和排除均使用 `decide +kernel`。Python 搜索仅用于发现和组织证书，不是 Lean 证明的假设。
 
+模 3 的锚点从因子位置的短列表计算最小值；Lean 证明了它与逐个扫描全部循环位置得到的锚点完全相同。因此这项计算优化同时保留检验结果、置换不变性和中性因子删除引理。
+
 ## 文件
 
 - [`submission/OeisA245211.conjecture.R2.H2.lean`](submission/OeisA245211.conjecture.R2.H2.lean)：供上游直接检查的完整单文件证明。
@@ -84,7 +86,7 @@ c_0=0,\qquad c_{j+1}=d_jc_j+2^j.
 
 最终内核检查结果待补入。
 
-完整复现步骤写在仓库的 [A245211 验证工作流](../.github/workflows/a245211.yml) 中：准备固定版本的 Formal Conjectures 和已接受归约，编译全部模块，再从源文件重新生成单文件，运行上游原版 `tools/check.sh`，检查 `OMA.solution` 的公理依赖。该工作流可从 GitHub Actions 手动运行。
+完整复现步骤写在仓库的 [A245211 验证工作流](../.github/workflows/a245211.yml) 中：准备固定版本的 Formal Conjectures 和已接受归约，从各模块源文件组装完整单文件，直接运行上游原版 `tools/check.sh`，重新检查全部证明以及 `OMA.solution` 的公理依赖。该工作流可从 GitHub Actions 手动运行。
 
 在仓库根目录重建提交文件：
 

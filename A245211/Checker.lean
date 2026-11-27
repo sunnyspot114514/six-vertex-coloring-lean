@@ -214,7 +214,8 @@ theorem fastPrefix_of_nat_cycle (r q : Nat) (hq : 1 < q) (hodd : Odd q)
     (hclose : p r = p 0)
     (hcop : ∀ j < r, Nat.Coprime (p j) q) :
     fastPrefix r q spec = true := by
-  unfold fastPrefix
+  rw [fastPrefix_eq_legacy]
+  unfold legacyFastPrefix
   split
   · exact anchorPrefix_of_nat_cycle r q hq hodd spec p d hc hrec hclose hcop
   · split
