@@ -1,0 +1,53 @@
+name: Cube-full audit
+
+on:
+  push:
+    paths:
+      - 'Additional/CubeFull.lean'
+      - 'CheckCubeFull.lean'
+      - 'scripts/*cube_full*.py'
+      - '.github/workflows/cube-full.yml'
+      - 'lean-toolchain'
+      - 'lakefile.toml'
+      - 'lake-manifest.json'
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cube-full-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      LEAN_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - name: Independent arithmetic check
+        run: python3 scripts/check_cube_full.py
+      - name: Reproduce the supplied certificate
+        run: |
+          python3 scripts/generate_cube_full_certificate.py
+          git diff --exit-code -- Additional/CubeFull.lean
+      - name: Set up Lean and Mathlib
+        uses: leanprover/lean-action@v1
+        with:
+          auto-config: 'false'
+          build: 'false'
+          test: 'false'
+          lint: 'false'
+          use-mathlib-cache: 'true'
+      - name: Check the finite proof in the Lean kernel
+        run: |
+          mkdir -p .lake/build/lib/lean/Additional
+          lake env lean -o .lake/build/lib/lean/Additional/CubeFull.olean Additional/CubeFull.lean
+      - name: Check the final theorem axioms
+        run: |
+          set -o pipefail
+          lake env lean CheckCubeFull.lean | tee cube-full-axioms.log
+          python3 scripts/check_cube_full_axioms.py cube-full-axioms.log
