@@ -1,0 +1,60 @@
+name: A245211 proof development
+
+on:
+  push:
+    paths:
+      - 'A245211/**'
+      - '.github/workflows/a245211.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: a245211-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      LEAN_NUM_THREADS: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: google-deepmind/formal-conjectures
+          ref: 9097e2f90e66d2f6244209cb1c07f7120d17ec53
+          path: .verification/formal-conjectures
+      - uses: actions/checkout@v4
+        with:
+          repository: GuillaumeBAUD-coder/open-math-agents
+          ref: d4827fcc0af9b8327e56e1eb335394e1cf6514c6
+          path: .verification/open-math-agents
+      - name: Prepare the exact upstream reduction
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import shutil
+          fc = Path('.verification/formal-conjectures')
+          reductions = fc / 'OMAReductions'
+          reductions.mkdir()
+          shutil.copyfile('.verification/open-math-agents/reductions/OeisA245211.conjecture.R2.lean', reductions / 'R_OeisA245211_conjecture_R2.lean')
+          shutil.copytree('A245211', fc / 'A245211')
+          with (fc / 'lakefile.toml').open('a') as f:
+              f.write('\n[[lean_lib]]\nname = "OMAReductions"\n\n[[lean_lib]]\nname = "A245211"\n')
+          PY
+      - name: Build the pinned dependencies
+        uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: .verification/formal-conjectures
+          auto-config: 'false'
+          build: 'true'
+          build-args: 'OMAReductions.R_OeisA245211_conjecture_R2'
+          test: 'false'
+          lint: 'false'
+          use-mathlib-cache: 'true'
+      - name: Compile the proof modules
+        working-directory: .verification/formal-conjectures
+        run: lake build A245211.Cycle
