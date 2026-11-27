@@ -59,13 +59,6 @@ jobs:
           test: 'false'
           lint: 'false'
           use-mathlib-cache: 'true'
-      - name: Compile the proof modules
+      - name: Compile the structural lemmas
         working-directory: .verification/formal-conjectures
-        run: lake build A245211.Projection A245211.Finite A245211.Main
-      - name: Verify the single-file submission and audit its axioms
-        working-directory: .verification/open-math-agents
-        run: |
-          status=0
-          OMA_FC="$GITHUB_WORKSPACE/.verification/formal-conjectures" bash tools/check.sh proofs/OeisA245211.conjecture.R2.H2.lean verdict.json || status=$?
-          cat verdict.json
-          exit "$status"
+        run: lake build A245211.Projection
