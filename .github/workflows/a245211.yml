@@ -59,6 +59,20 @@ jobs:
           test: 'false'
           lint: 'false'
           use-mathlib-cache: 'true'
+      - uses: actions/cache/restore@v4
+        with:
+          path: |
+            .verification/formal-conjectures/.lake/build/lib/lean/A245211
+            .verification/formal-conjectures/.lake/build/ir/A245211
+          key: a245211-modules-4331-${{ github.sha }}
+          restore-keys: a245211-modules-4331-
       - name: Compile the structural lemmas
         working-directory: .verification/formal-conjectures
         run: lake build A245211.Projection
+      - uses: actions/cache/save@v4
+        if: ${{ !cancelled() }}
+        with:
+          path: |
+            .verification/formal-conjectures/.lake/build/lib/lean/A245211
+            .verification/formal-conjectures/.lake/build/ir/A245211
+          key: a245211-modules-4331-${{ github.sha }}

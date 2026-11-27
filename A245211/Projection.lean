@@ -103,6 +103,7 @@ theorem coefficient_filter_ne_one (q : ℕ) (hq : 1 < q)
   induction spec with
   | nil => rfl
   | cons tp spec ih =>
+      simp only [decide_not] at ih
       by_cases htp : tp.1 % q = 1 <;>
         simp [List.filter_cons, htp, coefficient_cons, ih, coefficient_mod q hq]
 
@@ -124,7 +125,7 @@ theorem positionTest_congr (r q : ℕ) (spec spec' : List (ℕ × ℕ))
     (h : ∀ j, coefficient q spec j = coefficient q spec' j) :
     positionTest r q spec = positionTest r q spec' := by
   have hfun : coefficient q spec = coefficient q spec' := funext h
-  simp only [positionTest, hfun]
+  simp only [positionTest, fastPrefix, anchorPrefix, closedPrefix, hfun]
 
 theorem positionTest_filter_ne_one (r q : ℕ) (hq : 1 < q)
     (spec : List (ℕ × ℕ)) :
