@@ -86,7 +86,7 @@ c_0=0,\qquad c_{j+1}=d_jc_j+2^j.
 
 最终内核检查结果待补入。
 
-完整复现步骤写在仓库的 [A245211 验证工作流](../.github/workflows/a245211.yml) 中：准备固定版本的 Formal Conjectures 和已接受归约，从各模块源文件组装完整单文件，直接运行上游原版 `tools/check.sh`，重新检查全部证明以及 `OMA.solution` 的公理依赖。该工作流可从 GitHub Actions 手动运行。
+完整复现步骤写在仓库的 [A245211 验证工作流](../.github/workflows/a245211.yml) 中：准备固定版本的 Formal Conjectures 和已接受归约，从各模块源文件组装完整单文件，运行上游 `tools/check.sh` 的提交检查与公理审计。工作流只给其中的 Lean 编译命令添加 `-j1`，将编译工作线程限制为一个，并在日志中展示这项差异；保留原有的 30 分钟编译期限、全部证明检查，以及 `OMA.solution` 的公理白名单。该工作流可从 GitHub Actions 手动运行。
 
 在仓库根目录重建提交文件：
 

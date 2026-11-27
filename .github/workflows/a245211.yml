@@ -58,6 +58,19 @@ jobs:
           test: 'false'
           lint: 'false'
           use-mathlib-cache: 'true'
+      - name: Limit Lean to one compiler worker
+        working-directory: .verification/open-math-agents
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p = Path('tools/check.sh')
+          source = p.read_text()
+          old = 'timeout 1800 lake env lean "$SUB"'
+          new = 'timeout 1800 lake env lean -j1 "$SUB"'
+          assert source.count(old) == 1, 'Pinned compiler invocation changed'
+          p.write_text(source.replace(old, new))
+          PY
+          git diff -- tools/check.sh
       - name: Verify the single-file submission and audit its axioms
         working-directory: .verification/open-math-agents
         run: |
@@ -67,7 +80,7 @@ jobs:
           while kill -0 "$verifier_pid" 2>/dev/null; do
             sleep 30
             if kill -0 "$verifier_pid" 2>/dev/null; then
-              echo "The unmodified upstream checker is still running."
+              echo "The upstream checks are still running with one Lean worker."
               date -u +%FT%TZ
               ps -C lean -o etime=,pcpu=,rss=,comm= || true
             fi
@@ -77,5 +90,9 @@ jobs:
             cat verdict.json
           else
             echo "No verdict was produced."
+            status=1
+          fi
+          if [ "$status" -eq 0 ]; then
+            python3 -c 'import json; verdict = json.load(open("verdict.json")); assert verdict["verdict"] == "accepted", verdict' || status=$?
           fi
           exit "$status"
