@@ -1,0 +1,132 @@
+name: A245211 count-65 upstream verification
+
+on:
+  push:
+    paths:
+      - 'A245211/count65/*.lean'
+      - 'A245211/count65/reductions/*.lean'
+      - 'A245211/count65/proofs/*.lean'
+      - 'A245211/count65/assemble_count65.py'
+      - 'A245211/Core.lean'
+      - 'A245211/Cycle.lean'
+      - 'A245211/TokenAllocation.lean'
+      - 'A245211/Checker.lean'
+      - 'A245211/Projection.lean'
+      - 'A245211/assemble.py'
+      - '.github/workflows/a245211-count65.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: a245211-count65-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: google-deepmind/formal-conjectures
+          ref: 9097e2f90e66d2f6244209cb1c07f7120d17ec53
+          path: .verification/formal-conjectures
+      - uses: actions/checkout@v4
+        with:
+          repository: GuillaumeBAUD-coder/open-math-agents
+          ref: d4827fcc0af9b8327e56e1eb335394e1cf6514c6
+          path: .verification/open-math-agents
+      - name: Reassemble and prepare the two exact submissions
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import hashlib
+          import json
+          import shutil
+          import subprocess
+          import sys
+
+          local = Path('A245211/count65')
+          fc = Path('.verification/formal-conjectures')
+          upstream = Path('.verification/open-math-agents')
+          proof = 'OeisA245211.conjecture.R2.H3.R1.H1.lean'
+          reduction = 'OeisA245211.conjecture.R2.H3.R1.lean'
+          expected = (local / 'proofs' / proof).read_bytes()
+          subprocess.run([sys.executable, str(local / 'assemble_count65.py')], check=True)
+          assert (local / 'proofs' / proof).read_bytes() == expected, 'Reassembled H1 differs from the tracked submission'
+
+          modules = fc / 'OMAReductions'
+          modules.mkdir(exist_ok=True)
+          shutil.copyfile(upstream / 'reductions/OeisA245211.conjecture.R2.lean',
+                          modules / 'R_OeisA245211_conjecture_R2.lean')
+          shutil.copyfile(local / 'reductions' / reduction,
+                          modules / 'R_OeisA245211_conjecture_R2_H3_R1.lean')
+          with (fc / 'lakefile.toml').open('a') as handle:
+              handle.write('\n[[lean_lib]]\nname = "OMAReductions"\nglobs = ["OMAReductions.+"]\n')
+          shutil.copyfile(local / 'reductions' / reduction, upstream / 'reductions' / reduction)
+          (upstream / 'proofs').mkdir(exist_ok=True)
+          shutil.copyfile(local / 'proofs' / proof, upstream / 'proofs' / proof)
+
+          artifacts = upstream / 'count65-artifacts'
+          artifacts.mkdir(exist_ok=True)
+          inputs = ['reductions/' + reduction, 'proofs/' + proof, 'tools/check.sh', 'tools/lint.py']
+          manifest = {
+              'formal_conjectures_commit': '9097e2f90e66d2f6244209cb1c07f7120d17ec53',
+              'open_math_agents_commit': 'd4827fcc0af9b8327e56e1eb335394e1cf6514c6',
+              'reassembled_h1_byte_identical': True,
+              'sha256': {name: hashlib.sha256((upstream / name).read_bytes()).hexdigest() for name in inputs},
+          }
+          (artifacts / 'source-sha256.json').write_text(json.dumps(manifest, indent=2) + '\n')
+          PY
+      - name: Apply the original upstream linter to both files
+        working-directory: .verification/open-math-agents
+        run: |
+          python3 -I tools/lint.py reductions/OeisA245211.conjecture.R2.H3.R1.lean data/catalog.json > count65-artifacts/reduction-lint.json
+          cat count65-artifacts/reduction-lint.json
+          python3 -I tools/lint.py proofs/OeisA245211.conjecture.R2.H3.R1.H1.lean data/catalog.json > count65-artifacts/h1-lint.json
+          cat count65-artifacts/h1-lint.json
+      - name: Build only the new reduction module and its pinned dependencies
+        uses: leanprover/lean-action@v1
+        with:
+          lake-package-directory: .verification/formal-conjectures
+          auto-config: 'false'
+          build: 'true'
+          build-args: 'OMAReductions.R_OeisA245211_conjecture_R2_H3_R1'
+          test: 'false'
+          lint: 'false'
+          use-mathlib-cache: 'true'
+      - name: Check the reduction with the unmodified upstream verifier
+        working-directory: .verification/open-math-agents
+        run: |
+          status=0
+          OMA_FC="$GITHUB_WORKSPACE/.verification/formal-conjectures" bash tools/check.sh reductions/OeisA245211.conjecture.R2.H3.R1.lean count65-artifacts/reduction-verdict.json || status=$?
+          if [ -f count65-artifacts/reduction-verdict.json ]; then
+            cat count65-artifacts/reduction-verdict.json
+            python3 -c 'import json; v=json.load(open("count65-artifacts/reduction-verdict.json")); assert v["verdict"] == "accepted", v' || status=$?
+          else
+            status=1
+          fi
+          exit "$status"
+      - name: Check H1 with the unmodified upstream verifier
+        working-directory: .verification/open-math-agents
+        run: |
+          status=0
+          OMA_FC="$GITHUB_WORKSPACE/.verification/formal-conjectures" bash tools/check.sh proofs/OeisA245211.conjecture.R2.H3.R1.H1.lean count65-artifacts/h1-verdict.json || status=$?
+          if [ -f count65-artifacts/h1-verdict.json ]; then
+            cat count65-artifacts/h1-verdict.json
+            python3 -c 'import json; v=json.load(open("count65-artifacts/h1-verdict.json")); assert v["verdict"] == "accepted", v' || status=$?
+          else
+            status=1
+          fi
+          exit "$status"
+      - name: Preserve both verdicts, lints, and source hashes
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: a245211-count65-${{ github.run_id }}-${{ github.run_attempt }}
+          path: .verification/open-math-agents/count65-artifacts/
+          if-no-files-found: warn
+          include-hidden-files: true
