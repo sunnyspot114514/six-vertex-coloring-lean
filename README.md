@@ -26,6 +26,7 @@ The Python checker exhausts all labeled simple graphs on six vertices:
 | Triangle-free graphs | 5,789 |
 | Already bipartite | 5,177 |
 | Require exactly one edge deletion | 612 |
+| Graph/edge-coloring pairs verified | 294,987 |
 | Counterexamples | 0 |
 
 The Lean proof checks the finite graph property with kernel reduction, connects the encoding to `SimpleGraph`, and proves the final statement for every `k ≤ 6`. Python output is not an axiom or input trusted by the Lean theorem.
@@ -65,7 +66,7 @@ The target is the finite hypothesis **H2** from the [R1 reduction of an Erdős #
 
 While preparing this repository, we checked the current upstream GitHub state and found that **Salofe's [PR #5331](https://github.com/GuillaumeBAUD-coder/open-math-agents/pull/5331)** had already been accepted and merged on **27 November 2026 at 11:22:31 UTC**. The site's earlier “open step” listing was stale. That formalization also uses a finite graph check followed by a global color swap. It is the prior accepted formalization; this repository claims no first-solution credit.
 
-The elementary proof and independent checker were developed in a conversation between **Xiwei Chen (sunnyspot114514)** and **ChatGPT**, followed by source and status checks. The repository is maintained by Xiwei Chen. The Lean implementation and documentation were prepared with AI assistance.
+Prepared for **sunnyspot114514** with assistance from **ChatGPT**.
 
 ### Scope
 

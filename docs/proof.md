@@ -7,10 +7,10 @@ triangle. Give each edge an arbitrary color in `{false, true}`. There is a
 coloring **d** of the vertices with the same two colors such that no edge has
 both endpoints colored with that edge's color:
 
-\[
+$$
 \forall\{x,y\}\in E(G),\qquad
 \neg\bigl(d(x)=c(\{x,y\})\;\land\;d(y)=c(\{x,y\})\bigr).
-\]
+$$
 
 In the upstream Lean statement, `c x y = c y x` expresses that the edge color
 does not depend on the order of its endpoints. Colors assigned to nonedges or

@@ -74,8 +74,8 @@ theorem good_unique {m col : Nat} (h : Good m col) {i j : Nat}
     i = j := by
   have hcard : (monoEdges m col).card ≤ 1 := h
   apply (Finset.card_le_one.mp hcard) i _ j _
-  · simp [monoEdges, hi, hmi, hci]
-  · simp [monoEdges, hj, hmj, hcj]
+  · exact Finset.mem_filter.mpr ⟨Finset.mem_range.mpr hi, hmi, hci⟩
+  · exact Finset.mem_filter.mpr ⟨Finset.mem_range.mpr hj, hmj, hcj⟩
 
 set_option maxRecDepth 1000000
 set_option maxHeartbeats 0
