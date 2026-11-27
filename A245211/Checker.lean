@@ -1,0 +1,174 @@
+import A245211.Cycle
+
+namespace A245211New
+
+open Finset
+
+set_option maxRecDepth 1000000
+set_option maxHeartbeats 0
+
+/-- A modular coefficient from prime tokens and their assigned positions. -/
+def coefficient (q : Nat) (spec : List (Nat × Nat)) (j : Nat) : Nat :=
+  spec.foldr (fun tp acc => if tp.2 = j then (tp.1 % q * acc) % q else acc) 1
+
+/-- The affine constant and the current power of two, both modulo q. -/
+def seedStep (q : Nat) (d : Nat → Nat) : Nat → Nat × Nat
+  | 0 => (0, 1)
+  | k + 1 =>
+      let previous := seedStep q d k
+      ((d k * previous.1 + previous.2) % q, (2 * previous.2) % q)
+
+def nextResidue (q d x : Nat) : Nat :=
+  ((d * x + (q - 1)) * ((q + 1) / 2)) % q
+
+/-- Test only the residues that an actual prime cycle would have to visit. -/
+def walkOK (q : Nat) (d : Nat → Nat) : Nat → Nat → Nat → Bool
+  | 0, _, _ => true
+  | fuel + 1, j, x =>
+      decide (Nat.Coprime x q) &&
+        walkOK q d fuel (j + 1) (nextResidue q (d j) x)
+
+def positionTest (r q : Nat) (spec : List (Nat × Nat)) : Bool :=
+  walkOK q (coefficient q spec) r 0
+    (seedStep q (coefficient q spec) r).1
+
+def exactSeed (d : Nat → Nat) : Nat → Nat
+  | 0 => 0
+  | k + 1 => d k * exactSeed d k + 2 ^ k
+
+theorem exactSeed_relation (r : Nat) (p d : Nat → Nat)
+    (hrec : ∀ j < r, 2 * p (j + 1) + 1 = d j * p j) :
+    ∀ k ≤ r, 2 ^ k * p k + exactSeed d k =
+      (∏ j ∈ range k, d j) * p 0 := by
+  intro k
+  induction k with
+  | zero => simp [exactSeed]
+  | succ k ih =>
+      intro hk
+      calc
+        2 ^ (k + 1) * p (k + 1) + exactSeed d (k + 1) =
+            2 ^ k * (2 * p (k + 1) + 1) + d k * exactSeed d k := by
+              simp only [exactSeed, pow_succ]
+              ring
+        _ = d k * (2 ^ k * p k + exactSeed d k) := by
+              rw [hrec k (by omega)]
+              ring
+        _ = (∏ j ∈ range (k + 1), d j) * p 0 := by
+              rw [ih (by omega), prod_range_succ]
+              ring
+
+theorem exactSeed_closed (r : Nat) (p d : Nat → Nat)
+    (hrec : ∀ j < r, 2 * p (j + 1) + 1 = d j * p j)
+    (hclose : p r = p 0)
+    (hprod : (∏ j ∈ range r, d j) = 2 ^ r + 1) :
+    exactSeed d r = p 0 := by
+  have h := exactSeed_relation r p d hrec r le_rfl
+  rw [hclose, hprod] at h
+  nlinarith only [h]
+
+theorem seedStep_correct (r q : Nat) (hq : 1 < q) (c d : Nat → Nat)
+    (hc : ∀ j < r, c j % q = d j % q) :
+    ∀ k ≤ r, seedStep q c k = (exactSeed d k % q, 2 ^ k % q) := by
+  intro k
+  induction k with
+  | zero => simp [seedStep, exactSeed, Nat.mod_eq_of_lt hq]
+  | succ k ih =>
+      intro hk
+      rw [seedStep, ih (by omega)]
+      apply Prod.ext
+      · simp only [exactSeed, Nat.add_mod, Nat.mul_mod, Nat.mod_mod]
+        rw [hc k (by omega)]
+      · simp [pow_succ, Nat.mul_mod, Nat.mul_comm]
+
+theorem nextResidue_correct (q d x y : Nat) (hq : 1 < q) (hodd : Odd q)
+    (hrec : 2 * y + 1 = d * x) :
+    nextResidue q (d % q) (x % q) = y % q := by
+  have hinv : 2 * ((q + 1) / 2) = q + 1 := by
+    obtain ⟨k, hk⟩ := hodd
+    omega
+  have hsum : d * x + (q - 1) = 2 * y + q := by omega
+  calc
+    nextResidue q (d % q) (x % q) =
+        ((d * x + (q - 1)) * ((q + 1) / 2)) % q := by
+          simp [nextResidue, Nat.add_mod, Nat.mul_mod]
+    _ = ((2 * y + q) * ((q + 1) / 2)) % q := by rw [hsum]
+    _ = ((2 * ((q + 1) / 2)) * y + q * ((q + 1) / 2)) % q := by
+          congr 1
+          ring
+    _ = y % q := by
+          rw [hinv]
+          simp [Nat.add_mul, Nat.add_mod, Nat.mul_mod]
+
+theorem walkOK_correct (r q : Nat) (hq : 1 < q) (hodd : Odd q)
+    (p c d : Nat → Nat)
+    (hc : ∀ j < r, c j % q = d j % q)
+    (hrec : ∀ j < r, 2 * p (j + 1) + 1 = d j * p j)
+    (hcop : ∀ j < r, Nat.Coprime (p j) q) :
+    ∀ fuel j, j + fuel ≤ r → walkOK q c fuel j (p j % q) = true := by
+  intro fuel
+  induction fuel with
+  | zero => simp [walkOK]
+  | succ fuel ih =>
+      intro j hj
+      have hlt : j < r := by omega
+      have hunit : decide (Nat.Coprime (p j % q) q) = true :=
+        decide_eq_true ((ZMod.coprime_mod_iff_coprime (p j) q).mpr (hcop j hlt))
+      have hnext : nextResidue q (c j) (p j % q) = p (j + 1) % q := by
+        calc
+          nextResidue q (c j) (p j % q) = nextResidue q (d j % q) (p j % q) := by
+            simp only [nextResidue, Nat.add_mod, Nat.mul_mod, Nat.mod_mod]
+            rw [hc j hlt]
+          _ = p (j + 1) % q := nextResidue_correct q _ _ _ hq hodd (hrec j hlt)
+      rw [walkOK]
+      simp only [hunit, Bool.true_and, hnext]
+      exact ih (j + 1) (by omega)
+
+theorem positionTest_of_nat_cycle (r q : Nat) (hq : 1 < q) (hodd : Odd q)
+    (spec : List (Nat × Nat)) (p d : Nat → Nat)
+    (hc : ∀ j < r, coefficient q spec j % q = d j % q)
+    (hrec : ∀ j < r, 2 * p (j + 1) + 1 = d j * p j)
+    (hclose : p r = p 0)
+    (hprod : (∏ j ∈ range r, d j) = 2 ^ r + 1)
+    (hcop : ∀ j < r, Nat.Coprime (p j) q) :
+    positionTest r q spec = true := by
+  unfold positionTest
+  rw [seedStep_correct r q hq _ d hc r le_rfl]
+  rw [exactSeed_closed r p d hrec hclose hprod]
+  exact walkOK_correct r q hq hodd p _ d hc hrec hcop r 0 (by omega)
+
+def cyclicValue {r : Nat} (hr : 0 < r) (f : Fin r → Nat) (j : Nat) : Nat :=
+  f ⟨j % r, Nat.mod_lt j hr⟩
+
+theorem cyclicValue_at {r : Nat} (hr : 0 < r) (f : Fin r → Nat) (i : Fin r) :
+    cyclicValue hr f i.val = f i := by
+  simp [cyclicValue, Nat.mod_eq_of_lt i.isLt]
+
+theorem positionTest_of_cycle {r : Nat} (hr : 0 < r)
+    (q : Nat) (hq : 1 < q) (hodd : Odd q)
+    (spec : List (Nat × Nat)) (p d : Fin r → Nat)
+    (hc : ∀ i : Fin r, coefficient q spec i.val % q = d i % q)
+    (hrec : ∀ i, 2 * p (cycleNext i) + 1 = d i * p i)
+    (hprod : (∏ i, d i) = 2 ^ r + 1)
+    (hp : ∀ i, (p i).Prime) (hlarge : ∀ i, q < p i) :
+    positionTest r q spec = true := by
+  apply positionTest_of_nat_cycle r q hq hodd spec
+    (cyclicValue hr p) (cyclicValue hr d)
+  · intro j hj
+    simpa [cyclicValue, Nat.mod_eq_of_lt hj] using hc ⟨j, hj⟩
+  · intro j hj
+    have hnext : cycleNext (⟨j, hj⟩ : Fin r) =
+        ⟨(j + 1) % r, Nat.mod_lt _ hr⟩ := rfl
+    simpa [cyclicValue, Nat.mod_eq_of_lt hj, hnext] using hrec ⟨j, hj⟩
+  · simp [cyclicValue]
+  · calc
+      (∏ j ∈ range r, cyclicValue hr d j) = ∏ i : Fin r, cyclicValue hr d i.val :=
+        (Fin.prod_univ_eq_prod_range (cyclicValue hr d) r).symm
+      _ = ∏ i, d i := prod_congr rfl fun i _ => cyclicValue_at hr d i
+      _ = 2 ^ r + 1 := hprod
+  · intro j hj
+    have hi := hp ⟨j, hj⟩
+    have hl := hlarge ⟨j, hj⟩
+    simpa [cyclicValue, Nat.mod_eq_of_lt hj] using
+      hi.coprime_iff_not_dvd.mpr (Nat.not_dvd_of_pos_of_lt (by omega) hl)
+
+end A245211New

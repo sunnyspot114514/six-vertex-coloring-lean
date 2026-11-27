@@ -18,7 +18,7 @@ open OMA.R_OeisA245211_conjecture_R2
 
 /-- Successor on a finite cycle, defined also for the empty domain. -/
 def cycleNext {r : ℕ} (i : Fin r) : Fin r :=
-  ⟨(i.val + 1) % r, Nat.mod_lt _ (by omega)⟩
+  ⟨(i.val + 1) % r, Nat.mod_lt _ (by have hi := i.isLt; omega)⟩
 
 section FiniteProducts
 
@@ -136,7 +136,10 @@ private theorem enumerate_cycle [Nonempty ι] (f : ι → ι)
   refine ⟨⟨hinj, hsurj⟩, Equiv.ofBijective enumerate ⟨heinj, hesurj⟩, ?_⟩
   intro i
   change f^[((i.val + 1) % Fintype.card ι)] x = f (f^[i.val] x)
-  rw [← hperiod, iterate_mod_minimalPeriod_eq, iterate_succ_apply']
+  have hindex : (i.val + 1) % Fintype.card ι =
+      (i.val + 1) % minimalPeriod f x :=
+    congrArg (fun k : ℕ => (i.val + 1) % k) hperiod.symm
+  rw [hindex, iterate_mod_minimalPeriod_eq, iterate_succ_apply']
 
 private theorem prime_product_cycle [Nonempty ι] (p : ι → ℕ)
     (hp : ∀ i, (p i).Prime) (hi : Injective p)
@@ -194,15 +197,22 @@ theorem squarefree_cycle {n r : ℕ} (hs : Squarefree n)
   classical
   let S := n.primeFactors
   have hcard : Fintype.card S = r := by simpa [S] using hr
-  have hnonempty : S.Nonempty := card_pos.mpr (by dsimp [S]; omega)
+  have hnonempty : S.Nonempty := card_pos.mp (by dsimp [S]; omega)
   letI : Nonempty S := hnonempty.to_subtype
   have hbalance : (∏ i : S, (2 * (i : ℕ) + 1)) =
       (2 ^ Fintype.card S + 1) * ∏ i : S, (i : ℕ) := by
-    rw [Fintype.card_coe, prod_coe_sort, prod_coe_sort]
-    exact squarefree_fixed_point_product hs ha
+    calc
+      (∏ i : S, (2 * (i : ℕ) + 1)) = ∏ p ∈ S, (2 * p + 1) :=
+        prod_coe_sort S (fun p => 2 * p + 1)
+      _ = (2 ^ S.card + 1) * ∏ p ∈ S, p := squarefree_fixed_point_product hs ha
+      _ = (2 ^ Fintype.card S + 1) * ∏ i : S, (i : ℕ) := by
+        rw [Fintype.card_coe]
+        exact congrArg (fun v : ℕ => (2 ^ S.card + 1) * v)
+          (prod_coe_sort S (fun p => p)).symm
   have hcycle := prime_product_cycle (fun i : S => (i : ℕ))
     (fun i => Nat.prime_of_mem_primeFactors i.property) Subtype.val_injective
     (by omega) hbalance
-  simpa only [hcard] using hcycle
+  cases hcard
+  exact hcycle
 
 end A245211New

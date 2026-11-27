@@ -57,4 +57,4 @@ jobs:
           use-mathlib-cache: 'true'
       - name: Compile the proof modules
         working-directory: .verification/formal-conjectures
-        run: lake build A245211.Cycle
+        run: lake build A245211.TokenAllocation A245211.Checker
