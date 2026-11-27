@@ -1,0 +1,38 @@
+name: Verify
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: verify-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  proof:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    env:
+      LEAN_NUM_THREADS: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Exhaustive independent Python check
+        run: python3 scripts/check_exhaustive.py
+      - name: Build with the pinned Lean and Mathlib versions
+        uses: leanprover/lean-action@v1
+        with:
+          auto-config: "false"
+          build: "true"
+          use-mathlib-cache: "true"
+          leanchecker: "true"
+          leanchecker-args: "SixVertex"
+      - name: Print and check final theorem axioms
+        run: |
+          set -o pipefail
+          lake env lean Check.lean | tee axioms.log
+          python3 scripts/check_axioms.py axioms.log
+
