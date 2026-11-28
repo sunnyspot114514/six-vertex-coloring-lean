@@ -78,4 +78,4 @@ $$
 
 证明使用固定版本 R2 归约中的公开引理，并复用本仓库独立编写的循环、因子分配和模检验模块。循环论证的数学思路也见于上游 [R2.H1 的 PR #7273](https://github.com/GuillaumeBAUD-coder/open-math-agents/pull/7273)。原 `R2.H2` 已由 MakisChristou 通过 [PR #9600](https://github.com/GuillaumeBAUD-coder/open-math-agents/pull/9600) 解决；本目录处理的是其 `r < 65` 范围之外的 `r = 65` 子情形，不主张全猜想或该数学事实的首次发现。
 
-目前成果发布在本仓库；尚未创建新归约的上游 PR。上游接受状态应以实际 PR 和合并记录为准。
+新归约已于 2026-11-28 11:48:05（北京时间） 提交为[上游 PR #19267](https://github.com/GuillaumeBAUD-coder/open-math-agents/pull/19267)，当前仍开放、尚未合并。H1 证明已在本仓库验证并发布，待父归约合并后再单独向上游提交。上游接受状态应以实际 PR 和合并记录为准。

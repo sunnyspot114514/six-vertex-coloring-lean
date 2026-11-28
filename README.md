@@ -52,7 +52,7 @@ The original upstream checker returned **`accepted` for all three submissions**:
 
 The [count65 workflow](.github/workflows/a245211-count65.yml) separately checks the reduction and H1 using the unmodified upstream checker. It preserves the per-submission time limit and axiom audit, and saves the verdicts and source hashes. The [H2 workflow](.github/workflows/a245211.yml) is separate.
 
-**The new reduction and 65-factor proof are published in this repository only. No upstream pull request has been submitted or merged for these two files.** Upstream submission would require the reduction to be accepted before its H1 proof is submitted.
+**The reduction has been submitted upstream as [PR #19267](https://github.com/GuillaumeBAUD-coder/open-math-agents/pull/19267) and is open, awaiting merge.** The 65-factor H1 proof remains published in this repository and will be submitted separately after the parent reduction merges.
 
 ### Earlier H2 result: independent implementation, with prior work credited
 
