@@ -1,6 +1,6 @@
 # A245211：排除恰有 65 个不同素因子的无平方因子情形
 
-本目录进一步拆分已接受的 R2 归约中的 `H3`，并给出其中第一个子目标的完整 Lean 证明。**新归约与 H1 证明均已通过原版上游检查器，判定均为 `accepted`。** 验证记录见 [GitHub Actions 运行 46066283100](https://github.com/sunnyspot114514/six-vertex-coloring-lean/actions/runs/46066283100)；这表示内核检查通过，不表示新归约或证明已由上游合并。
+本目录进一步拆分已接受的 R2 归约中的 `H3`，并给出其中第一个子目标的完整 Lean 证明。**新归约与 H1 证明均已通过原版上游检查器，判定均为 `accepted`。** 独立验证记录见 [GitHub Actions 运行 46066283100](https://github.com/sunnyspot114514/six-vertex-coloring-lean/actions/runs/46066283100)。上游归约 [PR #19267](https://github.com/lefttosolve2/open-math-agents/pull/19267) 已实际合并，完整 H1 证明已提交为 [PR #31022](https://github.com/lefttosolve2/open-math-agents/pull/31022)，当前开放、尚未合并。
 
 ## 精确目标与范围
 
@@ -56,7 +56,7 @@ $$
 - [assemble_count65.py](assemble_count65.py)：从五个共享模块及 `Count65Main.lean` 组装 H1 单文件。
 - [独立验证工作流](../../.github/workflows/a245211-count65.yml)：使用原版上游 lint 和检查器分别验证两份提交。
 
-上游提交应分两步：**先提交并等待新归约合并，再提交它生成的 H1 叶子证明。** 工作流为本地验证注册新归约模块，不表示该归约已经被上游接受。
+上游已依照两步顺序完成投稿：**先由 PR #19267 合并新归约，再由 PR #31022 提交它生成的 H1 叶子证明。** 下面的独立工作流保留了投稿前注册新归约模块进行验证的方法；实际合并与投稿状态以 PR 记录为准。
 
 ## 可复现验证
 
@@ -78,4 +78,5 @@ $$
 
 证明使用固定版本 R2 归约中的公开引理，并复用本仓库独立编写的循环、因子分配和模检验模块。循环论证的数学思路也见于上游 [R2.H1 的 PR #7273](https://github.com/GuillaumeBAUD-coder/open-math-agents/pull/7273)。原 `R2.H2` 已由 MakisChristou 通过 [PR #9600](https://github.com/GuillaumeBAUD-coder/open-math-agents/pull/9600) 解决；本目录处理的是其 `r < 65` 范围之外的 `r = 65` 子情形，不主张全猜想或该数学事实的首次发现。
 
-新归约已于 2026-11-28 11:48:05（北京时间） 提交为[上游 PR #19267](https://github.com/GuillaumeBAUD-coder/open-math-agents/pull/19267)，当前仍开放、尚未合并。H1 证明已在本仓库验证并发布，待父归约合并后再单独向上游提交。上游接受状态应以实际 PR 和合并记录为准。
+新归约于 2026-11-28 11:48:05（北京时间）提交为 [PR #19267](https://github.com/lefttosolve2/open-math-agents/pull/19267)，并于同日 **17:33:03 实际合并**。H1 单文件证明已于 **21:37:38** 提交为 [PR #31022](https://github.com/lefttosolve2/open-math-agents/pull/31022)，头提交为 `61809ae4dbc3b232588c4c53351efb54542ffe1d`，当前开放、尚未合并；[上游检查运行 46150555837](https://github.com/lefttosolve2/open-math-agents/actions/runs/46150555837) 已于北京时间 **21:40** 成功完成，日志在 21:40:37 明确返回 `accepted — kernel accepted; axioms within propext, Classical.choice, Quot.sound`。上游仓库已迁移至 `lefttosolve2/open-math-agents`。投稿前的独立验证版本、判定文件与已有工作的优先权记录均保留。
+

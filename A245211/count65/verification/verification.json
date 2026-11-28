@@ -62,16 +62,40 @@
     ],
     "reduction": {
       "pull_request": 19267,
-      "url": "https://github.com/GuillaumeBAUD-coder/open-math-agents/pull/19267",
-      "state": "open",
+      "url": "https://github.com/lefttosolve2/open-math-agents/pull/19267",
+      "state": "closed",
       "created_at": "2026-11-28T03:48:05Z",
       "head_sha": "ce04effa363224daef76b0ff26dd302c4dbee3bd",
-      "merged": false
+      "merged": true,
+      "original_url": "https://github.com/GuillaumeBAUD-coder/open-math-agents/pull/19267",
+      "merged_at": "2026-11-28T09:33:03Z"
     },
     "proof": {
-      "created": false,
-      "status": "pending_parent_reduction_merge"
-    }
+      "created": true,
+      "pull_request": 31022,
+      "url": "https://github.com/lefttosolve2/open-math-agents/pull/31022",
+      "status": "open",
+      "state": "open",
+      "created_at": "2026-11-28T13:37:38Z",
+      "head_sha": "61809ae4dbc3b232588c4c53351efb54542ffe1d",
+      "merged": false,
+      "workflow_run": 46150555837,
+      "workflow_url": "https://github.com/lefttosolve2/open-math-agents/actions/runs/46150555837",
+      "workflow_status": "completed",
+      "workflow_conclusion": "success",
+      "result": "accepted",
+      "workflow_job": 140996050268,
+      "verdict_logged_at": "2026-11-28T13:40:37.2693567Z",
+      "workflow_updated_at": "2026-11-28T13:40:41Z",
+      "observed_axioms": [
+        "propext",
+        "Classical.choice",
+        "Quot.sound"
+      ]
+    },
+    "status": "parent_merged_proof_submitted",
+    "repository": "lefttosolve2/open-math-agents",
+    "previous_repository": "GuillaumeBAUD-coder/open-math-agents"
   },
   "prior_coverage_checked_upstream_tree": "f9f4d2ee7b118f62d260932b88a220dfd71bb3f1",
   "no_claim_of_first_mathematical_discovery": true

@@ -37,7 +37,7 @@ $$
 
 All listed factors except 3 are congruent to 1 modulo 5. After rotating the factor 3 to the first position and applying the proved projection lemma, a single modular specification remains. Its forced starting residue is 1, and the next two prime residues are $1\to1\to0\pmod5$, contradicting primality and the lower bound on those primes. The finite calculation is a kernel certificate after this mathematical reduction; it imposes no size bound on the original integer.
 
-The accompanying [proposed reduction](A245211/count65/reductions/OeisA245211.conjecture.R2.H3.R1.lean) splits the existing `R2.H3` into this exact 65-factor case and the remaining squarefree cases with **odd, non-prime-power factor counts at least 67**. That remaining statement is open in this work. **This does not solve all of H3 or the full OEIS conjecture.** See the [detailed proof and verification notes in Chinese](A245211/count65/README.zh-CN.md).
+The accompanying [upstream reduction](A245211/count65/reductions/OeisA245211.conjecture.R2.H3.R1.lean) splits the existing `R2.H3` into this exact 65-factor case and the remaining squarefree cases with **odd, non-prime-power factor counts at least 67**. That remaining statement is open in this work. **This does not solve all of H3 or the full OEIS conjecture.** See the [detailed proof and verification notes in Chinese](A245211/count65/README.zh-CN.md).
 
 ### A245211 verification and publication status
 
@@ -52,7 +52,11 @@ The original upstream checker returned **`accepted` for all three submissions**:
 
 The [count65 workflow](.github/workflows/a245211-count65.yml) separately checks the reduction and H1 using the unmodified upstream checker. It preserves the per-submission time limit and axiom audit, and saves the verdicts and source hashes. The [H2 workflow](.github/workflows/a245211.yml) is separate.
 
-**The reduction has been submitted upstream as [PR #19267](https://github.com/GuillaumeBAUD-coder/open-math-agents/pull/19267) and is open, awaiting merge.** The 65-factor H1 proof remains published in this repository and will be submitted separately after the parent reduction merges.
+**The reduction [PR #19267](https://github.com/lefttosolve2/open-math-agents/pull/19267) merged on 28 November 2026 at 09:33:03 UTC. The complete 65-factor H1 proof has now been submitted as [PR #31022](https://github.com/lefttosolve2/open-math-agents/pull/31022), created at 13:37:38 UTC the same day.** The proof PR is open and unmerged; its [upstream CI run](https://github.com/lefttosolve2/open-math-agents/actions/runs/46150555837) completed successfully at 13:40 UTC and returned **`accepted`**, with only `propext`, `Classical.choice`, and `Quot.sound` in the axiom audit. The upstream repository has moved to `lefttosolve2/open-math-agents`; the independent verification records above retain their original source versions.
+
+### Further computation: the 69-prime-factor case
+
+The [count69 audit](A245211/count69/README.zh-CN.md) independently reproduces dot's proposed modular exclusion: **28,428 → 3,547 → 14 → 0** after the modulo-5 projection and subsequent modulo-7, 11, and 13 checks. A smaller certificate uses moduli 3, 5, 7, and 11, leaving only **138** full position assignments before the last two checks. The [standalone Python checker](A245211/count69/audit_count69.py) and [report](A245211/count69/audit_count69.json) are published for reproduction. **This 69-factor result has not yet passed Lean verification.** It concerns one case of the remaining `R2.H3.R1.H2`, without a size bound on the integer; it does not resolve that whole subgoal or the conjecture.
 
 ### Earlier H2 result: independent implementation, with prior work credited
 
@@ -128,5 +132,6 @@ Prepared for **sunnyspot114514** with assistance from **ChatGPT**.
 ### Scope
 
 This is a small, fully specified graph lemma and a reproducibility exercise. **It does not solve Erdős Problem 151**, its general `cliqueFree_four` variant, or the other hypotheses in the upstream reduction. Its human proof uses the five-cycle structure; the Lean implementation verifies the corresponding finite graph property computationally.
+
 
 

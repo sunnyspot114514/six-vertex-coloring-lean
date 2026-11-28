@@ -1,0 +1,279 @@
+{
+  "target": {
+    "sequence": "OEIS A245211",
+    "hypotheses": "Squarefree n and n.primeFactors.card = 69",
+    "conclusion": "OeisA245211.a n != n",
+    "upper_bound_on_n": null,
+    "status": "finite computational obstruction; not a Lean proof",
+    "remaining_branch": "OeisA245211.conjecture.R2.H3.R1.H2"
+  },
+  "factorization": {
+    "two_to_69_plus_one": "590295810358705651713",
+    "prime_tokens": [
+      3,
+      3,
+      139,
+      2796203,
+      168749965921
+    ],
+    "product_matches": true,
+    "all_tokens_prime": true,
+    "primality_method": "deterministic odd trial division through floor(sqrt(p))",
+    "largest_trial_divisor_bound": 410791,
+    "prime_lower_bound_strict": "295147905179352825856"
+  },
+  "definitions": {
+    "indexing": "indices and positions are zero based",
+    "position_tuple": "(a,b,c,d) gives token positions (0,a,b,c,d)",
+    "recurrence": "2*p[(i+1) mod 69]+1 = d[i]*p[i]",
+    "product": "product(d)=2^69+1",
+    "seed": "S[0]=0; S[k+1]=d[k]*S[k]+2^k; p[0]=S[69]",
+    "modular_step": "x_next=(d*x-1)*inverse(2) mod q",
+    "denominator": "q odd, so inverse(2)=(q+1)//2 exists",
+    "admissible": "the unique closed residue trace is coprime to q everywhere"
+  },
+  "coverage_and_soundness": [
+    "Each occurrence of a prime is a separately labelled token, including the two 3s.",
+    "Every token is assigned to exactly one of 69 positions; arbitrary collisions are allowed.",
+    "Cyclic translation fixes the first labelled 3 at position 0 without excluding any allocation.",
+    "The normalized full position space has 69^4 assignments.",
+    "A projection omits only factors equal to 1 modulo that modulus; the code asserts this condition.",
+    "Surviving position tuples retain the same assignments when passed to subsequent moduli.",
+    "The product identity makes the closed initial residue unique, even if a coefficient is zero.",
+    "Every actual cycle prime is greater than 2^68, hence coprime to each checked prime modulus.",
+    "Exhaustive modular rejection is a necessary-condition contradiction; no bound on n is searched.",
+    "The connection from fixed points to prime-token cycles relies on the existing Lean structural theorem."
+  ],
+  "dot_route": {
+    "normalized_full_position_count": 22667121,
+    "mod5_projected_position_count": 328509,
+    "mod5_projected_survivor_count": 412,
+    "after_restoring_neutral_token_positions": 28428,
+    "after_mod7_count": 3547,
+    "after_mod11_count": 14,
+    "after_mod11_positions_abcd": [
+      [
+        1,
+        0,
+        1,
+        66
+      ],
+      [
+        1,
+        0,
+        67,
+        68
+      ],
+      [
+        1,
+        7,
+        5,
+        6
+      ],
+      [
+        2,
+        2,
+        3,
+        1
+      ],
+      [
+        3,
+        2,
+        2,
+        63
+      ],
+      [
+        7,
+        2,
+        8,
+        7
+      ],
+      [
+        8,
+        10,
+        1,
+        12
+      ],
+      [
+        61,
+        2,
+        62,
+        4
+      ],
+      [
+        62,
+        64,
+        1,
+        0
+      ],
+      [
+        66,
+        68,
+        68,
+        60
+      ],
+      [
+        67,
+        0,
+        1,
+        68
+      ],
+      [
+        68,
+        6,
+        4,
+        5
+      ],
+      [
+        68,
+        68,
+        0,
+        65
+      ],
+      [
+        68,
+        68,
+        66,
+        67
+      ]
+    ],
+    "after_mod13_count": 0,
+    "after_mod13_positions_abcd": []
+  },
+  "smaller_route": {
+    "mod3_projected_position_count": 4761,
+    "after_mod3_positions_ac": [
+      [
+        0,
+        1
+      ],
+      [
+        1,
+        2
+      ],
+      [
+        68,
+        1
+      ]
+    ],
+    "mod5_projected_extensions_checked": 207,
+    "after_mod5_positions_abc": [
+      [
+        1,
+        4,
+        2
+      ],
+      [
+        68,
+        3,
+        1
+      ]
+    ],
+    "after_restoring_last_token_positions": 138,
+    "after_mod7_positions_abcd": [
+      [
+        1,
+        4,
+        2,
+        3
+      ],
+      [
+        1,
+        4,
+        2,
+        68
+      ],
+      [
+        68,
+        3,
+        1,
+        2
+      ],
+      [
+        68,
+        3,
+        1,
+        67
+      ]
+    ],
+    "after_mod11_positions_abcd": [],
+    "mod11_rejection_traces": [
+      {
+        "positions_abcd": [
+          1,
+          4,
+          2,
+          3
+        ],
+        "seed": 0,
+        "first_nonunit_index": 0,
+        "residue_trace": [
+          0
+        ]
+      },
+      {
+        "positions_abcd": [
+          1,
+          4,
+          2,
+          68
+        ],
+        "seed": 3,
+        "first_nonunit_index": 2,
+        "residue_trace": [
+          3,
+          4,
+          0
+        ]
+      },
+      {
+        "positions_abcd": [
+          68,
+          3,
+          1,
+          2
+        ],
+        "seed": 5,
+        "first_nonunit_index": 8,
+        "residue_trace": [
+          5,
+          7,
+          10,
+          6,
+          4,
+          7,
+          3,
+          1,
+          0
+        ]
+      },
+      {
+        "positions_abcd": [
+          68,
+          3,
+          1,
+          67
+        ],
+        "seed": 4,
+        "first_nonunit_index": 1,
+        "residue_trace": [
+          4,
+          0
+        ]
+      }
+    ],
+    "mod13_needed": false
+  },
+  "independent_algorithm": {
+    "method": "enumerate every starting residue, test unit walk and cyclic closure",
+    "uses_seed_formula": false,
+    "whole_smaller_route_matches": true,
+    "dot_last_14_cases_mod11_and_mod13_match": true
+  },
+  "lean_status": {
+    "formalized_here": false,
+    "needed": "kernel-check the finite tables and combine them with the existing cycle and projection theorems",
+    "native_decide_used": false,
+    "external_oracle_accepted_by_lean": false
+  }
+}
